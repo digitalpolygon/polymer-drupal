@@ -1,0 +1,43 @@
+{
+  "name": "digitalpolygon/polymer-drupal",
+  "description": "Drupal integration for Polymer",
+  "license": "GPL-2.0+",
+  "authors":[
+    {
+      "name": "Digital Polygon Engineering",
+      "homepage": "https://www.digitalpolygon.com/",
+      "role": "Maintainer"
+    }
+  ],
+  "keywords": [
+    "Drupal",
+    "Polymer",
+    "Integration"
+  ],
+  "support": {
+    "issues": "https://github.com/digitalpolygon/polymer-drupal/issues",
+    "source": "https://github.com/digitalpolygon/polymer-drupal"
+  },
+  "repositories": {
+    "polymer": {
+      "type": "vcs",
+      "url": "git@github.com:digitalpolygon/polymer.git"
+    }
+  },
+  "require": {
+    "digitalpolygon/polymer": "dev-main",
+    "php": ">=7.3.0"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "DigitalPolygon\\PolymerDrupal\\": "./src/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "digitalpolygon/polymer": true
+    }
+  }
+}

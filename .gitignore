@@ -1,0 +1,13 @@
+# Ignore composer files.
+composer.lock
+vendor/
+
+# Ignore editor files.
+.idea/
+.vscode/
+
+# Ignore local scratch space.
+scratch/
+
+# Ignore local configuration files.
+phpcs.xml
