@@ -9,7 +9,7 @@ use DigitalPolygon\Polymer\Robo\Exceptions\PolymerException;
 use Robo\Result;
 use DigitalPolygon\Polymer\Robo\Tasks\Command as PolymerCommand;
 
-class SyncCommand extends TaskBase
+class SyncCommands extends TaskBase
 {
     /**
      * Synchronize each multisite.

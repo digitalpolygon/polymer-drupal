@@ -11,7 +11,7 @@ use Consolidation\AnnotatedCommand\Attributes\Command;
 use DigitalPolygon\Polymer\Robo\Exceptions\PolymerException;
 use DigitalPolygon\Polymer\Robo\Tasks\Command as PolymerCommand;
 
-class ConfigCommand extends TaskBase
+class ConfigCommands extends TaskBase
 {
     use IO;
 

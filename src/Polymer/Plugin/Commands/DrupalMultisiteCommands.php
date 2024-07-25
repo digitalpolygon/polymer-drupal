@@ -15,7 +15,7 @@ use Robo\Exception\AbortTasksException;
  * This command facilitates the creation and configuration of Drupal multi-sites,
  * leveraging local development environments like DDEV for streamlined setup.
  */
-class DrupalMultisiteCommand extends TaskBase
+class DrupalMultisiteCommands extends TaskBase
 {
     /**
      * Path to the 'default' site directory.

@@ -12,7 +12,7 @@ use Robo\Exception\AbortTasksException;
  *
  * This class provides commands related to Drupal settings management.
  */
-class SettingsCommand extends TaskBase
+class SettingsCommands extends TaskBase
 {
     /**
      * Path to the multisite settings.php file.
