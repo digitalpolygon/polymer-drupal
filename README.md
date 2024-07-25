@@ -1,4 +1,4 @@
-# Drupal integration for Polymer WebOps Tooling
+# Drupal Integration for Polymer WebOps Tooling
 
 This repository provides a suite of commands designed to integrate Polymer WebOps Tooling with Drupal, enhancing your
 Drupal development experience. These commands streamline various aspects of site management, including multisite
