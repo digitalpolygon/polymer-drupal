@@ -2,6 +2,7 @@
 
 namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Commands;
 
+use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\LoadDrushTaskTrait;
 use Robo\Exception\TaskException;
 use DigitalPolygon\Polymer\Robo\Tasks\TaskBase;
 use Consolidation\AnnotatedCommand\Attributes\Command;
@@ -11,6 +12,8 @@ use DigitalPolygon\Polymer\Robo\Tasks\Command as PolymerCommand;
 
 class SyncCommands extends TaskBase
 {
+    use LoadDrushTaskTrait;
+
     /**
      * Synchronize each multisite.
      *

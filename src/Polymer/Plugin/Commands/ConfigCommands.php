@@ -2,6 +2,7 @@
 
 namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Commands;
 
+use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\LoadDrushTaskTrait;
 use Robo\Common\IO;
 use Symfony\Component\Yaml\Yaml;
 use Robo\Exception\TaskException;
@@ -13,6 +14,7 @@ use DigitalPolygon\Polymer\Robo\Tasks\Command as PolymerCommand;
 
 class ConfigCommands extends TaskBase
 {
+	use LoadDrushTaskTrait;
     use IO;
 
     /**

@@ -26,6 +26,7 @@
   },
   "require": {
     "digitalpolygon/polymer": "dev-main",
+    "drush/drush": "^12",
     "php": ">=7.3.0"
   },
   "minimum-stability": "dev",
