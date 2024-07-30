@@ -27,7 +27,7 @@ class InstallCommand extends TaskBase
     /**
     * The site name.
     *
-    * @var
+    * @var string
     */
     protected string $site = '';
 
@@ -45,7 +45,8 @@ class InstallCommand extends TaskBase
     #[Option(name: 'site', description: 'The site name.')]
     public function drupalSiteInstall(array $options = ['site' => InputOption::VALUE_OPTIONAL]): void {
         /** @var string $site */
-        $this->site = $options['site'] ?? 'default';
+        $site = $options['site'] ?? 'default';
+        $this->site = $site;
 
         /** @var \DigitalPolygon\Polymer\Robo\Tasks\Command[] $commands */
         $commands = [];
