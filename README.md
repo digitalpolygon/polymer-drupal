@@ -41,6 +41,8 @@ To integrate this Drupal plugin with Polymer using Composer, follow these steps:
    necessary, followed by a cache rebuild.
 4. `drupal:deploy:hook` (aliases: `ddh`): Executes deploy hooks defined in the Drush deploy system. These hooks run
    one-time functions necessary after configuration imports.
+5. `drupal:site:install` (aliases: `dsi`): This command will install the Drupal site.
+   one-time functions necessary after configuration imports.
 
 ### Site Creation
 
