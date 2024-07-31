@@ -5,7 +5,7 @@ namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Commands;
 use Consolidation\AnnotatedCommand\Attributes\Command;
 use Consolidation\AnnotatedCommand\Attributes\Option;
 use Consolidation\AnnotatedCommand\Attributes\Usage;
-use DigitalPolygon\Polymer\Robo\Common\RandomString;
+use DigitalPolygon\PolymerDrupal\Common\RandomString;
 use DigitalPolygon\Polymer\Robo\Exceptions\PolymerException;
 use DigitalPolygon\Polymer\Robo\Tasks\Command as PolymerCommand;
 use DigitalPolygon\Polymer\Robo\Tasks\TaskBase;
@@ -25,23 +25,23 @@ class InstallCommand extends TaskBase
     use IO;
 
     /**
-    * The site name.
-    *
-    * @var string
-    */
+     * The site name.
+     *
+     * @var string
+     */
     protected string $site = '';
 
     /**
-    * Installs Drupal and sets correct file/directory permissions.
-    *
-    * @param array<string, int|false> $options
-    *   The artifact deploy command options.
-    *
-    * @throws \Robo\Exception\AbortTasksException|TaskException
-    */
+     * Installs Drupal and sets correct file/directory permissions.
+     *
+     * @param array<string, int|false> $options
+     *   The artifact deploy command options.
+     *
+     * @throws \Robo\Exception\AbortTasksException|TaskException
+     */
     #[Command(name: 'drupal:site:install', aliases: ['dsi'])]
-    #[Usage(name: 'polymer drupal:site:install', description: 'Installs Drupal site.')]
-    #[Usage(name: 'polymer drupal:site:install --site={site_name}', description: 'Add site name.')]
+    #[Usage(name: 'drupal:site:install', description: 'Installs Drupal site.')]
+    #[Usage(name: 'drupal:site:install --site={site_name}', description: 'Add site name.')]
     #[Option(name: 'site', description: 'The site name.')]
     public function drupalSiteInstall(array $options = ['site' => InputOption::VALUE_OPTIONAL]): void {
         /** @var string $site */
@@ -78,7 +78,7 @@ class InstallCommand extends TaskBase
         $dirs = $finder
             ->in($multisite_dir)
             ->directories()
-            ->depth('< 1')
+            ->depth('== 0')
             ->exclude('files');
 
         foreach ($dirs->getIterator() as $dir) {
@@ -88,7 +88,7 @@ class InstallCommand extends TaskBase
         $files = $finder
             ->in($multisite_dir)
             ->files()
-            ->depth('< 1')
+            ->depth('== 0')
             ->exclude('files');
         
         foreach ($files->getIterator() as $file) {
