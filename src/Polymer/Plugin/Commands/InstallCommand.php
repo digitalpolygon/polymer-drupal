@@ -5,7 +5,7 @@ namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Commands;
 use Consolidation\AnnotatedCommand\Attributes\Command;
 use Consolidation\AnnotatedCommand\Attributes\Option;
 use Consolidation\AnnotatedCommand\Attributes\Usage;
-use DigitalPolygon\PolymerDrupal\Common\RandomString;
+use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Common\RandomString;
 use DigitalPolygon\Polymer\Robo\Exceptions\PolymerException;
 use DigitalPolygon\Polymer\Robo\Tasks\Command as PolymerCommand;
 use DigitalPolygon\Polymer\Robo\Tasks\TaskBase;
