@@ -38,7 +38,21 @@
   },
   "config": {
     "allow-plugins": {
-      "digitalpolygon/polymer": true
+      "digitalpolygon/polymer": true,
+      "phpro/grumphp-shim": true
     }
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^1.11",
+    "phpro/grumphp-shim": "^2.5",
+    "squizlabs/php_codesniffer": "^3"
+  },
+  "scripts": {
+    "cs": "phpcs",
+    "sa": "phpstan analyse -v -c phpstan.neon",
+    "validations": [
+      "@cs",
+      "@sa"
+    ]
   }
 }

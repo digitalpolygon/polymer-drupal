@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="polymer-drupal">
+    <description>Default PHP CodeSniffer configuration for the Drupal Integration for Polymer WebOps Tooling project.</description>
+    <file>src</file>
+    <rule ref="PSR12"/>
+    <arg value="n" />
+    <arg value="s" />
+</ruleset>
