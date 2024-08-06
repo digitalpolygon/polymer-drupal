@@ -14,7 +14,7 @@ use DigitalPolygon\Polymer\Robo\Tasks\Command as PolymerCommand;
 
 class ConfigCommands extends TaskBase
 {
-	use LoadDrushTaskTrait;
+    use LoadDrushTaskTrait;
     use IO;
 
     /**
@@ -69,7 +69,7 @@ class ConfigCommands extends TaskBase
     #[Command(name: 'drupal:config:import', aliases: ['dcim'])]
     public function import(): mixed
     {
-        /** @var DrushTask $task */
+        /** @var \DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\DrushTask $task */
         $task = $this->taskDrush();
 
         $strategy = $this->getConfigValue('cm.strategy');

@@ -19,7 +19,7 @@ use Symfony\Component\Finder\Finder;
 /**
  * Defines commands in the "drupal:*" namespace.
  */
-class InstallCommand extends TaskBase 
+class InstallCommand extends TaskBase
 {
     use LoadDrushTaskTrait;
     use IO;
@@ -37,13 +37,14 @@ class InstallCommand extends TaskBase
      * @param array<string, int|false> $options
      *   The artifact deploy command options.
      *
-     * @throws \Robo\Exception\AbortTasksException|TaskException
+     * @throws \Robo\Exception\AbortTasksException|\Robo\Exception\TaskException
      */
     #[Command(name: 'drupal:site:install', aliases: ['dsi'])]
     #[Usage(name: 'drupal:site:install', description: 'Installs Drupal site.')]
     #[Usage(name: 'drupal:site:install --site={site_name}', description: 'Add site name.')]
     #[Option(name: 'site', description: 'The site name.')]
-    public function drupalSiteInstall(array $options = ['site' => InputOption::VALUE_OPTIONAL]): void {
+    public function drupalSiteInstall(array $options = ['site' => InputOption::VALUE_OPTIONAL]): void
+    {
         /** @var string $site */
         $site = $options['site'] ?? 'default';
         $this->site = $site;
@@ -66,9 +67,10 @@ class InstallCommand extends TaskBase
      * For directories (755) and files (644) in docroot/sites/[site] (excluding
      * docroot/sites/[site]/files).
      *
-     * @throws \Robo\Exception\AbortTasksException|TaskException
+     * @throws \Robo\Exception\AbortTasksException|\Robo\Exception\TaskException
      */
-    protected function setSitePermissions(): void {
+    protected function setSitePermissions(): void
+    {
         /** @var \Robo\Task\Filesystem\FilesystemStack $taskFilesystemStack */
         $taskFilesystemStack = $this->taskFilesystemStack();
         $multisite_dir = $this->getConfigValue('docroot') . '/sites/' . $this->site;
@@ -90,7 +92,7 @@ class InstallCommand extends TaskBase
             ->files()
             ->depth('== 0')
             ->exclude('files');
-        
+
         foreach ($files->getIterator() as $file) {
             $taskFilesystemStack->chmod($file->getRealPath(), 0644);
         }
@@ -109,25 +111,24 @@ class InstallCommand extends TaskBase
      * @return \Robo\Result
      *   The `drush site-install` command result.
      *
-     * @throws \Robo\Exception\AbortTasksException|TaskException
+     * @throws \Robo\Exception\AbortTasksException|\Robo\Exception\TaskException
      */
     #[Command(name: 'internal:drupal:install')]
-    public function install(): Result {
+    public function install(): Result
+    {
         // Allows for installs to define custom user 0 name.
-        if ($this->getConfigValue('drupal.account.name') !== NULL) {
-        /** @var string $username */
+        if ($this->getConfigValue('drupal.account.name') !== null) {
+            /** @var string $username */
             $username = $this->getConfigValue('drupal.account.name');
-        }
-
-        else {
+        } else {
             // Generate a random, valid username.
             // @see \Drupal\user\Plugin\Validation\Constraint\UserNameConstraintValidator
             /** @var string $username */
             $username = RandomString::string(
                 10,
-                FALSE,
+                false,
                 function ($string) {
-                  return !preg_match('/[^\x{80}-\x{F7} a-z0-9@+_.\'-]/i', $string);
+                    return !preg_match('/[^\x{80}-\x{F7} a-z0-9@+_.\'-]/i', $string);
                 },
                 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!#%^&*()_?/.,+=><'
             );
@@ -151,7 +152,7 @@ class InstallCommand extends TaskBase
         /** @var string $drupal_locale */
         $drupal_locale = $this->getConfigValue('drupal.locale');
 
-        /** @var \DigitalPolygon\Polymer\Robo\Tasks\DrushTask $task */
+        /** @var \DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\DrushTask $task */
         $task = $this->taskDrush()
             ->drush("site-install")
             ->arg($project_profile_name)
@@ -162,11 +163,11 @@ class InstallCommand extends TaskBase
             ->option('account-name', $username)
             ->option('account-mail', $drupal_account_mail)
             ->option('locale', $drupal_locale)
-            ->verbose(TRUE)
-            ->printOutput(TRUE);
+            ->verbose(true)
+            ->printOutput(true);
 
         // Allow installs to define a custom user 1 password.
-        if ($this->getConfigValue('drupal.account.pass') !== NULL) {
+        if ($this->getConfigValue('drupal.account.pass') !== null) {
             /** @var string $drupal_account_pass */
             $drupal_account_pass = $this->getConfigValue('drupal.account.pass');
             $task->option('account-pass', $drupal_account_pass);
@@ -180,7 +181,7 @@ class InstallCommand extends TaskBase
         if ($install_from_config && $strategy_uses_config) {
             $core_config_file = $this->getConfigValue('docroot') . '/' . $this->getConfigValue("cm.core.dirs.sync.path") . '/core.extension.yml';
             if (file_exists($core_config_file)) {
-              $task->option('existing-config');
+                $task->option('existing-config');
             }
         }
 
@@ -191,5 +192,4 @@ class InstallCommand extends TaskBase
 
         return $result;
     }
-
 }
