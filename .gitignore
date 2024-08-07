@@ -11,3 +11,9 @@ scratch/
 
 # Ignore local configuration files.
 phpcs.xml
+
+# Ignore docs site.
+docs_site/
+
+# polymer config repo
+polymer/

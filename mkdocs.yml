@@ -58,15 +58,17 @@ nav:
   - Home: index.md
   - Development: development.md
   - Commands:
-      - drupal:
+      - Multisite Operations:
           - "drupal:multisite:update-all": commands/drupal_multisite_update_all.md
           - "drupal:update": commands/drupal_update.md
           - "drupal:config:import": commands/drupal_config_import.md
           - "drupal:deploy:hook": commands/drupal_deploy_hook.md
-          - "drupal:multisite:update-all": commands/drupal_multisite_update_all.md
-          - "drupal:multisite:create": commands/drupal_multisite_create.md
           - "drupal:site:install": commands/drupal_site_install.md
+      - Site Creation:
+          - "drupal:multisite:create": commands/drupal_multisite_create.md
+      - Settings Initialization:
           - "drupal:init:settings": commands/drupal_init_settings.md
+      - Sync Operations:
           - "drupal:site:sync:all-sites": commands/drupal_site_sync_all_sites.md
           - "drupal:site:sync": commands/drupal_site_sync.md
           - "drupal:site:sync:db:all-sites": commands/drupal_site_sync_db_all_sites.md
