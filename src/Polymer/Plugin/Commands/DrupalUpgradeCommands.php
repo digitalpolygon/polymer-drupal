@@ -23,9 +23,8 @@ class DrupalUpgradeCommands extends TaskBase
     /**
      * Upgrades Drupal core based on the provided options.
      *
-     * This method manages the full upgrade process:
-     * - Initializes the environment.
-     * - Executes the selected upgrade strategy.
+     * This method manages the full Drupal upgrade process:
+     * - Executes the selected Drupal upgrade strategy.
      * - Applies database updates.
      * - Clears the cache.
      * - Exports configuration.
