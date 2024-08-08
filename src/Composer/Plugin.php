@@ -111,9 +111,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     public function onPostCmdEvent(): void
     {
-        // Only install the template files if digitalpolygon/polymer is installed.
+        // Only install the template files if digitalpolygon/polymer-drupal is installed.
         if (isset($this->polymerDrupalPackage)) {
-            $this->executePolymerUpdate();
+            $this->executePolymerDrupalUpdate();
         }
     }
 
@@ -179,7 +179,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      *
      * @throws \Exception
      */
-    protected function executePolymerUpdate(): void
+    protected function executePolymerDrupalUpdate(): void
     {
         $this->io->write('<info>Creating Polymer template files...</info>');
         /** @var string $command */
@@ -209,7 +209,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * Gets the Polymer Drupal root directory, e.g., /vendor/digitalpolygon/polymer-drupal.
      *
      * @return string
-     *   THe filepath for the Polymer root.
+     *   THe filepath for the Polymer Drupal root.
      *
      * @throws \Exception
      */
