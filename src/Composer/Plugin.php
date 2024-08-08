@@ -182,53 +182,27 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     protected function executePolymerDrupalUpdate(): void
     {
         $this->io->write('<info>Creating Polymer template files...</info>');
-        /** @var string $command */
-        $command = $this->getVendorPath() . '/bin/polymer polymer:init';
-        $success = $this->executeCommand($command, [], true);
-        if (!$success) {
-            $this->io->writeError("<error>Polymer installation failed! Please execute <comment>$command --verbose</comment> to debug the issue.</error>");
-            throw new \Exception('Installation aborted due to error');
-        } else {
-            /** @var string $polymer_config_file */
-            $polymer_config_file = $this->getRepoRoot() . '/polymer/polymer.yml';
-            /** @var string $polymer_drupal_config_file */
-            $polymer_drupal_config_file = $this->getPolymerDrupalRoot() . '/config/default.yml';
-            /** @var array $polymer_configs */
-            $polymer_configs = Yaml::parse($polymer_config_file);
-            /** @var array $polymer_drupal_configs */
-            $polymer_drupal_configs = Yaml::parse($polymer_drupal_config_file);
-            if (is_array($polymer_configs) && is_array($polymer_drupal_configs)) {
-                $combined_configs = array_merge($polymer_configs, $polymer_drupal_configs);
-                $alteredContents = Yaml::dump($combined_configs, PHP_INT_MAX, 2);
-                file_put_contents($polymer_config_file, $alteredContents);
-            }
-        }
-    }
 
-    /**
-     * Gets the Polymer Drupal root directory, e.g., /vendor/digitalpolygon/polymer-drupal.
-     *
-     * @return string
-     *   THe filepath for the polymer-drupal root.
-     *
-     * @throws \Exception
-     */
-    private function getPolymerDrupalRoot(): string
-    {
-        $possible_polymer_drupal_roots = [
-            dirname(dirname(dirname(dirname(__FILE__)))),
-            dirname(dirname(dirname(__FILE__))),
+        /** @var string[] $commands */
+        $commands = [
+            'polymer polymer:init',
+            'polymer polymer-drupal:init'
         ];
-        foreach ($possible_polymer_drupal_roots as $polymer_drupal_root) {
-            if (basename($polymer_drupal_root) !== 'polymer-drupal') {
-                continue;
+
+        foreach ($commands as $cmd) {
+            /** @var string $command */
+            $command = $this->getVendorPath() . '/bin/polymer ' . $cmd;
+            $success = $this->executeCommand($command, [], true);
+            if (!$success) {
+                $msg = sprintf(
+                    "<error>%s failed! Please execute <comment>%s --verbose</comment> to debug the issue.</error>",
+                    ucfirst($cmd),
+                    $command
+                );
+                $this->io->writeError($msg);
+                throw new \Exception(sprintf('Installation aborted due to error in %s', $cmd));
             }
-            if (!file_exists("$polymer_drupal_root/src/Polymer/Plugin/Tasks/DrushTask.php")) {
-                continue;
-            }
-            return $polymer_drupal_root;
         }
-        throw new \Exception('Could not find the polymer-drupal root directory');
     }
 
     /**

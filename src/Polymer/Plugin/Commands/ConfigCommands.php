@@ -245,4 +245,65 @@ class ConfigCommands extends TaskBase
             throw new PolymerException("Failed to run 'drush deploy:hook'!");
         }
     }
+
+    /**
+     * This command adds the polymer-drupal configs in polymer.yml.
+     *
+     * @throws \Robo\Exception\AbortTasksException|TaskException
+     */
+    #[Command(name: 'polymer-drupal:init', aliases: ['pdc'])]
+    #[Usage(name: 'polymer polymer-drupal:init', description: 'Adds the polymer-drupal configs in polymer.yml.')]
+    public function polymerDrupalConfig(): void
+    {
+        // Get the path to the polymer config file.
+        /** @var string $polymer_config_file */
+        $polymer_config_file = $this->getConfigValue('polymer.root') . '/config/default.yml';
+
+        // Get the path to the polymer-drupal config file.
+        /** @var string $polymer_drupal_config_file */
+        $polymer_drupal_config_file = $this->getPolymerDrupalRoot() . '/config/default.yml';
+
+        // Parse the polymer configs file.
+        /** @var array $polymer_configs */
+        $polymer_configs = Yaml::parseFile($polymer_config_file);
+        /** @var array $polymer_drupal_configs */
+        $polymer_drupal_configs = Yaml::parseFile($polymer_drupal_config_file);
+
+        // Merge the configs.
+        if (is_array($polymer_configs) && is_array($polymer_drupal_configs)) {
+            $combined_configs = array_merge($polymer_configs, $polymer_drupal_configs);
+
+            // Dump the combined configs to a YAML string.
+            $alteredContents = Yaml::dump($combined_configs, PHP_INT_MAX, 2);
+
+            // Write the altered contents to the polymer config file.
+            file_put_contents($polymer_config_file, $alteredContents);
+        }
+    }
+
+    /**
+     * Gets the Polymer Drupal root directory, e.g., /vendor/digitalpolygon/polymer-drupal.
+     *
+     * @return string
+     *   THe filepath for the polymer-drupal root.
+     *
+     * @throws \Exception
+     */
+    private function getPolymerDrupalRoot(): string
+    {
+        $possible_polymer_drupal_roots = [
+            dirname(dirname(dirname(dirname(__FILE__)))),
+            dirname(dirname(dirname(__FILE__))),
+        ];
+        foreach ($possible_polymer_drupal_roots as $polymer_drupal_root) {
+            if (basename($polymer_drupal_root) !== 'polymer-drupal') {
+                continue;
+            }
+            if (!file_exists("$polymer_drupal_root/src/Polymer/Plugin/Tasks/DrushTask.php")) {
+                continue;
+            }
+            return $polymer_drupal_root;
+        }
+        throw new \Exception('Could not find the polymer-drupal root directory');
+    }
 }
