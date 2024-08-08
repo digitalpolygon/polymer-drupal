@@ -2,11 +2,13 @@
 
 namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Commands;
 
-use Consolidation\AnnotatedCommand\Attributes\Argument;
 use Consolidation\AnnotatedCommand\Attributes\Command;
+use Consolidation\AnnotatedCommand\Attributes\Option;
 use Consolidation\AnnotatedCommand\Attributes\Usage;
+use DigitalPolygon\Polymer\Robo\Tasks\TaskBase;
+use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\LoadDrushTaskTrait;
 use Robo\Exception\AbortTasksException;
-use Robo\Tasks;
+use Robo\Exception\TaskException;
 
 /**
  * Provides commands for upgrading Drupal core.
@@ -14,8 +16,10 @@ use Robo\Tasks;
  * This class defines commands to automate the upgrade process for Drupal core,
  * including version updates, database updates, cache clearing, and configuration export.
  */
-class DrupalUpgradeCommands extends Tasks
+class DrupalUpgradeCommands extends TaskBase
 {
+    use LoadDrushTaskTrait;
+
     /**
      * Upgrades Drupal core based on the provided options.
      *
@@ -39,41 +43,28 @@ class DrupalUpgradeCommands extends Tasks
      *   Thrown if any step in the upgrade process fails.
      */
     #[Command(name: 'drupal:upgrade')]
-    #[Argument(name: 'new_version', description: 'The new version to upgrade Drupal core to.')]
-    #[Argument(name: 'latest_minor', description: 'Upgrade to the latest stable minor version.')]
-    #[Argument(name: 'latest_major', description: 'Upgrade to the latest stable major version.')]
-    #[Argument(name: 'next_major', description: 'Upgrade to the next major version.')]
-    #[Usage(name: 'drupal:upgrade', description: 'Executes the Drupal upgrade process.')]
+    #[Option(name: 'new_version', description: 'The specific Drupal core version to upgrade to.')]
+    #[Option(name: 'latest_minor', description: 'Upgrade to the latest stable minor version of Drupal core.')]
+    #[Option(name: 'latest_major', description: 'Upgrade to the latest stable major version of Drupal core.')]
+    #[Option(name: 'next_major', description: 'Upgrade to the next major version of Drupal core.')]
     #[Usage(name: 'drupal:upgrade --new_version=10.2.3', description: 'Upgrades Drupal core to version 10.2.3.')]
     #[Usage(name: 'drupal:upgrade --latest_minor', description: 'Upgrades Drupal core to the latest stable minor version.')]
     #[Usage(name: 'drupal:upgrade --latest_major', description: 'Upgrades Drupal core to the latest stable major version.')]
-    #[Usage(name: 'drupal:upgrade --next_major', description: 'Upgrades Drupal core to the latest stable of the next major version.')]
+    #[Usage(name: 'drupal:upgrade --next_major', description: 'Upgrades Drupal core to the next major version.')]
     public function upgradeDrupal(string $new_version = null, bool $latest_minor = false, bool $latest_major = false, bool $next_major = false): void
     {
-        $this->initialize();
-        $this->doUpgradeDrupal($new_version, $latest_minor, $latest_major, $next_major);
-        $this->applyDrupalDatabaseUpdates();
-        $this->clearDrupalCache();
-        $this->exportDrupalConfiguration();
+        $this->doUpgrade($new_version, $latest_minor, $latest_major, $next_major);
+        $this->applyDatabaseUpdates();
+        $this->clearCache();
+        $this->exportConfiguration();
         $this->say("Drupal upgrade process completed successfully.");
     }
 
     /**
-     * Initializes the environment for the upgrade process.
-     *
-     * This method should include any setup or configuration needed
-     * before performing the upgrade. It is currently a placeholder.
-     */
-    private function initialize(): void
-    {
-        // @todo: Implement initialization logic.
-    }
-
-    /**
-     * Determines and executes the appropriate Drupal upgrade strategy.
+     * Determines and executes the appropriate Drupal upgrade strategy based on provided options.
      *
      * @param string|null $new_version
-     *   The specific version to upgrade to.
+     *   The specific Drupal version to upgrade to.
      * @param bool $latest_minor
      *   If TRUE, upgrades to the latest stable minor version.
      * @param bool $latest_major
@@ -82,12 +73,12 @@ class DrupalUpgradeCommands extends Tasks
      *   If TRUE, upgrades to the next major version.
      *
      * @throws \Robo\Exception\AbortTasksException
-     *   Thrown if no upgrade option is selected.
+     *   Thrown if no valid upgrade option is selected.
      */
-    private function doUpgradeDrupal(?string $new_version = null, bool $latest_minor = false, bool $latest_major = false, bool $next_major = false): void
+    private function doUpgrade(string $new_version = null, bool $latest_minor = false, bool $latest_major = false, bool $next_major = false): void
     {
         if ($new_version) {
-            $this->upgradeDrupalToVersion($new_version);
+            $this->upgradeToVersion($new_version);
             return;
         }
         if ($latest_minor) {
@@ -95,11 +86,11 @@ class DrupalUpgradeCommands extends Tasks
             return;
         }
         if ($latest_major) {
-            $this->upgradeDrupalToLatestMajor();
+            $this->upgradeToLatestMajor();
             return;
         }
         if ($next_major) {
-            $this->upgradeDrupalToNextMajor();
+            $this->upgradeToNextMajor();
             return;
         }
         // Throw an AbortTasksException if no upgrade option is selected.
@@ -112,15 +103,9 @@ class DrupalUpgradeCommands extends Tasks
      * @throws \Robo\Exception\AbortTasksException
      *   Thrown if the configuration export fails.
      */
-    private function exportDrupalConfiguration(): void
+    private function exportConfiguration(): void
     {
-        $this->say("Exporting configuration...");
-        $task = $this->taskExec('ddev exec -- drush cex -y');
-        $result = $task->run();
-        $success = $result->wasSuccessful();
-        if (!$success) {
-            throw new AbortTasksException("Error exporting Drupal configuration.");
-        }
+        $this->runDrushCommand('config:export', 'Exporting configuration...');
     }
 
     /**
@@ -129,15 +114,9 @@ class DrupalUpgradeCommands extends Tasks
      * @throws \Robo\Exception\AbortTasksException
      *   Thrown if the cache clearing fails.
      */
-    private function clearDrupalCache(): void
+    private function clearCache(): void
     {
-        $this->say("Clearing cache...");
-        $task = $this->taskExec('ddev exec -- drush cr');
-        $result = $task->run();
-        $success = $result->wasSuccessful();
-        if (!$success) {
-            throw new AbortTasksException("Error clearing Drupal cache.");
-        }
+        $this->runDrushCommand('cache:rebuild', 'Clearing cache...');
     }
 
     /**
@@ -146,19 +125,13 @@ class DrupalUpgradeCommands extends Tasks
      * @throws \Robo\Exception\AbortTasksException
      *   Thrown if applying database updates fails.
      */
-    private function applyDrupalDatabaseUpdates(): void
+    private function applyDatabaseUpdates(): void
     {
-        $this->say("Applying database updates...");
-        $task = $this->taskExec('ddev exec -- drush updb -y');
-        $result = $task->run();
-        $success = $result->wasSuccessful();
-        if (!$success) {
-            throw new AbortTasksException("Error applying database updates.");
-        }
+        $this->runDrushCommand('updatedb', 'Applying database updates...');
     }
 
     /**
-     * Upgrades Drupal core to a specific version.
+     * Upgrades Drupal core to a specific version using Composer.
      *
      * @param string $new_version
      *   The new Drupal version to upgrade to.
@@ -166,69 +139,109 @@ class DrupalUpgradeCommands extends Tasks
      * @throws \Robo\Exception\AbortTasksException
      *   Thrown if the upgrade to the specified version fails.
      */
-    private function upgradeDrupalToVersion(string $new_version): void
+    private function upgradeToVersion(string $new_version): void
     {
         $this->say("Upgrading Drupal core to version $new_version...");
-        $command = "ddev exec -- composer drupal:core:version-change --version=\"$new_version\" --yes";
-        $task = $this->taskExec($command);
-        $result = $task->run();
-        $success = $result->wasSuccessful();
-        if (!$success) {
-            throw new AbortTasksException("Error upgrading Drupal core to version $new_version.");
-        }
+        $this->runComposerCommand("drupal:core:version-change --version=\"$new_version\" --yes");
     }
 
     /**
-     * Upgrades Drupal core to the latest stable minor version.
+     * Upgrades Drupal core to the latest stable minor version using Composer.
      *
      * @throws \Robo\Exception\AbortTasksException
      *   Thrown if the upgrade to the latest minor version fails.
      */
     private function upgradeDrupalToLatestMinor(): void
     {
-        $this->say("Upgrading Drupal core to the latest stable minor version...");
-        $command = "ddev exec -- composer drupal:core:version-change --latest-minor --yes";
-        $task = $this->taskExec($command);
-        $result = $task->run();
-        $success = $result->wasSuccessful();
-        if (!$success) {
-            throw new AbortTasksException("Error upgrading Drupal core to the latest stable minor version.");
-        }
+        $this->say('Upgrading Drupal core to the latest stable minor version...');
+        $this->runComposerCommand('drupal:core:version-change --latest-minor --yes');
     }
 
     /**
-     * Upgrades Drupal core to the latest stable major version.
+     * Upgrades Drupal core to the latest stable major version using Composer.
      *
      * @throws \Robo\Exception\AbortTasksException
      *   Thrown if the upgrade to the latest major version fails.
      */
-    private function upgradeDrupalToLatestMajor(): void
+    private function upgradeToLatestMajor(): void
     {
-        $this->say("Upgrading Drupal core to the latest stable major version...");
-        $command = "ddev exec -- composer drupal:core:version-change --latest-major --yes";
-        $task = $this->taskExec($command);
-        $result = $task->run();
-        $success = $result->wasSuccessful();
-        if (!$success) {
-            throw new AbortTasksException("Error upgrading Drupal core to the latest stable major version.");
-        }
+        $this->say('Upgrading Drupal core to the latest stable major version...');
+        $this->runComposerCommand('drupal:core:version-change --latest-major --yes');
     }
 
     /**
-     * Upgrades Drupal core to the next major version.
+     * Upgrades Drupal core to the next major version using Composer.
      *
      * @throws \Robo\Exception\AbortTasksException
      *   Thrown if the upgrade to the next major version fails.
      */
-    private function upgradeDrupalToNextMajor(): void
+    private function upgradeToNextMajor(): void
     {
-        $this->say("Upgrading Drupal core to the latest stable of the next major version...");
-        $command = "ddev exec -- composer drupal:core:version-change --next-major --yes";
-        $task = $this->taskExec($command);
+        $this->say('Upgrading Drupal core to the latest stable of the next major version...');
+        $this->runComposerCommand('drupal:core:version-change --next-major --yes');
+    }
+
+    /**
+     * Runs a Composer command and handles the result.
+     *
+     * @param string $command
+     *   The Composer command to run.
+     *
+     * @throws \Robo\Exception\AbortTasksException
+     *   Thrown if the Composer command fails.
+     */
+    private function runComposerCommand(string $command): void
+    {
+        // Define the composer task to run.
+        /** @var \Robo\Task\Base\Exec $task */
+        $task = $this->taskExec("composer $command");
+        // Define the working dir where the Composer command will run.
+        /** @var string $dir */
+        $dir = $this->getConfigValue('repo.root');
+        if (!empty($dir)) {
+            $task->dir($dir);
+        }
+        // Run the composer command.
         $result = $task->run();
-        $success = $result->wasSuccessful();
-        if (!$success) {
-            throw new AbortTasksException("Error upgrading Drupal core to the latest stable of the next major version.");
+        // Validate the result.
+        if (!$result->wasSuccessful()) {
+            throw new AbortTasksException("Error executing command: $command");
+        }
+    }
+
+    /**
+     * Runs a Drush command and handles the result.
+     *
+     * @param string $drushCommand
+     *   The Drush command to run.
+     * @param string $description
+     *   A description of the task being performed.
+     *
+     * @throws \Robo\Exception\AbortTasksException
+     *   Thrown if the Drush command fails.
+     */
+    private function runDrushCommand(string $drushCommand, string $description): void
+    {
+        // Show Confirmation message.
+        $this->say($description);
+        // Define the Drush task to run in no-interaction mode.
+        $task = $this->taskDrush();
+        $task->drush($drushCommand);
+        $task->option('--yes');
+        // Define the working dir where the Drush command will run.
+        /** @var string $dir */
+        $dir = $this->getConfigValue('repo.root');
+        if (!empty($dir)) {
+            $task->dir($dir);
+        }
+        // Run the drush command.
+        try {
+            $result = $task->run();
+            if (!$result->wasSuccessful()) {
+                throw new AbortTasksException("Error during: $description");
+            }
+        } catch (TaskException $e) {
+            throw new AbortTasksException($e->getMessage());
         }
     }
 }
