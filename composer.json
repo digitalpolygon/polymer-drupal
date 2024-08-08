@@ -22,10 +22,15 @@
     "polymer": {
       "type": "vcs",
       "url": "git@github.com:digitalpolygon/polymer.git"
+    },
+    "drupal-upgrade-plugin":  {
+      "type": "vcs",
+      "url": "git@github.com:digitalpolygon/drupal-upgrade-plugin.git"
     }
   },
   "require": {
     "digitalpolygon/polymer": "dev-main",
+    "digitalpolygon/drupal-upgrade-plugin": "^1.0@dev",
     "drush/drush": "^12",
     "php": ">=7.3.0"
   },
@@ -39,6 +44,7 @@
   "config": {
     "allow-plugins": {
       "digitalpolygon/polymer": true,
+      "digitalpolygon/drupal-upgrade-plugin": true,
       "phpro/grumphp-shim": true
     }
   },
