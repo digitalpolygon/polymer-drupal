@@ -1,4 +1,4 @@
-project:
+polymer_drupal:
   recipe: common
   profile:
     name: minimal

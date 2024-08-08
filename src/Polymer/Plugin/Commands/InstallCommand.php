@@ -135,13 +135,13 @@ class InstallCommand extends TaskBase
         }
 
         /** @var string $project_profile_name */
-        $project_profile_name = $this->getConfigValue('project.profile.name');
+        $project_profile_name = $this->getConfigValue('polymer_drupal.profile.name');
 
         /** @var string $setup_install */
         $setup_install = $this->getConfigValue('setup.install-args');
 
         /** @var string $project_human_name */
-        $project_human_name = $this->getConfigValue('project.human_name');
+        $project_human_name = $this->getConfigValue('polymer_drupal.human_name');
 
         /** @var string $drupal_site_mail */
         $drupal_site_mail = $this->getConfigValue('drupal.site.mail');

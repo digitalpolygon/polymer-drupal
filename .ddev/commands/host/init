@@ -10,6 +10,6 @@ ddev start
 rm -rf vendor composer.lock
 ddev exec -- composer install --no-interaction
 
-ddev build-docs
-# Open docs in browser.
-ddev launch :444
+# ddev build-docs
+# # Open docs in browser.
+# ddev launch :444
