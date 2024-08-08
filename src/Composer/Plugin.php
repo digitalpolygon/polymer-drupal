@@ -96,9 +96,9 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      */
     public function onPostPackageEvent(PackageEvent $event): void
     {
-        $package = $this->getPolymerPackage($event->getOperation());
+        $package = $this->getPolymerDrupalPackage($event->getOperation());
         if ($package) {
-            // By explicitly setting the polymer package, the onPostCmdEvent() will
+            // By explicitly setting the polymer-drupal package, the onPostCmdEvent() will
             // process the update automatically.
             $this->polymerDrupalPackage = $package;
         }
@@ -209,7 +209,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
      * Gets the Polymer Drupal root directory, e.g., /vendor/digitalpolygon/polymer-drupal.
      *
      * @return string
-     *   THe filepath for the Polymer Drupal root.
+     *   THe filepath for the polymer-drupal root.
      *
      * @throws \Exception
      */
@@ -228,7 +228,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             }
             return $polymer_drupal_root;
         }
-        throw new \Exception('Could not find the Polymer Drupal root directory');
+        throw new \Exception('Could not find the polymer-drupal root directory');
     }
 
     /**
