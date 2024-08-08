@@ -5,9 +5,21 @@ project:
 
 docroot: ${repo.root}/web
 
+drush:
+  alias-dir: ${repo.root}/drush/sites
+  aliases:
+    local: self
+    ci: self
+  ansi: true
+  bin: ${composer.bin}/drush
+  default_alias: ${drush.aliases.local}
+  dir: ${docroot}
+  sanitize: true
+  alias: ${drush.default_alias}
+
 cm:
   # Possible values: core-only, config-split, none.
-  strategy: config-split
+  strategy: none
   core:
     # The parent directory for configuration directories, relative to the docroot.
     path: ../config
