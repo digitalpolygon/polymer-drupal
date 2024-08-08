@@ -223,7 +223,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface
             if (basename($polymer_drupal_root) !== 'polymer-drupal') {
                 continue;
             }
-            if (!file_exists("$polymer_drupal_root/src/Polymer/Tasks/DrushTask.php")) {
+            if (!file_exists("$polymer_drupal_root/src/Polymer/Plugin/Tasks/DrushTask.php")) {
                 continue;
             }
             return $polymer_drupal_root;
