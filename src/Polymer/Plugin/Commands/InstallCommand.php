@@ -52,7 +52,7 @@ class InstallCommand extends TaskBase
         /** @var \DigitalPolygon\Polymer\Robo\Tasks\Command[] $commands */
         $commands = [];
         $commands[] = new PolymerCommand('internal:drupal:install');
-        $strategy = $this->getConfigValue('cm.strategy');
+        $strategy = $this->getConfigValue('drupal.cm.strategy');
 
         if (in_array($strategy, ['core-only', 'config-split'])) {
             $commands[] = new PolymerCommand('drupal:config:import');
@@ -135,16 +135,16 @@ class InstallCommand extends TaskBase
         }
 
         /** @var string $project_profile_name */
-        $project_profile_name = $this->getConfigValue('project.profile.name');
+        $project_profile_name = $this->getConfigValue('drupal.profile.name');
 
         /** @var string $setup_install */
-        $setup_install = $this->getConfigValue('setup.install-args');
+        $setup_install = $this->getConfigValue('drupal.setup.install-args');
 
         /** @var string $project_human_name */
         $project_human_name = $this->getConfigValue('project.human_name');
 
         /** @var string $drupal_site_mail */
-        $drupal_site_mail = $this->getConfigValue('drupal.site.mail');
+        $drupal_site_mail = $this->getConfigValue('drupal.drupal.site.mail');
 
         /** @var string $drupal_account_mail */
         $drupal_account_mail = $this->getConfigValue('drupal.account.mail');
@@ -174,12 +174,12 @@ class InstallCommand extends TaskBase
         }
 
         // Install site from existing config if supported.
-        $strategy = $this->getConfigValue('cm.strategy');
-        $install_from_config = $this->getConfigValue('cm.core.install_from_config');
+        $strategy = $this->getConfigValue('drupal.cm.strategy');
+        $install_from_config = $this->getConfigValue('drupal.cm.core.install_from_config');
         $strategy_uses_config = in_array($strategy, ['core-only', 'config-split']);
 
         if ($install_from_config && $strategy_uses_config) {
-            $core_config_file = $this->getConfigValue('docroot') . '/' . $this->getConfigValue("cm.core.dirs.sync.path") . '/core.extension.yml';
+            $core_config_file = $this->getConfigValue('docroot') . '/' . $this->getConfigValue("drupal.cm.core.dirs.sync.path") . '/core.extension.yml';
             if (file_exists($core_config_file)) {
                 $task->option('existing-config');
             }

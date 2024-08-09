@@ -46,7 +46,7 @@ class SyncCommands extends TaskBase
     public function sync(): void
     {
         /** @var array<string> $commands */
-        $commands = $this->getConfigValue('sync.commands');
+        $commands = $this->getConfigValue('drupal.sync.commands');
 
         /** @var PolymerCommand[] $polymer_commands */
         $polymer_commands = [];
@@ -101,8 +101,8 @@ class SyncCommands extends TaskBase
         $sync_map = [];
         foreach ($multisites as $multisite) {
             $this->switchSiteContext($multisite);
-            $sync_map[$multisite]['local'] = '@' . $this->getConfigValue('drush.aliases.local');
-            $sync_map[$multisite]['remote'] = '@' . $this->getConfigValue('drush.aliases.remote');
+            $sync_map[$multisite]['local'] = '@' . $this->getConfigValue('drupal.drush.aliases.local');
+            $sync_map[$multisite]['remote'] = '@' . $this->getConfigValue('drupal.drush.aliases.remote');
             $this->say("  * <comment>" . $sync_map[$multisite]['remote'] . "</comment> => <comment>" . $sync_map[$multisite]['local'] . "</comment>");
         }
         $this->say("To modify the set of aliases for syncing, set the values for drush.aliases.local and drush.aliases.remote in docroot/sites/[site]/blt.yml");
@@ -116,8 +116,8 @@ class SyncCommands extends TaskBase
     #[Command(name: 'drupal:site:sync:database', aliases: ['dsdb'])]
     public function syncDb(): Result
     {
-        $local_alias = '@' . $this->getConfigValue('drush.aliases.local');
-        $remote_alias = '@' . $this->getConfigValue('drush.aliases.remote');
+        $local_alias = '@' . $this->getConfigValue('drupal.drush.aliases.local');
+        $remote_alias = '@' . $this->getConfigValue('drupal.drush.aliases.remote');
 
         $task = $this->taskDrush()
         ->alias('')
@@ -129,7 +129,7 @@ class SyncCommands extends TaskBase
         ->option('create-db');
         $task->drush('cr');
 
-        if ($this->getConfigValue('drush.sanitize')) {
+        if ($this->getConfigValue('drupal.drush.sanitize')) {
             $task->drush('sql-sanitize');
         }
 
@@ -151,7 +151,7 @@ class SyncCommands extends TaskBase
     #[Command(name: 'drupal:site:sync:files', aliases: ['dsf'])]
     public function syncPublicFiles(): Result
     {
-        $remote_alias = '@' . $this->getConfigValue('drush.aliases.remote');
+        $remote_alias = '@' . $this->getConfigValue('drupal.drush.aliases.remote');
 
         /** @var string $site_dir */
         $site_dir = $this->getConfigValue('site');
@@ -164,7 +164,7 @@ class SyncCommands extends TaskBase
         ->arg($this->getConfigValue('docroot') . "/sites/$site_dir/files");
 
         /** @var array<string> $exclude_paths */
-        $exclude_paths = $this->getConfigValue('sync.exclude-paths');
+        $exclude_paths = $this->getConfigValue('drupal.sync.exclude-paths');
         $task->option('exclude-paths', implode(':', $exclude_paths));
         $result = $task->run();
 
@@ -179,7 +179,7 @@ class SyncCommands extends TaskBase
     #[Command(name: 'drupal:site:sync:private-files', aliases: ['dspf'])]
     public function syncPrivateFiles(): Result
     {
-        $remote_alias = '@' . $this->getConfigValue('drush.aliases.remote');
+        $remote_alias = '@' . $this->getConfigValue('drupal.drush.aliases.remote');
 
         /** @var string $site_dir */
         $site_dir = $this->getConfigValue('site');
@@ -193,7 +193,7 @@ class SyncCommands extends TaskBase
         ->arg($private_files_local_path);
 
         /** @var array<string> $exclude_paths */
-        $exclude_paths = $this->getConfigValue('sync.exclude-paths');
+        $exclude_paths = $this->getConfigValue('drupal.sync.exclude-paths');
         $task->option('exclude-paths', implode(':', $exclude_paths));
         $result = $task->run();
 
