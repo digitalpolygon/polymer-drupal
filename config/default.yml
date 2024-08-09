@@ -18,10 +18,10 @@ drupal:
       ci: self
     ansi: true
     bin: ${composer.bin}/drush
-    default_alias: ${drush.aliases.local}
+    default_alias: ${drupal.drush.aliases.local}
     dir: ${docroot}
     sanitize: true
-    alias: ${drush.default_alias}
+    alias: ${drupal.drush.default_alias}
   cm:
     # Possible values: core-only, config-split, none.
     strategy: none
@@ -31,7 +31,7 @@ drupal:
       dirs:
         # Corresponding value is defined in config.settings.php.
         sync:
-          path: ${cm.core.path}/default
+          path: ${drupal.cm.core.path}/default
       # Install site directly from existing config.
       # This cannot be used if your install profile implements hook_install.
       install_from_config: false

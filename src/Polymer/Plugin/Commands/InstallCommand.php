@@ -144,7 +144,7 @@ class InstallCommand extends TaskBase
         $project_human_name = $this->getConfigValue('project.human_name');
 
         /** @var string $drupal_site_mail */
-        $drupal_site_mail = $this->getConfigValue('drupal.drupal.site.mail');
+        $drupal_site_mail = $this->getConfigValue('drupal.site.mail');
 
         /** @var string $drupal_account_mail */
         $drupal_account_mail = $this->getConfigValue('drupal.account.mail');
