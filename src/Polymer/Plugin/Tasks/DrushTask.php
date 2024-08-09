@@ -266,26 +266,26 @@ class DrushTask extends CommandStack
      */
     protected function init(): void
     {
-        if ($this->getConfig()->get('drush.bin')) {
+        if ($this->getConfig()->get('drupal.drush.bin')) {
             /** @var string $drush_bin */
-            $drush_bin = $this->getConfig()->get('drush.bin');
+            $drush_bin = $this->getConfig()->get('drupal.drush.bin');
             $this->executable = str_replace(' ', '\\ ', $drush_bin);
         } else {
             $this->executable = 'drush';
         }
         if (!isset($this->dir)) {
             /** @var string $drush_dir */
-            $drush_dir = $this->getConfig()->get('drush.dir');
+            $drush_dir = $this->getConfig()->get('drupal.drush.dir');
             $this->dir($drush_dir);
         }
         if (!$this->uri) {
             /** @var string $drush_uri */
-            $drush_uri = $this->getConfig()->get('drush.uri');
+            $drush_uri = $this->getConfig()->get('drupal.drush.uri');
             $this->uri = $drush_uri;
         }
         if (!isset($this->alias)) {
             /** @var string $drush_alias */
-            $drush_alias = $this->getConfig()->get('drush.alias');
+            $drush_alias = $this->getConfig()->get('drupal.drush.alias');
             $this->alias($drush_alias);
         }
 
@@ -295,7 +295,7 @@ class DrushTask extends CommandStack
 
         if (!isset($this->ansi)) {
             /** @var bool $drush_ansi */
-            $drush_ansi = $this->getConfig()->get('drush.ansi');
+            $drush_ansi = $this->getConfig()->get('drupal.drush.ansi');
             $this->ansi($drush_ansi);
         }
 
@@ -374,18 +374,18 @@ class DrushTask extends CommandStack
         }
 
         if (
-            ($this->debug || $this->getConfig()->get('drush.debug'))
-            && $this->getConfig()->get('drush.debug') !== false
+            ($this->debug || $this->getConfig()->get('drupal.drush.debug'))
+            && $this->getConfig()->get('drupal.drush.debug') !== false
         ) {
             $this->option('-vvv');
         } elseif (
-            ($this->veryVerbose || $this->getConfig()->get('drush.veryVerbose'))
-            && $this->getConfig()->get('drush.veryVerbose') !== false
+            ($this->veryVerbose || $this->getConfig()->get('drupal.drush.veryVerbose'))
+            && $this->getConfig()->get('drupal.drush.veryVerbose') !== false
         ) {
             $this->option('-vv');
         } elseif (
-            ($this->verbose || $this->getConfig()->get('drush.verbose'))
-            && $this->getConfig()->get('drush.verbose') !== false
+            ($this->verbose || $this->getConfig()->get('drupal.drush.verbose'))
+            && $this->getConfig()->get('drupal.drush.verbose') !== false
         ) {
             $this->option('-v');
         }

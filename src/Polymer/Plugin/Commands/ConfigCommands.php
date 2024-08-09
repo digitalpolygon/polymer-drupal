@@ -72,7 +72,7 @@ class ConfigCommands extends TaskBase
         /** @var \DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\DrushTask $task */
         $task = $this->taskDrush();
 
-        $strategy = $this->getConfigValue('cm.strategy');
+        $strategy = $this->getConfigValue('drupal.cm.strategy');
         if ($strategy === 'none') {
             $this->logger->warning("CM strategy set to none in polymer.yml. Polymer will NOT import configuration.");
             // Still clear caches to regenerate frontend assets and such.
@@ -84,7 +84,7 @@ class ConfigCommands extends TaskBase
         // If using core-only or config-split strategies, first check to see if
         // required config is exported.
         if (in_array($strategy, ['core-only', 'config-split'])) {
-            $core_config_file = $this->getConfigValue('docroot') . '/' . $this->getConfigValue("cm.core.dirs.sync.path") . '/core.extension.yml';
+            $core_config_file = $this->getConfigValue('docroot') . '/' . $this->getConfigValue("drupal.cm.core.dirs.sync.path") . '/core.extension.yml';
 
             if (!file_exists($core_config_file)) {
                 $this->logger->warning("Polymer will NOT import configuration, $core_config_file was not found.");
@@ -170,7 +170,7 @@ class ConfigCommands extends TaskBase
      */
     protected function checkConfigOverrides(): void
     {
-        if (!$this->getConfigValue('cm.allow-overrides') && !$this->isActiveConfigIdentical()) {
+        if (!$this->getConfigValue('drupal.cm.allow-overrides') && !$this->isActiveConfigIdentical()) {
             $task = $this->taskDrush()
             ->stopOnFail()
             ->drush("config-status");
@@ -213,7 +213,7 @@ class ConfigCommands extends TaskBase
      */
     protected function getExportedSiteUuid(): ?string
     {
-        $site_config_file = $this->getConfigValue('docroot') . '/' . $this->getConfigValue("cm.core.dirs.sync.path") . '/system.site.yml';
+        $site_config_file = $this->getConfigValue('docroot') . '/' . $this->getConfigValue("drupal.cm.core.dirs.sync.path") . '/system.site.yml';
         if (file_exists($site_config_file)) {
             $site_config = Yaml::parseFile($site_config_file);
             if (is_array($site_config) && isset($site_config['uuid'])) {
