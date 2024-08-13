@@ -14,9 +14,6 @@ on:
       - 'README.md'
       - 'docs/**'
 
-env:
-  COMPOSER_GITHUB_TOKEN: ${{ secrets.COMPOSER_GITHUB_TOKEN }}
-
 jobs:
     code_guidelines:
       name: Code Guidelines
@@ -36,7 +33,6 @@ jobs:
 
       - name: Install Composer dependencies
         run: |
-          composer config --global github-oauth.github.com "$COMPOSER_GITHUB_TOKEN"
           composer install --no-interaction
 
       - name: Run PHP_CodeSniffer
