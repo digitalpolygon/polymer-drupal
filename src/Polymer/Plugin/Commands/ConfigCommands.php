@@ -55,10 +55,13 @@ class ConfigCommands extends TaskBase
         }
 
         /** @var PolymerCommand[] $commands */
-        $commands = [];
-        $commands[] = new PolymerCommand('drupal:config:import');
-        $commands[] = new PolymerCommand('drupal:deploy:hook');
-        $this->invokeCommands($commands);
+        $commands = [
+            'drupal:config:import',
+            'drupal:deploy:hook',
+        ];
+        foreach ($commands as $command) {
+            $this->invokeCommand($command);
+        }
     }
 
     /**

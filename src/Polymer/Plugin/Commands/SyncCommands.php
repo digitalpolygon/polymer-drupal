@@ -9,6 +9,7 @@ use Consolidation\AnnotatedCommand\Attributes\Command;
 use DigitalPolygon\Polymer\Robo\Exceptions\PolymerException;
 use Robo\Result;
 use DigitalPolygon\Polymer\Robo\Tasks\Command as PolymerCommand;
+use Robo\Symfony\ConsoleIO;
 
 class SyncCommands extends TaskBase
 {
@@ -43,18 +44,17 @@ class SyncCommands extends TaskBase
      * @throws \Robo\Exception\AbortTasksException|TaskException
      */
     #[Command(name: 'drupal:site:sync', aliases: ['dss'])]
-    public function sync(): void
+    public function sync(ConsoleIO $io): void
     {
+        $application = $this->getContainer()->get('application');
         /** @var array<string> $commands */
         $commands = $this->getConfigValue('drupal.sync.commands');
 
-        /** @var PolymerCommand[] $polymer_commands */
-        $polymer_commands = [];
+        $builder = $this->collectionBuilder($io);
         foreach ($commands as $command) {
-            $polymer_commands[] = new PolymerCommand($command);
+            $builder->taskToggleableSymfonyCommand($application->find($command));
         }
-
-        $this->invokeCommands($polymer_commands);
+        $result = $builder->run();
     }
 
     /**
