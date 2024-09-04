@@ -51,13 +51,15 @@ class InstallCommand extends TaskBase
 
         /** @var \DigitalPolygon\Polymer\Robo\Tasks\Command[] $commands */
         $commands = [];
-        $commands[] = new PolymerCommand('internal:drupal:install');
+        $commands[] = 'internal:drupal:install';
         $strategy = $this->getConfigValue('drupal.cm.strategy');
 
         if (in_array($strategy, ['core-only', 'config-split'])) {
-            $commands[] = new PolymerCommand('drupal:config:import');
+            $commands[] = 'drupal:config:import';
         }
-        $this->invokeCommands($commands);
+        foreach ($commands as $command) {
+            $this->invokeCommand($command);
+        }
         $this->setSitePermissions();
     }
 
