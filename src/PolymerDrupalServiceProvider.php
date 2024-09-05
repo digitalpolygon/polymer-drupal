@@ -2,9 +2,10 @@
 
 namespace DigitalPolygon\PolymerDrupal;
 
-use DigitalPolygon\Polymer\Robo\ConsoleApplication;
 use DigitalPolygon\PolymerDrupal\Polymer\Services\ContextProvidersSubscriber;
-use DigitalPolygon\PolymerDrupal\Services\EventSubscriber\DrupalConfigInjector;
+use DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber\DrupalConfigInjector;
+use DrupalFinder\DrupalFinderComposerRuntime;
+use League\Container\Argument\ResolvableArgument;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -17,7 +18,9 @@ class PolymerDrupalServiceProvider extends AbstractServiceProvider implements Bo
     public function provides(string $id): bool
     {
         $services = [
-            'drupalConfigContextProvider'
+            'drupalConfigContextProvider',
+            'drupalConfigInjector',
+            'drupalFinder',
         ];
         return in_array($id, $services);
     }
@@ -27,14 +30,14 @@ class PolymerDrupalServiceProvider extends AbstractServiceProvider implements Bo
      */
     public function register(): void
     {
-
+        $this->getContainer()->addShared('drupalFinder', DrupalFinderComposerRuntime::class);
+        $this->getContainer()->addShared('drupalConfigContextProvider', ContextProvidersSubscriber::class);
+        $this->getContainer()->addShared('drupalConfigInjector', DrupalConfigInjector::class)
+            ->addArgument(new ResolvableArgument('drupalFinder'));
     }
 
     public function boot(): void
     {
-        $this->getContainer()->addShared('drupalConfigContextProvider', ContextProvidersSubscriber::class);
-        $this->getContainer()->addShared('drupalConfigInjector', DrupalConfigInjector::class);
-
         $this->getContainer()->extend('eventDispatcher')
             ->addMethodCall('addSubscriber', ['drupalConfigContextProvider'])
             ->addMethodCall('addSubscriber', ['drupalConfigInjector']);

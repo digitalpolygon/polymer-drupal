@@ -1,9 +1,9 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Services\EventSubscriber;
+namespace DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber;
 
-use Consolidation\Config\Loader\YamlConfigLoader;
 use DigitalPolygon\Polymer\Robo\Config\PolymerConfig;
+use DrupalFinder\DrupalFinderComposerRuntime;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use Robo\Common\ConfigAwareTrait;
@@ -17,6 +17,11 @@ class DrupalConfigInjector extends GlobalOptionsEventListener implements EventSu
 {
     use ConfigAwareTrait;
     use ContainerAwareTrait;
+
+    public function __construct(protected DrupalFinderComposerRuntime $drupalFinder)
+    {
+        parent::__construct();
+    }
 
     public function injectEnvironmentConfig(ConsoleCommandEvent $event): void
     {
@@ -36,6 +41,8 @@ class DrupalConfigInjector extends GlobalOptionsEventListener implements EventSu
             if (!isset($value)) {
                 $value = $default;
             }
+            $drupalRoot = $this->drupalFinder->getDrupalRoot();
+            $x = 5;
 //            $environmentProjectConfigFilePath = $config->get('repo.root') . '/polymer/' . $value . '.polymer.yml';
 //            $projectEnvironmentConfig = $config->getContext('project_environment');
 //            $loader = new YamlConfigLoader();
