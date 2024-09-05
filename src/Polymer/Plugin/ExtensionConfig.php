@@ -3,24 +3,33 @@
 namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin;
 
 use DigitalPolygon\Polymer\Robo\Config\ExtensionConfigInterface;
+use DigitalPolygon\PolymerDrupal\PolymerDrupalServiceProvider;
 
 class ExtensionConfig implements ExtensionConfigInterface
 {
+    public const NAME = 'digitalpolygon_polymer_drupal';
+
+    /**
+     * {@inheritdoc}
+     */
     public function getExtensionName(): string
     {
-        return 'digitalpolygon/polymer-drupal';
+        return ExtensionConfig::NAME;
     }
 
-    public function getConfigFiles(): array
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfig(): ?string
     {
-        $configDir = dirname(__DIR__, 3);
+        return dirname(__DIR__, 3) . '/config/default.yml';
+    }
 
-        $configurationFiles = [
-            'default.yml',
-        ];
-
-        return array_map(function ($file) use ($configDir) {
-            return $configDir . '/config/' . $file;
-        }, $configurationFiles);
+    /**
+     * {@inheritdoc}
+     */
+    public function getServiceProvider(): ?string
+    {
+        return PolymerDrupalServiceProvider::class;
     }
 }
