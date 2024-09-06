@@ -1,6 +1,6 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal;
+namespace DigitalPolygon\PolymerDrupal\Polymer;
 
 use DigitalPolygon\PolymerDrupal\Polymer\Services\ContextProvidersSubscriber;
 use DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber\DrupalConfigInjector;
@@ -11,7 +11,7 @@ use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
 use Symfony\Component\Console\Input\InputOption;
 
-class PolymerDrupalServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface {
+class DpDrupalServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface {
 
     /**
      * {@inheritdoc}
@@ -22,6 +22,7 @@ class PolymerDrupalServiceProvider extends AbstractServiceProvider implements Bo
             'drupalConfigContextProvider',
             'drupalConfigInjector',
             'drupalFinder',
+            'drupalFileSystem',
         ];
         return in_array($id, $services);
     }

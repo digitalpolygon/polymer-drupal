@@ -4,7 +4,7 @@ namespace DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber;
 
 use Consolidation\Config\Loader\YamlConfigLoader;
 use DigitalPolygon\Polymer\Robo\Config\PolymerConfig;
-use DigitalPolygon\PolymerDrupal\Polymer\Plugin\ExtensionInfo;
+use DigitalPolygon\PolymerDrupal\Polymer\ExtensionInfo;
 use DigitalPolygon\PolymerDrupal\Polymer\Services\FileSystem;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
@@ -37,7 +37,7 @@ class DrupalConfigInjector extends GlobalOptionsEventListener implements EventSu
     {
         /** @var PolymerConfig $config */
         $config = $this->getConfig();
-        $extensionConfig = $config->getContext(ExtensionInfo::NAME);
+        $extensionConfig = $config->getContext(ExtensionInfo::getExtensionName());
 
         $multiSiteDirs = $this->drupalFileSystem->getMultisiteDirs();
         $extensionConfig
