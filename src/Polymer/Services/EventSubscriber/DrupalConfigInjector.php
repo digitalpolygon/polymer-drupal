@@ -8,6 +8,7 @@ use DigitalPolygon\PolymerDrupal\Polymer\Plugin\ExtensionInfo;
 use DigitalPolygon\PolymerDrupal\Polymer\Services\FileSystem;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
+use Robo\Application;
 use Robo\Common\ConfigAwareTrait;
 use Robo\Contract\ConfigAwareInterface;
 use Robo\GlobalOptionsEventListener;
@@ -20,9 +21,10 @@ class DrupalConfigInjector extends GlobalOptionsEventListener implements EventSu
     use ConfigAwareTrait;
     use ContainerAwareTrait;
 
-    public function __construct(protected FileSystem $drupalFileSystem)
+    public function __construct(protected FileSystem $drupalFileSystem, Application $application)
     {
         parent::__construct();
+        $this->setApplication($application);
     }
 
     public function injectEnvironmentConfig(ConsoleCommandEvent $event): void
@@ -89,7 +91,7 @@ class DrupalConfigInjector extends GlobalOptionsEventListener implements EventSu
     {
         return [
             ConsoleEvents::COMMAND => [
-                ['injectEnvironmentConfig', -1],
+                ['injectEnvironmentConfig', 1],
             ],
         ];
     }

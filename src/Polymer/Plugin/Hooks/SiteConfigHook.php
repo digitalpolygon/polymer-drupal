@@ -24,22 +24,30 @@ class SiteConfigHook implements ConfigAwareInterface, LoggerAwareInterface, IOAw
     #[Hook(type: 'pre-command-event', target: '*')]
     public function setSiteConfig(ConsoleCommandEvent $event): void
     {
+        $x = 5;
         /** @var PolymerConfig $config */
-        $config = $this->getConfig();
-        $siteContext = $config->getContext('site');
-        $siteEnvironmentContext = $config->getContext('site_environment');
-        $options = $this->input()->getOptions();
-        $site = $options['site'] ?? 'default';
-        $environment = $options['environment'] ?? 'local';
-        $docroot = $this->getContainer()->get('drupalFileSystem')->getDrupalRoot();
-        $siteDirPath = $docroot . '/sites/' . $site;
-        $siteConfigPath = $siteDirPath . '/polymer.yml';
-        $siteEnvironmentConfigPath = $siteDirPath . '/' . $environment . '.polymer.yml';
-        $loader = new YamlConfigLoader();
-        $siteConfig = $loader->load($siteConfigPath)->export();
-        $siteEnvironmentConfig = $loader->load($siteEnvironmentConfigPath)->export();
-        $siteContext->replace($siteConfig);
-        $siteEnvironmentContext->replace($siteEnvironmentConfig);
-        $config->reprocess();
+//        $config = $this->getConfig();
+//        $siteContext = $config->getContext('site');
+//        $siteEnvironmentContext = $config->getContext('site_environment');
+//        $options = $this->input()->getOptions();
+//        $site = $options['site'] ?? 'default';
+//        $environment = $options['environment'] ?? 'local';
+//        $docroot = $this->getContainer()->get('drupalFileSystem')->getDrupalRoot();
+//        $siteDirPath = $docroot . '/sites/' . $site;
+//        $siteConfigPath = $siteDirPath . '/polymer.yml';
+//        $siteEnvironmentConfigPath = $siteDirPath . '/' . $environment . '.polymer.yml';
+//        $loader = new YamlConfigLoader();
+//        $siteConfig = $loader->load($siteConfigPath)->export();
+//        $loader = new YamlConfigLoader();
+//        $siteEnvironmentConfig = $loader->load($siteEnvironmentConfigPath)->export();
+//        $siteContext->replace($siteConfig);
+//        $siteEnvironmentContext->replace($siteEnvironmentConfig);
+//        $config->reprocess();
+    }
+
+    #[Hook(type: 'command-event', target: '*')]
+    public function commandEvent()
+    {
+        $x = 5;
     }
 }
