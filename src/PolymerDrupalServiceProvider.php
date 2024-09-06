@@ -4,6 +4,7 @@ namespace DigitalPolygon\PolymerDrupal;
 
 use DigitalPolygon\PolymerDrupal\Polymer\Services\ContextProvidersSubscriber;
 use DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber\DrupalConfigInjector;
+use DigitalPolygon\PolymerDrupal\Polymer\Services\FileSystem;
 use DrupalFinder\DrupalFinderComposerRuntime;
 use League\Container\Argument\ResolvableArgument;
 use League\Container\ServiceProvider\AbstractServiceProvider;
@@ -33,6 +34,8 @@ class PolymerDrupalServiceProvider extends AbstractServiceProvider implements Bo
         $this->getContainer()->addShared('drupalFinder', DrupalFinderComposerRuntime::class);
         $this->getContainer()->addShared('drupalConfigContextProvider', ContextProvidersSubscriber::class);
         $this->getContainer()->addShared('drupalConfigInjector', DrupalConfigInjector::class)
+            ->addArgument(new ResolvableArgument('drupalFileSystem'));
+        $this->getContainer()->addShared('drupalFileSystem', FileSystem::class)
             ->addArgument(new ResolvableArgument('drupalFinder'));
     }
 

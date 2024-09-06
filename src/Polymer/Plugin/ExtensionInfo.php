@@ -5,7 +5,7 @@ namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin;
 use DigitalPolygon\Polymer\Robo\Config\ExtensionConfigInterface;
 use DigitalPolygon\PolymerDrupal\PolymerDrupalServiceProvider;
 
-class ExtensionConfig implements ExtensionConfigInterface
+class ExtensionInfo implements ExtensionConfigInterface
 {
     public const NAME = 'digitalpolygon_polymer_drupal';
 
@@ -14,7 +14,7 @@ class ExtensionConfig implements ExtensionConfigInterface
      */
     public function getExtensionName(): string
     {
-        return ExtensionConfig::NAME;
+        return ExtensionInfo::NAME;
     }
 
     /**
