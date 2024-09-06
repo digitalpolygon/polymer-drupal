@@ -26,7 +26,7 @@ class SiteConfigHook implements ConfigAwareInterface, LoggerAwareInterface, IOAw
     public function setSiteConfig(ConsoleCommandEvent $event): void
     {
         $x = 5;
-        /** @var PolymerConfig $config */
+//        /** @var PolymerConfig $config */
 //        $config = $this->getConfig();
 //        $siteContext = $config->getContext('site');
 //        $siteEnvironmentContext = $config->getContext('site_environment');
@@ -44,11 +44,5 @@ class SiteConfigHook implements ConfigAwareInterface, LoggerAwareInterface, IOAw
 //        $siteContext->replace($siteConfig);
 //        $siteEnvironmentContext->replace($siteEnvironmentConfig);
 //        $config->reprocess();
-    }
-
-    #[Hook(type: 'command-event', target: '*')]
-    public function commandEvent()
-    {
-        $x = 5;
     }
 }

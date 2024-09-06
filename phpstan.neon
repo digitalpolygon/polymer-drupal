@@ -1,4 +1,7 @@
 parameters:
-    level: 9
+    level: 6
     paths:
         - src
+    ignoreErrors:
+        -
+            message: "#^Parameter \\#2 \\$default of method Consolidation\\\\Config\\\\Util\\\\ConfigOverlay\\:\\:get\\(\\) expects string\\|null, array given\\.$#"

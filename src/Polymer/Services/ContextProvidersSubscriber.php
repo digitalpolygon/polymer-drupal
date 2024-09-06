@@ -8,13 +8,16 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ContextProvidersSubscriber implements EventSubscriberInterface
 {
-    public function addContexts(CollectConfigContextsEvent $event)
+    public function addContexts(CollectConfigContextsEvent $event): void
     {
         $event->addPlaceholderContext('site');
         $event->addPlaceholderContext('site_environment');
     }
 
-    public static function getSubscribedEvents()
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedEvents(): array
     {
         $events = [
             PolymerEvents::COLLECT_CONFIG_CONTEXTS => [

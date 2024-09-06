@@ -24,7 +24,7 @@ class SyncCommands extends TaskBase
     public function allSites(): void
     {
         /** @var array<string> $multisites */
-        $multisites = $this->getConfigValue('polymer.multisites');
+        $multisites = $this->getConfigValue('drupal.multisites');
         $this->printSyncMap($multisites);
         $continue = $this->confirm("Continue?", true);
         if (!$continue) {
@@ -32,8 +32,8 @@ class SyncCommands extends TaskBase
         }
         foreach ($multisites as $multisite) {
             $this->say("Refreshing site <comment>$multisite</comment>...");
-            $this->switchSiteContext($multisite);
-            $this->sync();
+//            $this->switchSiteContext($multisite);
+            $this->invokeCommand('drupal:site:sync', ['--site' => $multisite]);
         }
     }
 
@@ -44,17 +44,15 @@ class SyncCommands extends TaskBase
      * @throws \Robo\Exception\AbortTasksException|TaskException
      */
     #[Command(name: 'drupal:site:sync', aliases: ['dss'])]
-    public function sync(ConsoleIO $io): void
+    public function sync(): void
     {
         $application = $this->getContainer()->get('application');
         /** @var array<string> $commands */
         $commands = $this->getConfigValue('drupal.sync.commands');
 
-        $builder = $this->collectionBuilder($io);
         foreach ($commands as $command) {
-            $builder->taskToggleableSymfonyCommand($application->find($command));
+            $this->invokeCommand($command);
         }
-        $result = $builder->run();
     }
 
     /**
@@ -68,7 +66,7 @@ class SyncCommands extends TaskBase
         $exit_code = 0;
 
         /** @var array<string> $multisites */
-        $multisites = $this->getConfigValue('polymer.multisites');
+        $multisites = $this->getConfigValue('drupal.multisites');
 
         $this->printSyncMap($multisites);
         $continue = $this->confirm("Continue?");
@@ -78,12 +76,7 @@ class SyncCommands extends TaskBase
 
         foreach ($multisites as $multisite) {
             $this->say("Refreshing site <comment>$multisite</comment>...");
-            $this->switchSiteContext($multisite);
-            $result = $this->syncDb();
-            if (!$result->wasSuccessful()) {
-                $this->logger->error("Could not sync database for site <comment>$multisite</comment>.");
-                throw new PolymerException("Could not sync database.");
-            }
+            $this->invokeCommand('drupal:site:sync:database', ['--site' => $multisite]);
         }
 
         return $exit_code;
@@ -100,7 +93,7 @@ class SyncCommands extends TaskBase
         $this->say("Sync operations will be performed for the following drush aliases:");
         $sync_map = [];
         foreach ($multisites as $multisite) {
-            $this->switchSiteContext($multisite);
+//            $this->switchSiteContext($multisite);
             $sync_map[$multisite]['local'] = '@' . $this->getConfigValue('drupal.drush.aliases.local');
             $sync_map[$multisite]['remote'] = '@' . $this->getConfigValue('drupal.drush.aliases.remote');
             $this->say("  * <comment>" . $sync_map[$multisite]['remote'] . "</comment> => <comment>" . $sync_map[$multisite]['local'] . "</comment>");

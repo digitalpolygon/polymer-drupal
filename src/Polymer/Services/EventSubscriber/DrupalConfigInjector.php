@@ -2,6 +2,7 @@
 
 namespace DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber;
 
+use Consolidation\Config\Config;
 use Consolidation\Config\Loader\YamlConfigLoader;
 use DigitalPolygon\Polymer\Robo\Config\PolymerConfig;
 use DigitalPolygon\PolymerDrupal\Polymer\ExtensionInfo;
@@ -71,7 +72,9 @@ class DrupalConfigInjector extends GlobalOptionsEventListener implements EventSu
             $sitePath = $this->drupalFileSystem->getDrupalRoot() . '/sites/' . $site;
             $siteConfigFilePath = $sitePath . '/polymer.yml';
             $siteEnvironmentConfigFilePath = $sitePath . '/' . $environment . '.polymer.yml';
+            /** @var Config $siteConfig */
             $siteConfig = $config->getContext('site');
+            /** @var Config $siteEnvironmentConfig */
             $siteEnvironmentConfig = $config->getContext('site_environment');
             $loader = new YamlConfigLoader();
             $siteData = $loader
@@ -86,6 +89,9 @@ class DrupalConfigInjector extends GlobalOptionsEventListener implements EventSu
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getSubscribedEvents(): array
     {
         return [
