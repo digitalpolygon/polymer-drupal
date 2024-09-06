@@ -57,8 +57,7 @@ class DrupalConfigInjector extends GlobalOptionsEventListener implements EventSu
         }
 
         $globalOptions += $this->applicationOptionDefaultValues();
-        if (array_key_exists('environment', $globalOptions) && array_key_exists('site', $globalOptions))
-        {
+        if (array_key_exists('environment', $globalOptions) && array_key_exists('site', $globalOptions)) {
             $default = $globalOptions['environment'];
             $environment = $input->hasOption('environment') ? $input->getOption('environment') : null;
             if (!isset($environment)) {

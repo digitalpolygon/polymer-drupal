@@ -11,8 +11,8 @@ use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
 use Symfony\Component\Console\Input\InputOption;
 
-class DpDrupalServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface {
-
+class DpDrupalServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface
+{
     /**
      * {@inheritdoc}
      */
@@ -49,7 +49,7 @@ class DpDrupalServiceProvider extends AbstractServiceProvider implements Bootabl
 
         $this->getContainer()->extend('application')
             ->addMethodCall('addGlobalOption', [
-                new InputOption('--site', NULL, InputOption::VALUE_REQUIRED, 'The multisite to execute this command against.', 'default')
+                new InputOption('--site', null, InputOption::VALUE_REQUIRED, 'The multisite to execute this command against.', 'default')
             ]);
     }
 }

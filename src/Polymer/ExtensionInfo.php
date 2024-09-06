@@ -13,5 +13,4 @@ class ExtensionInfo extends PolymerExtensionBase
     {
         return 'dp_drupal';
     }
-
 }

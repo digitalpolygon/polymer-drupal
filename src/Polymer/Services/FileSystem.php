@@ -5,11 +5,12 @@ namespace DigitalPolygon\PolymerDrupal\Polymer\Services;
 use DrupalFinder\DrupalFinderComposerRuntime;
 use Symfony\Component\Finder\Finder;
 
-class FileSystem {
-
+class FileSystem
+{
     public function __construct(
         protected DrupalFinderComposerRuntime $drupalFinder
-    ) {}
+    ) {
+    }
 
     public function getDrupalRoot(): string
     {

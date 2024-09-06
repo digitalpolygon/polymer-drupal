@@ -15,7 +15,8 @@ use Robo\Contract\ConfigAwareInterface;
 use Robo\Contract\IOAwareInterface;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
 
-class SiteConfigHook implements ConfigAwareInterface, LoggerAwareInterface, IOAwareInterface, ContainerAwareInterface {
+class SiteConfigHook implements ConfigAwareInterface, LoggerAwareInterface, IOAwareInterface, ContainerAwareInterface
+{
     use ConfigAwareTrait;
     use ContainerAwareTrait;
     use IO;
