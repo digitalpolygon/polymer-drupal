@@ -11,6 +11,6 @@ class ExtensionInfo extends PolymerExtensionBase
      */
     public static function getExtensionName(): string
     {
-        return 'dp_drupal';
+        return 'polymer_drupal';
     }
 }

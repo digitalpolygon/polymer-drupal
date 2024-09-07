@@ -29,7 +29,6 @@ class ConfigCommands extends TaskBase
         $multisites = $this->getConfigValue('drupal.multisites');
 
         foreach ($multisites as $multisite) {
-//            $this->switchSiteContext($multisite);
             $this->invokeCommand('drupal:update', ['--site' => $multisite]);
         }
     }

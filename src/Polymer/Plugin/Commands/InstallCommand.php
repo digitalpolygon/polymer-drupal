@@ -34,20 +34,14 @@ class InstallCommand extends TaskBase
     /**
      * Installs Drupal and sets correct file/directory permissions.
      *
-     * @param array<string, int|false> $options
-     *   The artifact deploy command options.
-     *
      * @throws \Robo\Exception\AbortTasksException|\Robo\Exception\TaskException
      */
     #[Command(name: 'drupal:site:install', aliases: ['dsi'])]
     #[Usage(name: 'drupal:site:install', description: 'Installs Drupal site.')]
     #[Usage(name: 'drupal:site:install --site={site_name}', description: 'Add site name.')]
-    #[Option(name: 'site', description: 'The site name.')]
-    public function drupalSiteInstall(array $options = ['site' => InputOption::VALUE_OPTIONAL]): void
+    public function drupalSiteInstall(): void
     {
-        /** @var string $site */
-        $site = $options['site'] ?? 'default';
-        $this->site = $site;
+        $this->site = $this->input()->getOption('site');
 
         /** @var \DigitalPolygon\Polymer\Robo\Tasks\Command[] $commands */
         $commands = [];

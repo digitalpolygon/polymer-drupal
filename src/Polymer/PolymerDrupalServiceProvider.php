@@ -11,7 +11,7 @@ use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
 use Symfony\Component\Console\Input\InputOption;
 
-class DpDrupalServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface
+class PolymerDrupalServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface
 {
     /**
      * {@inheritdoc}

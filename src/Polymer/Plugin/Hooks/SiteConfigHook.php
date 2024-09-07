@@ -3,9 +3,7 @@
 namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Hooks;
 
 use Consolidation\AnnotatedCommand\Attributes\Hook;
-use Consolidation\Config\Loader\YamlConfigLoader;
 use DigitalPolygon\Polymer\Robo\Config\ConfigAwareTrait;
-use DigitalPolygon\Polymer\Robo\Config\PolymerConfig;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use Psr\Log\LoggerAwareInterface;

@@ -61,7 +61,7 @@ class DrupalMultisiteCommands extends TaskBase
      * @throws \Robo\Exception\AbortTasksException
      *   If initialization fails or the site directory already exists.
      */
-    private function initialize(string $site_name): void
+    private function prepareSiteVariables(string $site_name): void
     {
         /** @var string $docroot */
         $docroot = $this->getConfigValue('docroot');
@@ -71,10 +71,10 @@ class DrupalMultisiteCommands extends TaskBase
         /** @var string $repo_root */
         $repo_root = $this->getConfigValue('repo.root');
         $this->ddevEnv = new DDEVEnvironment($repo_root);
-        /** @var string $polymer_root */
+        /** @var string $extensionRoot */
         // Path to the template and target 'sites.php' files.
-        $polymer_root = $this->getConfigValue('polymer.root');
-        $this->sitesFileTemplate =  "$polymer_root/settings/sites.php";
+        $extensionRoot = $this->getConfigValue('extension.polymer_drupal.root');
+        $this->sitesFileTemplate =  "$extensionRoot/settings/sites.php";
         $this->sitesFile = "$docroot/sites/sites.php";
         // Ensure the new site directory does not already exist.
         if (file_exists($this->currentSiteDir)) {
@@ -97,14 +97,14 @@ class DrupalMultisiteCommands extends TaskBase
     public function copyDrupalMultiSite(string $site_name): int
     {
         // Initialize paths and environment settings for the new site.
-        $this->initialize($site_name);
+        $this->prepareSiteVariables($site_name);
         // Perform directory copy operation from 'default' to new site directory.
         $this->performCopyOperation();
         // Add the new site to the list of multi-site directory aliases if using DDEV.
-        $confirmation_message = "Would you like to generate a new 'web_extra_exposed_ports' entry for this site inside DDEV config?";
-        if ($this->ddevEnv->isDDEVEnv() && $this->confirm($confirmation_message, true)) {
-            $this->addSiteToMultisiteDirectoryAliases($site_name);
-        }
+//        $confirmation_message = "Would you like to generate a new 'web_extra_exposed_ports' entry for this site inside DDEV config?";
+//        if ($this->ddevEnv->isDDEVEnv() && $this->confirm($confirmation_message, true)) {
+//            $this->addSiteToMultisiteDirectoryAliases($site_name);
+//        }
         // Return a success exit code.
         return 0;
     }
