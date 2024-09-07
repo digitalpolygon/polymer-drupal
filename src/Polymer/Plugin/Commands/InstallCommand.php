@@ -3,17 +3,14 @@
 namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Commands;
 
 use Consolidation\AnnotatedCommand\Attributes\Command;
-use Consolidation\AnnotatedCommand\Attributes\Option;
 use Consolidation\AnnotatedCommand\Attributes\Usage;
 use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Common\RandomString;
 use DigitalPolygon\Polymer\Robo\Exceptions\PolymerException;
-use DigitalPolygon\Polymer\Robo\Tasks\Command as PolymerCommand;
 use DigitalPolygon\Polymer\Robo\Tasks\TaskBase;
 use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\LoadDrushTaskTrait;
 use Robo\Common\IO;
 use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Result;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -188,4 +185,5 @@ class InstallCommand extends TaskBase
 
         return $result;
     }
+
 }
