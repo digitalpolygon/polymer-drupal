@@ -32,12 +32,13 @@ class PolymerDrupalServiceProvider extends AbstractServiceProvider implements Bo
      */
     public function register(): void
     {
-        $this->getContainer()->addShared('drupalFinder', DrupalFinderComposerRuntime::class);
-        $this->getContainer()->addShared('drupalConfigContextProvider', ContextProvidersSubscriber::class);
-        $this->getContainer()->addShared('drupalConfigInjector', DrupalConfigInjector::class)
+        $container = $this->getContainer();
+        $container->addShared('drupalConfigContextProvider', ContextProvidersSubscriber::class);
+        $container->addShared('drupalConfigInjector', DrupalConfigInjector::class)
             ->addArgument(new ResolvableArgument('drupalFileSystem'))
             ->addArgument(new ResolvableArgument('application'));
-        $this->getContainer()->addShared('drupalFileSystem', FileSystem::class)
+        $container->addShared('drupalFinder', DrupalFinderComposerRuntime::class);
+        $container->addShared('drupalFileSystem', FileSystem::class)
             ->addArgument(new ResolvableArgument('drupalFinder'));
     }
 
