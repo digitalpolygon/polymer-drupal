@@ -120,8 +120,9 @@ class DrupalMultisiteCommands extends TaskBase
         // Copy the default directory contents, excluding files and local settings.
         /** @var \Robo\Task\Filesystem\CopyDir $task */
         $task = $this->taskCopyDir([$this->defaultSiteDir => $this->currentSiteDir]);
+        $excludePatterns = $this->getConfigValue('drupal.multisite.exclude-patterns');
         $task->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE);
-        $task->exclude(['local.settings.php', 'files']);
+        $task->exclude($excludePatterns);
         $result = $task->run();
         if (!$result->wasSuccessful()) {
             throw new AbortTasksException("Failed to copy sites directory from '{$this->defaultSiteDir}' to '{$this->currentSiteDir}'.", $result->getExitCode());
