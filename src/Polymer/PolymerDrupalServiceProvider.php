@@ -2,7 +2,7 @@
 
 namespace DigitalPolygon\PolymerDrupal\Polymer;
 
-use DigitalPolygon\PolymerDrupal\Polymer\Services\ContextProvidersSubscriber;
+use DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber\ContextProvidersSubscriber;
 use DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber\DrupalConfigInjector;
 use DigitalPolygon\PolymerDrupal\Polymer\Services\FileSystem;
 use DrupalFinder\DrupalFinderComposerRuntime;

@@ -1,6 +1,6 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Services;
+namespace DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber;
 
 use DigitalPolygon\Polymer\Robo\Event\CollectConfigContextsEvent;
 use DigitalPolygon\Polymer\Robo\Event\PolymerEvents;

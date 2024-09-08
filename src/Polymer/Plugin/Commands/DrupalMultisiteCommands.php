@@ -31,26 +31,26 @@ class DrupalMultisiteCommands extends TaskBase
      */
     private string $currentSiteDir;
 
-    /**
-     * Path to the template sites.php file used for multi-site configurations.
-     *
-     * @var string
-     */
-    private string $sitesFileTemplate;
-
-    /**
-     * Path to the sites.php file where new site configurations are saved.
-     *
-     * @var string
-     */
-    private string $sitesFile;
-
-    /**
-     * Instance of DDEVEnvironment for managing DDEV-specific operations.
-     *
-     * @var \DigitalPolygon\Polymer\Environment\DDEVEnvironment
-     */
-    private DDEVEnvironment $ddevEnv;
+//    /**
+//     * Path to the template sites.php file used for multi-site configurations.
+//     *
+//     * @var string
+//     */
+//    private string $sitesFileTemplate;
+//
+//    /**
+//     * Path to the sites.php file where new site configurations are saved.
+//     *
+//     * @var string
+//     */
+//    private string $sitesFile;
+//
+//    /**
+//     * Instance of DDEVEnvironment for managing DDEV-specific operations.
+//     *
+//     * @var \DigitalPolygon\Polymer\Environment\DDEVEnvironment
+//     */
+//    private DDEVEnvironment $ddevEnv;
 
     /**
      * Initializes paths for site directories based on the site name.
@@ -70,12 +70,12 @@ class DrupalMultisiteCommands extends TaskBase
         // Check if DDEV is configured for local development.
         /** @var string $repo_root */
         $repo_root = $this->getConfigValue('repo.root');
-        $this->ddevEnv = new DDEVEnvironment($repo_root);
+//        $this->ddevEnv = new DDEVEnvironment($repo_root);
         /** @var string $extensionRoot */
         // Path to the template and target 'sites.php' files.
         $extensionRoot = $this->getConfigValue('extension.polymer_drupal.root');
-        $this->sitesFileTemplate =  "$extensionRoot/settings/sites.php";
-        $this->sitesFile = "$docroot/sites/sites.php";
+//        $this->sitesFileTemplate =  "$extensionRoot/settings/sites.php";
+//        $this->sitesFile = "$docroot/sites/sites.php";
         // Ensure the new site directory does not already exist.
         if (file_exists($this->currentSiteDir)) {
             throw new AbortTasksException("Cannot create new multisite. The directory '{$this->currentSiteDir}' already exists.");
@@ -129,41 +129,41 @@ class DrupalMultisiteCommands extends TaskBase
         }
     }
 
-    /**
-     * Adds the new site to the list of multi-site directory aliases in DDEV configuration.
-     *
-     * @param string $site_name
-     *   The name of the new site.
-     *
-     * @throws \Robo\Exception\AbortTasksException
-     *   If adding the site configuration to 'sites.php' or updating DDEV configuration fails.
-     */
-    private function addSiteToMultisiteDirectoryAliases(string $site_name): void
-    {
-        // Determine available HTTP and HTTPS ports for the new site.
-        $ports = $this->ddevEnv->getNextAvailableMultisiteHttpAndHttpsPorts();
-        $http_port = $ports['http_port'];
-        $https_port = $ports['https_port'];
-        // Add new entry for 'web_extra_exposed_ports' in DDEV configuration.
-        $this->ddevEnv->addNewWebExtraExposedPorts($site_name, $http_port, $https_port);
-        // Injects this information into site 'sites.php' file.
-        /** @var string $sites_content */
-        $sites_content = file_get_contents($this->sitesFileTemplate);
-        /** @var \Robo\Task\File\Write $task */
-        $task = $this->taskWriteToFile($this->sitesFile);
-        $task->text($sites_content);
-        // Replace site name and ports from the template file.
-        $task->place('site_name', $site_name);
-        $task->place('http_port', (string) $http_port);
-        $task->place('https_port', (string) $https_port);
-        $task->append(true);
-        $task->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE);
-        $result = $task->run();
-        if (!$result->wasSuccessful()) {
-            throw new AbortTasksException("Unable to add new site alias into the 'sites.php' file.", $result->getExitCode());
-        }
-        // Inform the user about DDEV configuration changes and the new site's URL.
-        $new_site_url =  "https://{$site_name}.ddev.site:{$https_port}";
-        $this->say("New site has been successfully configured. Restart DDEV using the command 'ddev restart' to reflect the changes. The new site will be accessible at this URL: {$new_site_url}");
-    }
+//    /**
+//     * Adds the new site to the list of multi-site directory aliases in DDEV configuration.
+//     *
+//     * @param string $site_name
+//     *   The name of the new site.
+//     *
+//     * @throws \Robo\Exception\AbortTasksException
+//     *   If adding the site configuration to 'sites.php' or updating DDEV configuration fails.
+//     */
+//    private function addSiteToMultisiteDirectoryAliases(string $site_name): void
+//    {
+//        // Determine available HTTP and HTTPS ports for the new site.
+//        $ports = $this->ddevEnv->getNextAvailableMultisiteHttpAndHttpsPorts();
+//        $http_port = $ports['http_port'];
+//        $https_port = $ports['https_port'];
+//        // Add new entry for 'web_extra_exposed_ports' in DDEV configuration.
+//        $this->ddevEnv->addNewWebExtraExposedPorts($site_name, $http_port, $https_port);
+//        // Injects this information into site 'sites.php' file.
+//        /** @var string $sites_content */
+//        $sites_content = file_get_contents($this->sitesFileTemplate);
+//        /** @var \Robo\Task\File\Write $task */
+//        $task = $this->taskWriteToFile($this->sitesFile);
+//        $task->text($sites_content);
+//        // Replace site name and ports from the template file.
+//        $task->place('site_name', $site_name);
+//        $task->place('http_port', (string) $http_port);
+//        $task->place('https_port', (string) $https_port);
+//        $task->append(true);
+//        $task->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE);
+//        $result = $task->run();
+//        if (!$result->wasSuccessful()) {
+//            throw new AbortTasksException("Unable to add new site alias into the 'sites.php' file.", $result->getExitCode());
+//        }
+//        // Inform the user about DDEV configuration changes and the new site's URL.
+//        $new_site_url =  "https://{$site_name}.ddev.site:{$https_port}";
+//        $this->say("New site has been successfully configured. Restart DDEV using the command 'ddev restart' to reflect the changes. The new site will be accessible at this URL: {$new_site_url}");
+//    }
 }

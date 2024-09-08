@@ -23,6 +23,8 @@ drupal:
     sanitize: true
     alias: ${drupal.drush.default_alias}
   multisite:
+    sites:
+      - default
     exclude-patterns:
       - local.polymer.yml
       - local.drush.yml

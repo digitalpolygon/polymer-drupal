@@ -30,20 +30,7 @@ class DrupalConfigInjector extends GlobalOptionsEventListener implements EventSu
 
     public function injectEnvironmentConfig(ConsoleCommandEvent $event): void
     {
-        $this->addDynamicConfiguration($event);
         $this->addEnvironmentConfiguration($event);
-    }
-
-    protected function addDynamicConfiguration(ConsoleCommandEvent $event): void
-    {
-        /** @var PolymerConfig $config */
-        $config = $this->getConfig();
-        $extensionConfig = $config->getContext(ExtensionInfo::getExtensionName());
-
-        $multiSiteDirs = $this->drupalFileSystem->getMultisiteDirs();
-        $extensionConfig
-            ->set('drupal.multisites', $multiSiteDirs)
-            ->set('docroot', $this->drupalFileSystem->getDrupalRoot());
     }
 
     protected function addEnvironmentConfiguration(ConsoleCommandEvent $event): void
