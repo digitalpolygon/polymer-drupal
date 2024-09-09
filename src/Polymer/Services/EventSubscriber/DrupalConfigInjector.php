@@ -5,7 +5,8 @@ namespace DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber;
 use Consolidation\Config\Config;
 use Consolidation\Config\Loader\YamlConfigLoader;
 use DigitalPolygon\Polymer\Robo\Config\PolymerConfig;
-use DigitalPolygon\PolymerDrupal\Polymer\ExtensionInfo;
+use DigitalPolygon\Polymer\Robo\Event\PolymerEvents;
+use DigitalPolygon\Polymer\Robo\Event\PostInvokeCommandEvent;
 use DigitalPolygon\PolymerDrupal\Polymer\Services\FileSystem;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
@@ -15,6 +16,7 @@ use Robo\Contract\ConfigAwareInterface;
 use Robo\GlobalOptionsEventListener;
 use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class DrupalConfigInjector extends GlobalOptionsEventListener implements EventSubscriberInterface, ConfigAwareInterface, ContainerAwareInterface
@@ -31,6 +33,14 @@ class DrupalConfigInjector extends GlobalOptionsEventListener implements EventSu
     public function injectEnvironmentConfig(ConsoleCommandEvent $event): void
     {
         $this->addEnvironmentConfiguration($event);
+    }
+
+    public function onPostInvokeCommand(PostInvokeCommandEvent $event)
+    {
+        $input = $event->getParentInput();
+        $output = new NullOutput();
+        $consoleEvent = new ConsoleCommandEvent(null, $input, $output);
+        $this->addEnvironmentConfiguration($consoleEvent);
     }
 
     protected function addEnvironmentConfiguration(ConsoleCommandEvent $event): void
@@ -84,6 +94,9 @@ class DrupalConfigInjector extends GlobalOptionsEventListener implements EventSu
         return [
             ConsoleEvents::COMMAND => [
                 ['injectEnvironmentConfig', 1],
+            ],
+            PolymerEvents::POST_INVOKE_COMMAND => [
+                ['onPostInvokeCommand'],
             ],
         ];
     }

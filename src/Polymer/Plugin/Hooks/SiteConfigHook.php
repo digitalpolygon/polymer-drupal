@@ -4,6 +4,7 @@ namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Hooks;
 
 use Consolidation\AnnotatedCommand\Attributes\Hook;
 use DigitalPolygon\Polymer\Robo\Config\ConfigAwareTrait;
+use DigitalPolygon\Polymer\Robo\Config\PolymerConfig;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use Psr\Log\LoggerAwareInterface;
@@ -23,9 +24,11 @@ class SiteConfigHook implements ConfigAwareInterface, LoggerAwareInterface, IOAw
     #[Hook(type: 'pre-command-event', target: '*')]
     public function setSiteConfig(ConsoleCommandEvent $event): void
     {
+        $commandInput = $event->getInput();
+        $instanceInput = $this->input();
+        /** @var PolymerConfig $config */
+        $config = $this->getConfig();
         $x = 5;
-//        /** @var PolymerConfig $config */
-//        $config = $this->getConfig();
 //        $siteContext = $config->getContext('site');
 //        $siteEnvironmentContext = $config->getContext('site_environment');
 //        $options = $this->input()->getOptions();

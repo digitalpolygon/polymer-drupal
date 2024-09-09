@@ -4,6 +4,7 @@ namespace DigitalPolygon\PolymerDrupal\Polymer;
 
 use DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber\ContextProvidersSubscriber;
 use DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber\DrupalConfigInjector;
+use DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber\PostInvokeCommandSubscriber;
 use DigitalPolygon\PolymerDrupal\Polymer\Services\FileSystem;
 use DrupalFinder\DrupalFinderComposerRuntime;
 use League\Container\Argument\ResolvableArgument;
@@ -23,6 +24,7 @@ class PolymerDrupalServiceProvider extends AbstractServiceProvider implements Bo
             'drupalConfigInjector',
             'drupalFinder',
             'drupalFileSystem',
+            'drupalPostInvokeCommandSubscriber',
         ];
         return in_array($id, $services);
     }
@@ -44,11 +46,14 @@ class PolymerDrupalServiceProvider extends AbstractServiceProvider implements Bo
 
     public function boot(): void
     {
-        $this->getContainer()->extend('eventDispatcher')
+        $container = $this->getContainer();
+        $container->addShared('drupalPostInvokeCommandSubscriber', PostInvokeCommandSubscriber::class);
+        $container->extend('eventDispatcher')
             ->addMethodCall('addSubscriber', ['drupalConfigContextProvider'])
-            ->addMethodCall('addSubscriber', ['drupalConfigInjector']);
+            ->addMethodCall('addSubscriber', ['drupalConfigInjector'])
+            ->addMethodCall('addSubscriber', ['drupalPostInvokeCommandSubscriber']);
 
-        $this->getContainer()->extend('application')
+        $container->extend('application')
             ->addMethodCall('addGlobalOption', [
                 new InputOption('--site', null, InputOption::VALUE_REQUIRED, 'The multisite to execute this command against.', 'default')
             ]);
