@@ -23,7 +23,7 @@ class SyncCommands extends TaskBase
     public function allSites(): void
     {
         /** @var array<string> $multisites */
-        $multisites = $this->getConfigValue('polymer.multisites');
+        $multisites = $this->getConfigValue('multisites');
         $this->printSyncMap($multisites);
         $continue = $this->confirm("Continue?", true);
         if (!$continue) {
@@ -68,7 +68,7 @@ class SyncCommands extends TaskBase
         $exit_code = 0;
 
         /** @var array<string> $multisites */
-        $multisites = $this->getConfigValue('polymer.multisites');
+        $multisites = $this->getConfigValue('multisites');
 
         $this->printSyncMap($multisites);
         $continue = $this->confirm("Continue?");

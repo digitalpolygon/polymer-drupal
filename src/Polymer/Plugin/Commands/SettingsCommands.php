@@ -65,7 +65,7 @@ class SettingsCommands extends TaskBase
     public function generateDatabaseSettingsFiles(): void
     {
         /** @var array<string> $all_sites */
-        $all_sites = $this->getConfigValue('polymer.multisites');
+        $all_sites = $this->getConfigValue('multisites');
         foreach ($all_sites as $site) {
             $is_settings_exist = false;
             $this->switchSiteContext($site);

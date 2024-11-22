@@ -26,7 +26,7 @@ class ConfigCommands extends TaskBase
     public function multisiteUpdateAllCommand(): void
     {
         /** @var array<string> $multisites */
-        $multisites = $this->getConfigValue('polymer.multisites');
+        $multisites = $this->getConfigValue('multisites');
 
         /** @var PolymerCommand $command */
         $command = new PolymerCommand('drupal:update');
