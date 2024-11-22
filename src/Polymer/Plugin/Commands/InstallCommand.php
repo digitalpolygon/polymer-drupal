@@ -101,7 +101,7 @@ class InstallCommand extends TaskBase
         $result = $taskFilesystemStack->run();
 
         if (!$result->wasSuccessful()) {
-            $this->logger->warning('Unable to set permissions for site directories and files.');
+            $this->logger?->warning('Unable to set permissions for site directories and files.');
         }
     }
 

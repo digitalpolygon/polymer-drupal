@@ -81,7 +81,7 @@ class SyncCommands extends TaskBase
             $this->switchSiteContext($multisite);
             $result = $this->syncDb();
             if (!$result->wasSuccessful()) {
-                $this->logger->error("Could not sync database for site <comment>$multisite</comment>.");
+                $this->logger?->error("Could not sync database for site <comment>$multisite</comment>.");
                 throw new PolymerException("Could not sync database.");
             }
         }
