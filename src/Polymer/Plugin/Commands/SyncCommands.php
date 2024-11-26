@@ -23,7 +23,7 @@ class SyncCommands extends TaskBase
     public function allSites(): void
     {
         /** @var array<string> $multisites */
-        $multisites = $this->getConfigValue('polymer.multisites');
+        $multisites = $this->getConfigValue('multisites');
         $this->printSyncMap($multisites);
         $continue = $this->confirm("Continue?", true);
         if (!$continue) {
@@ -68,7 +68,7 @@ class SyncCommands extends TaskBase
         $exit_code = 0;
 
         /** @var array<string> $multisites */
-        $multisites = $this->getConfigValue('polymer.multisites');
+        $multisites = $this->getConfigValue('multisites');
 
         $this->printSyncMap($multisites);
         $continue = $this->confirm("Continue?");
@@ -81,7 +81,7 @@ class SyncCommands extends TaskBase
             $this->switchSiteContext($multisite);
             $result = $this->syncDb();
             if (!$result->wasSuccessful()) {
-                $this->logger->error("Could not sync database for site <comment>$multisite</comment>.");
+                $this->logger?->error("Could not sync database for site <comment>$multisite</comment>.");
                 throw new PolymerException("Could not sync database.");
             }
         }

@@ -26,7 +26,7 @@ class ConfigCommands extends TaskBase
     public function multisiteUpdateAllCommand(): void
     {
         /** @var array<string> $multisites */
-        $multisites = $this->getConfigValue('polymer.multisites');
+        $multisites = $this->getConfigValue('multisites');
 
         /** @var PolymerCommand $command */
         $command = new PolymerCommand('drupal:update');
@@ -74,7 +74,7 @@ class ConfigCommands extends TaskBase
 
         $strategy = $this->getConfigValue('drupal.cm.strategy');
         if ($strategy === 'none') {
-            $this->logger->warning("CM strategy set to none in polymer.yml. Polymer will NOT import configuration.");
+            $this->logger?->warning("CM strategy set to none in polymer.yml. Polymer will NOT import configuration.");
             // Still clear caches to regenerate frontend assets and such.
             return $task->drush("cache-rebuild")->run();
         }
@@ -87,7 +87,7 @@ class ConfigCommands extends TaskBase
             $core_config_file = $this->getConfigValue('docroot') . '/' . $this->getConfigValue("drupal.cm.core.dirs.sync.path") . '/core.extension.yml';
 
             if (!file_exists($core_config_file)) {
-                $this->logger->warning("Polymer will NOT import configuration, $core_config_file was not found.");
+                $this->logger?->warning("Polymer will NOT import configuration, $core_config_file was not found.");
                 // This is not considered a failure.
                 return 0;
             }
@@ -113,7 +113,7 @@ class ConfigCommands extends TaskBase
                 $check_task->drush("pm-enable")->arg('config_split');
                 $result = $check_task->run();
                 if (!$result->wasSuccessful()) {
-                    $this->logger->warning('Import strategy is config-split, but the config_split module does not exist. Falling back to core-only.');
+                    $this->logger?->warning('Import strategy is config-split, but the config_split module does not exist. Falling back to core-only.');
                     $this->importCoreOnly($task);
                     break;
                 }
@@ -195,8 +195,8 @@ class ConfigCommands extends TaskBase
             ->drush("config:status");
         $result = $task->run();
         $message = trim($result->getMessage());
-        $this->logger->debug("Config status check results:");
-        $this->logger->debug($message);
+        $this->logger?->debug("Config status check results:");
+        $this->logger?->debug($message);
 
         // A successful test here results in "no message" so check for null.
         if ($message == null) {
