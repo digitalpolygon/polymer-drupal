@@ -62,3 +62,6 @@ drupal:
       # That's why files needs to be synchronized locally first.
       # Command order can be changed as per the need in custom polymer.config file.
       - drupal:update
+  # Provide a list of sites for Polymer to run commands against.
+  # multisites:
+  #  - default
