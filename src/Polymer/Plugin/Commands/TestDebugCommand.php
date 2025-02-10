@@ -1,6 +1,6 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Debug;
+namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Commands;
 
 use Consolidation\AnnotatedCommand\Attributes\Command;
 use DigitalPolygon\Polymer\Robo\Tasks\TaskBase;
