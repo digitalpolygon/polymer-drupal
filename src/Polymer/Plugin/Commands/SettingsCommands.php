@@ -65,10 +65,10 @@ class SettingsCommands extends TaskBase
     public function generateDatabaseSettingsFiles(): void
     {
         /** @var array<string> $all_sites */
-        $all_sites = $this->getConfigValue('drupal.multisites');
+        $all_sites = $this->getConfigValue('drupal.multisite.sites');
         foreach ($all_sites as $site) {
             $is_settings_exist = false;
-            $this->switchSiteContext($site);
+//            $this->switchSiteContext($site);
 
             // Initializes paths for settings files based on the site name.
             $this->initialize($site);

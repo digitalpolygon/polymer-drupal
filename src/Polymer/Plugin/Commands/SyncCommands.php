@@ -9,6 +9,7 @@ use Consolidation\AnnotatedCommand\Attributes\Command;
 use DigitalPolygon\Polymer\Robo\Exceptions\PolymerException;
 use Robo\Result;
 use DigitalPolygon\Polymer\Robo\Tasks\Command as PolymerCommand;
+use Robo\Symfony\ConsoleIO;
 
 class SyncCommands extends TaskBase
 {
@@ -20,10 +21,10 @@ class SyncCommands extends TaskBase
      * @throws \Robo\Exception\AbortTasksException|TaskException
      */
     #[Command(name: 'drupal:site:sync:all-sites', aliases: ['dsas'])]
-    public function allSites(): void
+    public function allSites(ConsoleIO $io): void
     {
         /** @var array<string> $multisites */
-        $multisites = $this->getConfigValue('drupal.multisites');
+        $multisites = $this->getConfigValue('drupal.multisite.sites');
         $this->printSyncMap($multisites);
         $continue = $this->confirm("Continue?", true);
         if (!$continue) {
@@ -31,8 +32,8 @@ class SyncCommands extends TaskBase
         }
         foreach ($multisites as $multisite) {
             $this->say("Refreshing site <comment>$multisite</comment>...");
-            $this->switchSiteContext($multisite);
-            $this->sync();
+            $this->commandInvoker->pinGlobal('--site', $multisite);
+            $this->commandInvoker->invokeCommand($io->input(), 'drupal:site:sync');
         }
     }
 
@@ -43,18 +44,15 @@ class SyncCommands extends TaskBase
      * @throws \Robo\Exception\AbortTasksException|TaskException
      */
     #[Command(name: 'drupal:site:sync', aliases: ['dss'])]
-    public function sync(): void
+    public function sync(ConsoleIO $io): void
     {
+        $application = $this->getContainer()->get('application');
         /** @var array<string> $commands */
         $commands = $this->getConfigValue('drupal.sync.commands');
 
-        /** @var PolymerCommand[] $polymer_commands */
-        $polymer_commands = [];
         foreach ($commands as $command) {
-            $polymer_commands[] = new PolymerCommand($command);
+            $this->commandInvoker->invokeCommand($io->input(), $command);
         }
-
-        $this->invokeCommands($polymer_commands);
     }
 
     /**
@@ -63,12 +61,12 @@ class SyncCommands extends TaskBase
      * @throws \Robo\Exception\AbortTasksException|TaskException
      */
     #[Command(name: 'drupal:site:sync:db:all-sites', aliases: ['dsadb'])]
-    public function syncDbAllSites(): int
+    public function syncDbAllSites(ConsoleIO $io): int
     {
         $exit_code = 0;
 
         /** @var array<string> $multisites */
-        $multisites = $this->getConfigValue('drupal.multisites');
+        $multisites = $this->getConfigValue('drupal.multisite.sites');
 
         $this->printSyncMap($multisites);
         $continue = $this->confirm("Continue?");
@@ -78,12 +76,8 @@ class SyncCommands extends TaskBase
 
         foreach ($multisites as $multisite) {
             $this->say("Refreshing site <comment>$multisite</comment>...");
-            $this->switchSiteContext($multisite);
-            $result = $this->syncDb();
-            if (!$result->wasSuccessful()) {
-                $this->logger?->error("Could not sync database for site <comment>$multisite</comment>.");
-                throw new PolymerException("Could not sync database.");
-            }
+            $this->commandInvoker->pinGlobal('--site', $multisite);
+            $this->commandInvoker->invokeCommand($io->input(), 'drupal:site:sync:database');
         }
 
         return $exit_code;
@@ -100,7 +94,7 @@ class SyncCommands extends TaskBase
         $this->say("Sync operations will be performed for the following drush aliases:");
         $sync_map = [];
         foreach ($multisites as $multisite) {
-            $this->switchSiteContext($multisite);
+//            $this->switchSiteContext($multisite);
             $sync_map[$multisite]['local'] = '@' . $this->getConfigValue('drupal.drush.aliases.local');
             $sync_map[$multisite]['remote'] = '@' . $this->getConfigValue('drupal.drush.aliases.remote');
             $this->say("  * <comment>" . $sync_map[$multisite]['remote'] . "</comment> => <comment>" . $sync_map[$multisite]['local'] . "</comment>");
@@ -154,7 +148,7 @@ class SyncCommands extends TaskBase
         $remote_alias = '@' . $this->getConfigValue('drupal.drush.aliases.remote');
 
         /** @var string $site_dir */
-        $site_dir = $this->getConfigValue('site');
+        $site_dir = $this->input()->getOption('site');
 
         $task = $this->taskDrush()
         ->alias('')
@@ -182,7 +176,7 @@ class SyncCommands extends TaskBase
         $remote_alias = '@' . $this->getConfigValue('drupal.drush.aliases.remote');
 
         /** @var string $site_dir */
-        $site_dir = $this->getConfigValue('site');
+        $site_dir = $this->input()->getOption('site');
         $private_files_local_path = $this->getConfigValue('repo.root') . "/files-private/$site_dir";
 
         $task = $this->taskDrush()

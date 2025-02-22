@@ -280,7 +280,7 @@ class DrushTask extends CommandStack
         }
         if (!$this->uri) {
             /** @var string $drush_uri */
-            $drush_uri = $this->getConfig()->get('drush.uri');
+            $drush_uri = $this->getConfig()->get('drupal.drush.uri');
             $this->uri = $drush_uri;
         }
         if (!isset($this->alias)) {
