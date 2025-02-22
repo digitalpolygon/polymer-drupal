@@ -21,7 +21,7 @@ class SyncCommands extends TaskBase
      * @throws \Robo\Exception\AbortTasksException|TaskException
      */
     #[Command(name: 'drupal:site:sync:all-sites', aliases: ['dsas'])]
-    public function allSites(): void
+    public function allSites(ConsoleIO $io): void
     {
         /** @var array<string> $multisites */
         $multisites = $this->getConfigValue('drupal.multisite.sites');
@@ -32,8 +32,8 @@ class SyncCommands extends TaskBase
         }
         foreach ($multisites as $multisite) {
             $this->say("Refreshing site <comment>$multisite</comment>...");
-//            $this->switchSiteContext($multisite);
-            $this->invokeCommand('drupal:site:sync', ['--site' => $multisite]);
+            $this->commandInvoker->pinGlobal('--site', $multisite);
+            $this->commandInvoker->invokeCommand($io->input(), 'drupal:site:sync');
         }
     }
 
@@ -61,7 +61,7 @@ class SyncCommands extends TaskBase
      * @throws \Robo\Exception\AbortTasksException|TaskException
      */
     #[Command(name: 'drupal:site:sync:db:all-sites', aliases: ['dsadb'])]
-    public function syncDbAllSites(): int
+    public function syncDbAllSites(ConsoleIO $io): int
     {
         $exit_code = 0;
 
@@ -76,7 +76,8 @@ class SyncCommands extends TaskBase
 
         foreach ($multisites as $multisite) {
             $this->say("Refreshing site <comment>$multisite</comment>...");
-            $this->invokeCommand('drupal:site:sync:database', ['--site' => $multisite]);
+            $this->commandInvoker->pinGlobal('--site', $multisite);
+            $this->commandInvoker->invokeCommand($io->input(), 'drupal:site:sync:database');
         }
 
         return $exit_code;

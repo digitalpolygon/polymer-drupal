@@ -11,6 +11,7 @@ use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\LoadDrushTaskTrait;
 use Robo\Common\IO;
 use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Result;
+use Robo\Symfony\ConsoleIO;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -36,7 +37,7 @@ class InstallCommand extends TaskBase
     #[Command(name: 'drupal:site:install', aliases: ['dsi'])]
     #[Usage(name: 'drupal:site:install', description: 'Installs Drupal site.')]
     #[Usage(name: 'drupal:site:install --site={site_name}', description: 'Add site name.')]
-    public function drupalSiteInstall(): void
+    public function drupalSiteInstall(ConsoleIO $io): void
     {
         $this->site = $this->input()->getOption('site');
 
@@ -49,7 +50,7 @@ class InstallCommand extends TaskBase
             $commands[] = 'drupal:config:import';
         }
         foreach ($commands as $command) {
-            $this->invokeCommand($command);
+            $this->commandInvoker->invokeCommand($io->input(), $command);
         }
         $this->setSitePermissions();
     }

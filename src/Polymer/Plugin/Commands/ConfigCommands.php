@@ -4,6 +4,7 @@ namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Commands;
 
 use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\LoadDrushTaskTrait;
 use Robo\Common\IO;
+use Robo\Symfony\ConsoleIO;
 use Symfony\Component\Yaml\Yaml;
 use Robo\Exception\TaskException;
 use DigitalPolygon\Polymer\Robo\Tasks\TaskBase;
@@ -23,13 +24,14 @@ class ConfigCommands extends TaskBase
      * @throws \Robo\Exception\AbortTasksException|TaskException
      */
     #[Command(name: 'drupal:multisite:update-all', aliases: ['dmua'])]
-    public function multisiteUpdateAllCommand(): void
+    public function multisiteUpdateAllCommand(ConsoleIO $io): void
     {
         /** @var array<string> $multisites */
         $multisites = $this->getConfigValue('drupal.multisite.sites');
 
         foreach ($multisites as $multisite) {
-            $this->invokeCommand('drupal:update', ['--site' => $multisite]);
+            $this->commandInvoker->pinGlobal('--site', $multisite);
+            $this->commandInvoker->invokeCommand($io->input(), 'drupal:update');
             $this->say("Finished deploying updates to $multisite.");
         }
     }
@@ -40,7 +42,7 @@ class ConfigCommands extends TaskBase
      * @throws \Robo\Exception\AbortTasksException|TaskException
      */
     #[Command(name: 'drupal:update', aliases: ['du'])]
-    public function updateSite(): void
+    public function updateSite(ConsoleIO $io): void
     {
         $task = $this->taskDrush()
         ->stopOnFail()
@@ -58,7 +60,7 @@ class ConfigCommands extends TaskBase
             'drupal:deploy:hook',
         ];
         foreach ($commands as $command) {
-            $this->invokeCommand($command);
+            $this->commandInvoker->invokeCommand($io->input(), $command);
         }
     }
 
