@@ -28,12 +28,8 @@ class ConfigCommands extends TaskBase
         /** @var array<string> $multisites */
         $multisites = $this->getConfigValue('drupal.multisites');
 
-        /** @var PolymerCommand $command */
-        $command = new PolymerCommand('drupal:update');
         foreach ($multisites as $multisite) {
-            $this->say("Deploying updates to <comment>$multisite</comment>...");
-            $this->switchSiteContext($multisite);
-            $this->invokeCommand($command);
+            $this->invokeCommand('drupal:update', ['--site' => $multisite]);
             $this->say("Finished deploying updates to $multisite.");
         }
     }
@@ -57,10 +53,13 @@ class ConfigCommands extends TaskBase
         }
 
         /** @var PolymerCommand[] $commands */
-        $commands = [];
-        $commands[] = new PolymerCommand('drupal:config:import');
-        $commands[] = new PolymerCommand('drupal:deploy:hook');
-        $this->invokeCommands($commands);
+        $commands = [
+            'drupal:config:import',
+            'drupal:deploy:hook',
+        ];
+        foreach ($commands as $command) {
+            $this->invokeCommand($command);
+        }
     }
 
     /**
@@ -145,7 +144,6 @@ class ConfigCommands extends TaskBase
    */
     protected function importCoreOnly($task): void
     {
-        // @phpstan-ignore method.nonObject
         $task->drush('config:import');
     }
 
@@ -157,11 +155,9 @@ class ConfigCommands extends TaskBase
    */
     protected function importConfigSplit($task): void
     {
-        // @phpstan-ignore method.nonObject
         $task->drush('config:import');
         // Runs a second import to ensure splits are
         // both defined and imported.
-        // @phpstan-ignore method.nonObject
         $task->drush('config:import');
     }
 

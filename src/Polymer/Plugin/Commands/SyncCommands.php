@@ -9,6 +9,7 @@ use Consolidation\AnnotatedCommand\Attributes\Command;
 use DigitalPolygon\Polymer\Robo\Exceptions\PolymerException;
 use Robo\Result;
 use DigitalPolygon\Polymer\Robo\Tasks\Command as PolymerCommand;
+use Robo\Symfony\ConsoleIO;
 
 class SyncCommands extends TaskBase
 {
@@ -31,8 +32,8 @@ class SyncCommands extends TaskBase
         }
         foreach ($multisites as $multisite) {
             $this->say("Refreshing site <comment>$multisite</comment>...");
-            $this->switchSiteContext($multisite);
-            $this->sync();
+//            $this->switchSiteContext($multisite);
+            $this->invokeCommand('drupal:site:sync', ['--site' => $multisite]);
         }
     }
 
@@ -45,16 +46,13 @@ class SyncCommands extends TaskBase
     #[Command(name: 'drupal:site:sync', aliases: ['dss'])]
     public function sync(): void
     {
+        $application = $this->getContainer()->get('application');
         /** @var array<string> $commands */
         $commands = $this->getConfigValue('drupal.sync.commands');
 
-        /** @var PolymerCommand[] $polymer_commands */
-        $polymer_commands = [];
         foreach ($commands as $command) {
-            $polymer_commands[] = new PolymerCommand($command);
+            $this->invokeCommand($command);
         }
-
-        $this->invokeCommands($polymer_commands);
     }
 
     /**
@@ -78,12 +76,7 @@ class SyncCommands extends TaskBase
 
         foreach ($multisites as $multisite) {
             $this->say("Refreshing site <comment>$multisite</comment>...");
-            $this->switchSiteContext($multisite);
-            $result = $this->syncDb();
-            if (!$result->wasSuccessful()) {
-                $this->logger?->error("Could not sync database for site <comment>$multisite</comment>.");
-                throw new PolymerException("Could not sync database.");
-            }
+            $this->invokeCommand('drupal:site:sync:database', ['--site' => $multisite]);
         }
 
         return $exit_code;
@@ -100,7 +93,7 @@ class SyncCommands extends TaskBase
         $this->say("Sync operations will be performed for the following drush aliases:");
         $sync_map = [];
         foreach ($multisites as $multisite) {
-            $this->switchSiteContext($multisite);
+//            $this->switchSiteContext($multisite);
             $sync_map[$multisite]['local'] = '@' . $this->getConfigValue('drupal.drush.aliases.local');
             $sync_map[$multisite]['remote'] = '@' . $this->getConfigValue('drupal.drush.aliases.remote');
             $this->say("  * <comment>" . $sync_map[$multisite]['remote'] . "</comment> => <comment>" . $sync_map[$multisite]['local'] . "</comment>");

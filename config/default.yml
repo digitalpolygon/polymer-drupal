@@ -1,3 +1,4 @@
+docroot: ${repo.root}/web
 drupal:
   account:
     # Admin account name and password will be randomly generated unless set here.
@@ -10,7 +11,6 @@ drupal:
   settings_file: ${docroot}/sites/${site}/settings.php
   profile:
     name: minimal
-  docroot: ${repo.root}/web
   drush:
     alias-dir: ${repo.root}/drush/sites
     aliases:
@@ -22,6 +22,15 @@ drupal:
     dir: ${docroot}
     sanitize: true
     alias: ${drupal.drush.default_alias}
+  multisite:
+    sites:
+      - default
+    exclude-patterns:
+      - local.polymer.yml
+      - local.drush.yml
+      - settings.local.php
+      - settings.ddev.php
+      - files
   cm:
     # Possible values: core-only, config-split, none.
     strategy: none

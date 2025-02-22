@@ -3,17 +3,14 @@
 namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Commands;
 
 use Consolidation\AnnotatedCommand\Attributes\Command;
-use Consolidation\AnnotatedCommand\Attributes\Option;
 use Consolidation\AnnotatedCommand\Attributes\Usage;
 use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Common\RandomString;
 use DigitalPolygon\Polymer\Robo\Exceptions\PolymerException;
-use DigitalPolygon\Polymer\Robo\Tasks\Command as PolymerCommand;
 use DigitalPolygon\Polymer\Robo\Tasks\TaskBase;
 use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\LoadDrushTaskTrait;
 use Robo\Common\IO;
 use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Result;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -34,30 +31,26 @@ class InstallCommand extends TaskBase
     /**
      * Installs Drupal and sets correct file/directory permissions.
      *
-     * @param array<string, int|false> $options
-     *   The artifact deploy command options.
-     *
      * @throws \Robo\Exception\AbortTasksException|\Robo\Exception\TaskException
      */
     #[Command(name: 'drupal:site:install', aliases: ['dsi'])]
     #[Usage(name: 'drupal:site:install', description: 'Installs Drupal site.')]
     #[Usage(name: 'drupal:site:install --site={site_name}', description: 'Add site name.')]
-    #[Option(name: 'site', description: 'The site name.')]
-    public function drupalSiteInstall(array $options = ['site' => InputOption::VALUE_OPTIONAL]): void
+    public function drupalSiteInstall(): void
     {
-        /** @var string $site */
-        $site = $options['site'] ?? 'default';
-        $this->site = $site;
+        $this->site = $this->input()->getOption('site');
 
         /** @var \DigitalPolygon\Polymer\Robo\Tasks\Command[] $commands */
         $commands = [];
-        $commands[] = new PolymerCommand('internal:drupal:install');
+        $commands[] = 'internal:drupal:install';
         $strategy = $this->getConfigValue('drupal.cm.strategy');
 
         if (in_array($strategy, ['core-only', 'config-split'])) {
-            $commands[] = new PolymerCommand('drupal:config:import');
+            $commands[] = 'drupal:config:import';
         }
-        $this->invokeCommands($commands);
+        foreach ($commands as $command) {
+            $this->invokeCommand($command);
+        }
         $this->setSitePermissions();
     }
 
