@@ -44,14 +44,14 @@ class SyncCommands extends TaskBase
      * @throws \Robo\Exception\AbortTasksException|TaskException
      */
     #[Command(name: 'drupal:site:sync', aliases: ['dss'])]
-    public function sync(): void
+    public function sync(ConsoleIO $io): void
     {
         $application = $this->getContainer()->get('application');
         /** @var array<string> $commands */
         $commands = $this->getConfigValue('drupal.sync.commands');
 
         foreach ($commands as $command) {
-            $this->invokeCommand($command);
+            $this->commandInvoker->invokeCommand($io->input(), $command);
         }
     }
 
@@ -147,7 +147,7 @@ class SyncCommands extends TaskBase
         $remote_alias = '@' . $this->getConfigValue('drupal.drush.aliases.remote');
 
         /** @var string $site_dir */
-        $site_dir = $this->getConfigValue('site');
+        $site_dir = $this->input()->getOption('site');
 
         $task = $this->taskDrush()
         ->alias('')
@@ -175,7 +175,7 @@ class SyncCommands extends TaskBase
         $remote_alias = '@' . $this->getConfigValue('drupal.drush.aliases.remote');
 
         /** @var string $site_dir */
-        $site_dir = $this->getConfigValue('site');
+        $site_dir = $this->input()->getOption('site');
         $private_files_local_path = $this->getConfigValue('repo.root') . "/files-private/$site_dir";
 
         $task = $this->taskDrush()
