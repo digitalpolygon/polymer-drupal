@@ -4,7 +4,6 @@ namespace DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber;
 
 use Consolidation\Config\Loader\YamlConfigLoader;
 use DigitalPolygon\Polymer\Robo\Event\CollectConfigContextsEvent;
-use DigitalPolygon\Polymer\Robo\Event\PolymerEvents;
 use DigitalPolygon\PolymerDrupal\Polymer\Services\FileSystem;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -15,6 +14,12 @@ class ContextProvidersSubscriber implements EventSubscriberInterface
 
     public function addContexts(CollectConfigContextsEvent $event): void
     {
+        try {
+            $this->drupalFileSystem->getDrupalRoot();
+        } catch (\OutOfBoundsException $e) {
+            // If Drupal root is not found, skip adding environment configuration.
+            return;
+        }
         $site = $event->getInput()->getOption('site');
         $environment = $event->getInput()->getOption('environment');
         $drupalConfig = [];
