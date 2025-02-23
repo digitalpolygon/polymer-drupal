@@ -97,13 +97,14 @@ class DrupalConfigInjector extends GlobalOptionsEventListener implements EventSu
      */
     public static function getSubscribedEvents(): array
     {
-        return [
-            ConsoleEvents::COMMAND => [
-                ['injectEnvironmentConfig', 1],
-            ],
-            PolymerEvents::POST_INVOKE_COMMAND => [
-                ['onPostInvokeCommand'],
-            ],
-        ];
+        return [];
+//        return [
+//            ConsoleEvents::COMMAND => [
+//                ['injectEnvironmentConfig', 1],
+//            ],
+//            PolymerEvents::POST_INVOKE_COMMAND => [
+//                ['onPostInvokeCommand'],
+//            ],
+//        ];
     }
 }

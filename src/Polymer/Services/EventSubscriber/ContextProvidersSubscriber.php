@@ -2,16 +2,38 @@
 
 namespace DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber;
 
+use Consolidation\Config\Loader\YamlConfigLoader;
 use DigitalPolygon\Polymer\Robo\Event\CollectConfigContextsEvent;
 use DigitalPolygon\Polymer\Robo\Event\PolymerEvents;
+use DigitalPolygon\PolymerDrupal\Polymer\Services\FileSystem;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ContextProvidersSubscriber implements EventSubscriberInterface
 {
+
+    public function __construct(protected FileSystem $drupalFileSystem) {}
+
     public function addContexts(CollectConfigContextsEvent $event): void
     {
-        $event->addPlaceholderContext('site');
-        $event->addPlaceholderContext('site_environment');
+        $site = $event->getInput()->getOption('site');
+        $environment = $event->getInput()->getOption('environment');
+        $drupalConfig = [];
+        $possibleConfigFiles = [];
+        if (is_string($site) && in_array($site, $this->drupalFileSystem->getMultisiteDirs())) {
+            $sitePath = $this->drupalFileSystem->getDrupalRoot() . '/sites/' . $site;
+            $possibleConfigFiles['site'] =  $sitePath . '/polymer.yml';
+            if (is_string($environment)) {
+                $possibleConfigFiles['site_environment'] = $sitePath . '/' . $environment . '.polymer.yml';
+            }
+        }
+        $possibleConfigFiles = array_filter($possibleConfigFiles, function ($file) {
+            return file_exists($file);
+        });
+        foreach ($possibleConfigFiles as $configId => $file) {
+            $loader = new YamlConfigLoader();
+            $drupalConfig[$configId] = $loader->load($file)->export();
+        }
+        $event->addContexts($drupalConfig);
     }
 
     /**
@@ -20,7 +42,7 @@ class ContextProvidersSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         $events = [
-            PolymerEvents::COLLECT_CONFIG_CONTEXTS => [
+            CollectConfigContextsEvent::class => [
                 ['addContexts', -1000]
             ],
         ];
