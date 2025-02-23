@@ -35,7 +35,8 @@ class PolymerDrupalServiceProvider extends AbstractServiceProvider implements Bo
     public function register(): void
     {
         $container = $this->getContainer();
-        $container->addShared('drupalConfigContextProvider', ContextProvidersSubscriber::class);
+        $container->addShared('drupalConfigContextProvider', ContextProvidersSubscriber::class)
+            ->addArgument(new ResolvableArgument('drupalFileSystem'));
         $container->addShared('drupalConfigInjector', DrupalConfigInjector::class)
             ->addArgument(new ResolvableArgument('drupalFileSystem'))
             ->addArgument(new ResolvableArgument('application'));
@@ -49,9 +50,9 @@ class PolymerDrupalServiceProvider extends AbstractServiceProvider implements Bo
         $container = $this->getContainer();
         $container->addShared('drupalPostInvokeCommandSubscriber', PostInvokeCommandSubscriber::class);
         $container->extend('eventDispatcher')
-            ->addMethodCall('addSubscriber', ['drupalConfigContextProvider'])
-            ->addMethodCall('addSubscriber', ['drupalConfigInjector'])
-            ->addMethodCall('addSubscriber', ['drupalPostInvokeCommandSubscriber']);
+            ->addMethodCall('addSubscriber', ['drupalConfigContextProvider']);
+//            ->addMethodCall('addSubscriber', ['drupalConfigInjector'])
+//            ->addMethodCall('addSubscriber', ['drupalPostInvokeCommandSubscriber']);
 
         $container->extend('application')
             ->addMethodCall('addGlobalOption', [

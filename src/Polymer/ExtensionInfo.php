@@ -20,18 +20,18 @@ class ExtensionInfo extends PolymerExtensionBase
     /**
      * {@inheritdoc}
      */
-    public function setDynamicConfiguration(DefinitionContainerInterface $container, ConfigInterface $config): void
+    public function setDynamicConfiguration(DefinitionContainerInterface $container, array &$config): void
     {
         /** @var FileSystem $drupalFileSystem */
         $drupalFileSystem = $container->get('drupalFileSystem');
         try {
-            $config->set('drupal.multisite.sites', $drupalFileSystem->getMultisiteDirs());
+            $config['drupal.multisite.sites'] = $drupalFileSystem->getMultisiteDirs();
         } catch (\OutOfBoundsException $e) {
             // No multisite directories found, use default from config file.
         }
 
         try {
-            $config->set('docroot', $drupalFileSystem->getDrupalRoot());
+            $config['docroot'] = $drupalFileSystem->getDrupalRoot();
         } catch (\OutOfBoundsException $e) {
             // No Drupal root found, use default from config file.
         }
