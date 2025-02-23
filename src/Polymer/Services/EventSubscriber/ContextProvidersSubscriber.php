@@ -9,8 +9,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ContextProvidersSubscriber implements EventSubscriberInterface
 {
-
-    public function __construct(protected FileSystem $drupalFileSystem) {}
+    public function __construct(protected FileSystem $drupalFileSystem)
+    {
+    }
 
     public function addContexts(CollectConfigContextsEvent $event): void
     {
