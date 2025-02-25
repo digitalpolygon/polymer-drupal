@@ -29,7 +29,7 @@
     }
   },
   "require": {
-    "digitalpolygon/polymer": "dev-main",
+    "digitalpolygon/polymer": "^0.0.6-alpha",
     "digitalpolygon/drupal-upgrade-plugin": "^1.0@dev",
     "drush/drush": "^12",
     "php": ">=8.1",
