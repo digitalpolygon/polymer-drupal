@@ -191,9 +191,15 @@ class DrupalUpgradeCommands extends TaskBase
      */
     private function runComposerCommand(string $command): void
     {
+        $is_verbose = $this->output()->isVerbose();
         // Define the composer task to run.
         /** @var \Robo\Task\Base\Exec $task */
-        $task = $this->taskExec("composer $command");
+        $task = $this->taskExecStack()
+            ->exec("composer $command")
+            ->printMetadata($is_verbose)
+            ->printOutput($is_verbose)
+            ->interactive($this->input()->isInteractive())
+            ->stopOnFail();
         // Define the working dir where the Composer command will run.
         /** @var string $dir */
         $dir = $this->getConfigValue('repo.root');
