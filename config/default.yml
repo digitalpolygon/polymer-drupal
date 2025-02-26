@@ -1,4 +1,7 @@
-docroot: ${repo.root}/web
+docroot-dir-name: web
+docroot: ${repo.root}/${docroot-dir-name}
+deploy:
+  docroot: ${deploy.dir}/${docroot-dir-name}
 drupal:
   account:
     # Admin account name and password will be randomly generated unless set here.
