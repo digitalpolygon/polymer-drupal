@@ -5,7 +5,6 @@ namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Commands;
 use Consolidation\AnnotatedCommand\Attributes\Command;
 use DigitalPolygon\Polymer\Robo\Tasks\TaskBase;
 use Grasmash\Expander\Expander;
-use Psr\Log\NullLogger;
 use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Symfony\ConsoleIO;
 
@@ -27,14 +26,41 @@ class SetupCommands extends TaskBase
     {
         $site = $io->input()->getOption('site');
         $io->say("Setting up Drupal $site site...");
-        $commands = [
-            'drupal:setup:site:files',
-        ];
-        foreach ($commands as $command) {
-            $this->commandInvoker->pinGlobal('--site', $site);
-            $this->commandInvoker->invokeCommand($io->input(), $command);
-            $this->commandInvoker->unpinGlobal('--site');
+        $defaultArtifact = $this->getConfigValue('project.default-artifact');
+        $commands = [];
+        if (!empty($defaultArtifact)) {
+            $build_dependencies = $this->getConfigValue('artifacts.' . $defaultArtifact . '.dependent-builds');
+            if (is_array($build_dependencies)) {
+                foreach ($build_dependencies as $build_dependency) {
+                    $commands[] = [
+                        'command' => 'build',
+                        'args' => ['target' => $build_dependency],
+                    ];
+                }
+            }
         }
+
+        $commands[] = 'drupal:setup:site:files';
+
+        switch ($this->getConfigValue('drupal.setup.strategy')) {
+            case 'install':
+                $commands[] = 'drupal:site:install';
+                break;
+            case 'sync':
+                $commands[] = 'drupal:site:sync';
+                break;
+        }
+
+        $this->commandInvoker->pinGlobal('--site', $site);
+        foreach ($commands as $command) {
+            if (is_array($command)) {
+                $this->commandInvoker->invokeCommand($io->input(), $command['command'], $command['args'] ?? []);
+            }
+            else {
+                $this->commandInvoker->invokeCommand($io->input(), $command);
+            }
+        }
+        $this->commandInvoker->unpinGlobal('--site');
     }
 
     #[Command(name: 'drupal:setup:site:files', aliases: ['dssf'])]
@@ -78,7 +104,7 @@ class SetupCommands extends TaskBase
  * @link https://digitalpolygon.github.io/polymer-drupal/
  */
 // Polymer assumes that this inclusion always comes at the end of the file.
-\$polymer_settings_file = DRUPAL_ROOT . '../vendor/digitalpolygon/polymer-drupal/settings/polymer.settings.php';
+\$polymer_settings_file = DRUPAL_ROOT . '/../vendor/digitalpolygon/polymer-drupal/settings/polymer.settings.php';
 if (file_exists(\$polymer_settings_file)) {
   require \$polymer_settings_file;
 }
@@ -204,7 +230,6 @@ INCLUDE;
         $task->run();
 
         // Expand files.
-        $logger = new NullLogger();
         $expander = new Expander();
         foreach ($expandFiles as $file) {
             if (file_exists($file)) {

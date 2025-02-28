@@ -34,7 +34,10 @@ $settings_files = [];
 $polymer_settings_files = ['config'];
 if ($polymer_settings_files) {
     foreach ($polymer_settings_files as $polymer_settings_file) {
-        $settings_files[] = __DIR__ . "/$polymer_settings_file.settings.php";
+        $settings_file = __DIR__ . "/$polymer_settings_file.settings.php";
+        if (file_exists($settings_file)) {
+            $settings_files[] = $settings_file;
+        }
     }
 }
 
