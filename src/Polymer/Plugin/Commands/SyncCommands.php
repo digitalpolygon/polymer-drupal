@@ -34,6 +34,7 @@ class SyncCommands extends TaskBase
             $this->say("Refreshing site <comment>$multisite</comment>...");
             $this->commandInvoker->pinGlobal('--site', $multisite);
             $this->commandInvoker->invokeCommand($io->input(), 'drupal:site:sync');
+            $this->commandInvoker->unpinGlobal('--site');
         }
     }
 
@@ -78,6 +79,7 @@ class SyncCommands extends TaskBase
             $this->say("Refreshing site <comment>$multisite</comment>...");
             $this->commandInvoker->pinGlobal('--site', $multisite);
             $this->commandInvoker->invokeCommand($io->input(), 'drupal:site:sync:database');
+            $this->commandInvoker->unpinGlobal('--site');
         }
 
         return $exit_code;
