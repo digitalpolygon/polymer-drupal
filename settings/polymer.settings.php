@@ -50,8 +50,9 @@ if (EnvironmentDetectorBase::isCiEnv()) {
 
 // Local global and site-specific settings.
 if (AcquiaEnvironmentDetector::isLocalEnv() || PantheonEnvironmentDetector::isLocalEnv()) {
-    $settings_files[] = DRUPAL_ROOT . '/sites/settings/local.settings.php';
-    $settings_files[] = DRUPAL_ROOT . "/sites/$site_name/settings/local.settings.php";
+    // Use settings.local.php because that's what Drupal scaffold uses.
+    $settings_files[] = DRUPAL_ROOT . '/sites/settings/settings.local.php';
+    $settings_files[] = DRUPAL_ROOT . "/sites/$site_name/settings.local.php";
 }
 
 foreach ($settings_files as $settings_file) {
