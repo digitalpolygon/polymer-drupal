@@ -32,6 +32,7 @@ class ConfigCommands extends TaskBase
         foreach ($multisites as $multisite) {
             $this->commandInvoker->pinGlobal('--site', $multisite);
             $this->commandInvoker->invokeCommand($io->input(), 'drupal:update');
+            $this->commandInvoker->unpinGlobal('--site');
             $this->say("Finished deploying updates to $multisite.");
         }
     }
