@@ -2,9 +2,8 @@
 
 /**
  * @file
- * #polymer-generated: Automatically generated Drupal settings file.
- * polymer manages this file and may delete or overwrite the file unless this
- * comment is removed.  It is recommended that you leave this file alone.
+ * This file contains database related configuration. Use this file to store
+ * predictable settings based on the environment.
  */
 
 if (getenv('IS_DDEV_PROJECT') == 'true') {
