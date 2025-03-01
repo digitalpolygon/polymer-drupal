@@ -193,10 +193,11 @@ class DrupalUpgradeCommands extends TaskBase
     private function runComposerCommand(string $command): void
     {
         $is_verbose = $this->output()->isVerbose();
+        $composerPath = $this->getNonProjectComposerPath();
         // Define the composer task to run.
         /** @var \Robo\Task\Base\Exec $task */
         $task = $this->taskExecStack()
-            ->exec("composer $command")
+            ->exec("$composerPath $command")
             ->printMetadata($is_verbose)
             ->printOutput($is_verbose)
             ->interactive($this->input()->isInteractive())
@@ -249,5 +250,17 @@ class DrupalUpgradeCommands extends TaskBase
         } catch (TaskException $e) {
             throw new AbortTasksException($e->getMessage());
         }
+    }
+
+    protected function getNonProjectComposerPath(): string|false {
+        if (!empty($path = getenv('PATH'))) {
+            $paths = explode(PATH_SEPARATOR, $path);
+            foreach ($paths as $path) {
+                if (file_exists($path . '/composer')) {
+                    return $path . '/composer';
+                }
+            }
+        }
+        return false;
     }
 }
