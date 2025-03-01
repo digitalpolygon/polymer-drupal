@@ -7,6 +7,8 @@ use DigitalPolygon\Polymer\Robo\Tasks\TaskBase;
 use Grasmash\Expander\Expander;
 use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Symfony\ConsoleIO;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Yaml\Yaml;
 
 class SetupCommands extends TaskBase
 {
@@ -54,9 +56,8 @@ class SetupCommands extends TaskBase
         $this->commandInvoker->pinGlobal('--site', $site);
         foreach ($commands as $command) {
             if (is_array($command)) {
-                $this->commandInvoker->invokeCommand($io->input(), $command['command'], $command['args'] ?? []);
-            }
-            else {
+                $this->commandInvoker->invokeCommand($io->input(), $command['command'], $command['args']);
+            } else {
                 $this->commandInvoker->invokeCommand($io->input(), $command);
             }
         }
@@ -237,5 +238,42 @@ INCLUDE;
                 file_put_contents($file, $expandedContent);
             }
         }
+    }
+
+    #[Command(name: 'drupal:setup:ddev', aliases: ['dssdd'])]
+    public function setupDdev(ConsoleIO $io): void
+    {
+        $io->say("Generating DDEV config and creating databases...");
+        $repoRoot = $this->getConfigValue('repo.root');
+        $taskCreateDatabases = $this->taskExecStack()
+            ->interactive($io->input()->isInteractive())
+            ->stopOnFail()
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE);
+        $ddevDir = $repoRoot . '/.ddev';
+        $polymerDdevConfigFile = "$ddevDir/config.polymer.yml";
+        if (!is_dir($ddevDir)) {
+            $this->say('Could not detect DDEV directory. Skipping DDEV setup.');
+            return;
+        }
+        $multisites = $this->getConfigValue('drupal.multisite.sites', []);
+        $databaseString = 'CREATE DATABASE IF NOT EXISTS #site#; GRANT ALL ON #site#.* TO "db"@"%";';
+        $config = [
+            'hooks' => [],
+        ];
+        $postStartHooks = [];
+        foreach ($multisites as $multisite) {
+            if ('default' === $multisite) {
+                // DDEV already writes DDEV settings file to default site.
+                continue;
+            }
+            $dbCreateString = "mysql -e '" . str_replace('#site#', $multisite, $databaseString) . "'";
+            $postStartHooks[] = [
+                'exec' => $dbCreateString,
+            ];
+            $taskCreateDatabases->exec($dbCreateString);
+        }
+        $config['hooks']['post-start'] = $postStartHooks;
+        file_put_contents($polymerDdevConfigFile, Yaml::dump($config, 4));
+        $taskCreateDatabases->run();
     }
 }

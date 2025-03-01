@@ -31,7 +31,10 @@ $settings_files = [];
 
 // Default global settings.
 // @todo Add polymer specific settings file as needed.
-$polymer_settings_files = ['config'];
+$polymer_settings_files = [
+    'config',
+    'db',
+];
 if ($polymer_settings_files) {
     foreach ($polymer_settings_files as $polymer_settings_file) {
         $settings_file = __DIR__ . "/$polymer_settings_file.settings.php";
