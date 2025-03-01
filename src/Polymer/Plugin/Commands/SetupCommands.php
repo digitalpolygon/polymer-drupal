@@ -284,8 +284,7 @@ INCLUDE;
             $taskCreateDatabases->run();
             // Only write the config file if we actually had to create databases.
             file_put_contents($polymerDdevConfigFile, Yaml::dump($config, 4));
-        }
-        catch (TaskException $e) {
+        } catch (TaskException $e) {
             $this->logger->info("No extra databases required for DDEV.");
         }
     }

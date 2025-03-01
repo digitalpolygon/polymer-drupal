@@ -13,8 +13,8 @@ use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\LoadDrushTaskTrait;
 use Robo\Symfony\ConsoleIO;
 use Symfony\Component\Console\Input\InputOption;
 
-class UpgradeCommands extends TaskBase {
-
+class UpgradeCommands extends TaskBase
+{
     use LoadDrushTaskTrait;
 
     /**
@@ -23,7 +23,8 @@ class UpgradeCommands extends TaskBase {
     #[Command(name: 'drupal:upgrade', aliases: ['du'])]
     #[Option(name: 'new-version', description: 'The specific Drupal core version to upgrade to.')]
     #[Usage(name: 'drupal:upgrade --new-version=10.2.3', description: 'Upgrades Drupal core to version 10.2.3.')]
-    public function upgrade(ConsoleIO $io, string|null $new_version = InputOption::VALUE_REQUIRED): void {
+    public function upgrade(ConsoleIO $io, string|null $new_version = InputOption::VALUE_REQUIRED): void
+    {
         $multisites = $this->getConfigValue('drupal.multisite.sites');
         $args = [];
         if ($new_version) {
@@ -39,7 +40,8 @@ class UpgradeCommands extends TaskBase {
 
     #[Command(name: 'drupal:upgrade:composer', aliases: ['duc'])]
     #[Option(name: 'new-version', description: 'The specific Drupal core version to upgrade to.')]
-    public function upgradeComposer(ConsoleIO $io, string|null $new_version = InputOption::VALUE_REQUIRED): int {
+    public function upgradeComposer(ConsoleIO $io, string|null $new_version = InputOption::VALUE_REQUIRED): int
+    {
         $composerPath = $this->getNonProjectComposerPath();
         $command = 'drupal:core:version-change';
         if (!$composerPath) {
@@ -51,17 +53,14 @@ class UpgradeCommands extends TaskBase {
         $args = [];
         if ($new_version) {
             $args[] = '--new-version=' . $new_version;
-        }
-        else {
+        } else {
             if (in_array($upgradeStrategy, $validOptions)) {
                 if ($upgradeStrategy === 'semantic') {
                     $command = 'update';
-                }
-                else {
+                } else {
                     $args[] = "--$upgradeStrategy";
                 }
-            }
-            else {
+            } else {
                 $this->logger->error("Invalid upgrade strategy: $upgradeStrategy. Valid options are: " . implode(', ', $validOptions));
                 return 1;
             }
@@ -72,7 +71,8 @@ class UpgradeCommands extends TaskBase {
     }
 
     #[Command(name: 'drupal:upgrade:export', aliases: ['due'])]
-    public function exportChanges(ConsoleIO $io): void {
+    public function exportChanges(ConsoleIO $io): void
+    {
         $task = $this->taskDrush()
             ->stopOnFail()
             ->interactive($io->input()->isInteractive())
@@ -84,7 +84,8 @@ class UpgradeCommands extends TaskBase {
         $task->run();
     }
 
-    protected function getNonProjectComposerPath(): string|false {
+    protected function getNonProjectComposerPath(): string|false
+    {
         // Find a composer binary not located within the repository directory.
         $repoRoot = $this->getConfigValue('repo.root');
         if (!empty($path = getenv('PATH'))) {
@@ -101,5 +102,4 @@ class UpgradeCommands extends TaskBase {
         }
         return false;
     }
-
 }
