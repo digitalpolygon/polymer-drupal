@@ -29,7 +29,9 @@ class SetupCommands extends TaskBase
         $site = $io->input()->getOption('site');
         $io->say("Setting up Drupal $site site...");
         $defaultArtifact = $this->getConfigValue('project.default-artifact');
-        $commands = [];
+        $commands = [
+            'drupal:setup:site:files',
+        ];
         if (!empty($defaultArtifact)) {
             $build_dependencies = $this->getConfigValue('artifacts.' . $defaultArtifact . '.dependent-builds');
             if (is_array($build_dependencies)) {
@@ -42,7 +44,9 @@ class SetupCommands extends TaskBase
             }
         }
 
-        $commands[] = 'drupal:setup:site:files';
+        if (getenv('IS_DDEV_PROJECT') == 'true') {
+            $commands[] = 'drupal:setup:ddev';
+        }
 
         switch ($this->getConfigValue('drupal.setup.strategy')) {
             case 'install':
