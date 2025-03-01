@@ -68,7 +68,7 @@ class UpgradeCommands extends TaskBase {
         }
         $args = implode(' ', $args);
 
-        return $this->execCommand("$composerPath $command $args");
+        return $this->execCommand("$composerPath $command $args --yes --no-interaction");
     }
 
     #[Command(name: 'drupal:upgrade:export', aliases: ['due'])]
