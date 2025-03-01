@@ -23,7 +23,7 @@ class UpgradeCommands extends TaskBase
     #[Command(name: 'drupal:upgrade', aliases: ['du'])]
     #[Option(name: 'new-version', description: 'The specific Drupal core version to upgrade to.')]
     #[Usage(name: 'drupal:upgrade --new-version=10.2.3', description: 'Upgrades Drupal core to version 10.2.3.')]
-    public function upgrade(ConsoleIO $io, string|null $new_version = InputOption::VALUE_REQUIRED): void
+    public function upgrade(ConsoleIO $io, string|null|int $new_version = InputOption::VALUE_REQUIRED): void
     {
         $multisites = $this->getConfigValue('drupal.multisite.sites');
         $args = [];
@@ -40,7 +40,7 @@ class UpgradeCommands extends TaskBase
 
     #[Command(name: 'drupal:upgrade:composer', aliases: ['duc'])]
     #[Option(name: 'new-version', description: 'The specific Drupal core version to upgrade to.')]
-    public function upgradeComposer(ConsoleIO $io, string|null $new_version = InputOption::VALUE_REQUIRED): int
+    public function upgradeComposer(ConsoleIO $io, string|null|int $new_version = InputOption::VALUE_REQUIRED): int
     {
         $composerPath = $this->getNonProjectComposerPath();
         $command = 'drupal:core:version-change';
