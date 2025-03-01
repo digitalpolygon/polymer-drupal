@@ -153,7 +153,8 @@ class DrupalUpgradeCommands extends TaskBase
     private function upgradeDrupalToLatestMinor(): void
     {
         $this->say('Upgrading Drupal core to the latest stable minor version...');
-        $this->runComposerCommand('drupal:core:version-change --latest-minor --yes');
+//        $this->runComposerCommand('drupal:core:version-change --latest-minor --yes');
+        $this->runComposerCommand('core-upgrade');
     }
 
     /**
