@@ -151,13 +151,15 @@ class SyncCommands extends TaskBase
 
         /** @var string $site_dir */
         $site_dir = $this->input()->getOption('site');
+        $publicFilesPath = $this->getConfigValue('docroot') . "/sites/$site_dir/files";
+        $this->execCommand("mkdir -p $publicFilesPath");
 
         $task = $this->taskDrush()
         ->alias('')
         ->uri('')
         ->drush('rsync')
         ->arg($remote_alias . ':%files/')
-        ->arg($this->getConfigValue('docroot') . "/sites/$site_dir/files");
+        ->arg($publicFilesPath);
 
         /** @var array<string> $exclude_paths */
         $exclude_paths = $this->getConfigValue('drupal.sync.exclude-paths');
@@ -180,6 +182,7 @@ class SyncCommands extends TaskBase
         /** @var string $site_dir */
         $site_dir = $this->input()->getOption('site');
         $private_files_local_path = $this->getConfigValue('repo.root') . "/files-private/$site_dir";
+        $this->execCommand("mkdir -p $private_files_local_path");
 
         $task = $this->taskDrush()
         ->alias('')
