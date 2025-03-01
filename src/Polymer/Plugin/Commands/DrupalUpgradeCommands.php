@@ -195,7 +195,7 @@ class DrupalUpgradeCommands extends TaskBase
         // Define the composer task to run.
         /** @var \Robo\Task\Base\Exec $task */
         $task = $this->taskExecStack()
-            ->exec("composer $command")
+            ->exec("composer $command --no-interaction")
             ->printMetadata($is_verbose)
             ->printOutput($is_verbose)
             ->interactive($this->input()->isInteractive())
