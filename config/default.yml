@@ -5,7 +5,7 @@ deploy:
 drupal:
   upgrade:
     # Valid values are: semantic, latest-minor, next-major, latest-major.
-    strategy: semantic
+    strategy: latest-minor
   account:
     # Admin account name and password will be randomly generated unless set here.
     #name: admin
