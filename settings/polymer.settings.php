@@ -31,10 +31,16 @@ $settings_files = [];
 
 // Default global settings.
 // @todo Add polymer specific settings file as needed.
-$polymer_settings_files = ['config'];
+$polymer_settings_files = [
+    'config',
+    'db',
+];
 if ($polymer_settings_files) {
     foreach ($polymer_settings_files as $polymer_settings_file) {
-        $settings_files[] = __DIR__ . "/$polymer_settings_file.settings.php";
+        $settings_file = __DIR__ . "/$polymer_settings_file.settings.php";
+        if (file_exists($settings_file)) {
+            $settings_files[] = $settings_file;
+        }
     }
 }
 
@@ -50,8 +56,9 @@ if (EnvironmentDetectorBase::isCiEnv()) {
 
 // Local global and site-specific settings.
 if (AcquiaEnvironmentDetector::isLocalEnv() || PantheonEnvironmentDetector::isLocalEnv()) {
-    $settings_files[] = DRUPAL_ROOT . '/sites/settings/local.settings.php';
-    $settings_files[] = DRUPAL_ROOT . "/sites/$site_name/settings/local.settings.php";
+    // Use settings.local.php because that's what Drupal scaffold uses.
+    $settings_files[] = DRUPAL_ROOT . '/sites/settings/settings.local.php';
+    $settings_files[] = DRUPAL_ROOT . "/sites/$site_name/settings.local.php";
 }
 
 foreach ($settings_files as $settings_file) {
