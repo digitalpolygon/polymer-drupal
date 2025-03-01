@@ -17,9 +17,7 @@ class UpgradeCommands extends TaskBase {
     #[Command(name: 'drupal:upgrade', aliases: ['du'])]
     public function upgrade(ConsoleIO $io) {
         $multisites = $this->getConfigValue('drupal.multisite.sites');
-        $commands = [
-            'drupal:upgrade:composer',
-        ];
+        $this->commandInvoker->invokeCommand($io->input(), 'drupal:upgrade:composer');
         foreach ($multisites as $multisite) {
             $this->commandInvoker->pinGlobal('--site', $multisite);
             $this->commandInvoker->invokeCommand($io->input(), 'drupal:upgrade:export');

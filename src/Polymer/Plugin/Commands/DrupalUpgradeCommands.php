@@ -41,15 +41,15 @@ class DrupalUpgradeCommands extends TaskBase
      * @throws \Robo\Exception\AbortTasksException
      *   Thrown if any step in the upgrade process fails.
      */
-    #[Command(name: 'drupal:upgrade')]
-    #[Option(name: 'new_version', description: 'The specific Drupal core version to upgrade to.')]
-    #[Option(name: 'latest_minor', description: 'Upgrade to the latest stable minor version of Drupal core.')]
-    #[Option(name: 'latest_major', description: 'Upgrade to the latest stable major version of Drupal core.')]
-    #[Option(name: 'next_major', description: 'Upgrade to the next major version of Drupal core.')]
-    #[Usage(name: 'drupal:upgrade --new_version=10.2.3', description: 'Upgrades Drupal core to version 10.2.3.')]
-    #[Usage(name: 'drupal:upgrade --latest_minor', description: 'Upgrades Drupal core to the latest stable minor version.')]
-    #[Usage(name: 'drupal:upgrade --latest_major', description: 'Upgrades Drupal core to the latest stable major version.')]
-    #[Usage(name: 'drupal:upgrade --next_major', description: 'Upgrades Drupal core to the next major version.')]
+//    #[Command(name: 'drupal:upgrade')]
+//    #[Option(name: 'new_version', description: 'The specific Drupal core version to upgrade to.')]
+//    #[Option(name: 'latest_minor', description: 'Upgrade to the latest stable minor version of Drupal core.')]
+//    #[Option(name: 'latest_major', description: 'Upgrade to the latest stable major version of Drupal core.')]
+//    #[Option(name: 'next_major', description: 'Upgrade to the next major version of Drupal core.')]
+//    #[Usage(name: 'drupal:upgrade --new_version=10.2.3', description: 'Upgrades Drupal core to version 10.2.3.')]
+//    #[Usage(name: 'drupal:upgrade --latest_minor', description: 'Upgrades Drupal core to the latest stable minor version.')]
+//    #[Usage(name: 'drupal:upgrade --latest_major', description: 'Upgrades Drupal core to the latest stable major version.')]
+//    #[Usage(name: 'drupal:upgrade --next_major', description: 'Upgrades Drupal core to the next major version.')]
     public function upgradeDrupal(string $new_version = null, bool $latest_minor = false, bool $latest_major = false, bool $next_major = false): void
     {
         $this->doUpgrade($new_version, $latest_minor, $latest_major, $next_major);
