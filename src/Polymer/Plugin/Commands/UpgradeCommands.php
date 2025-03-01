@@ -41,6 +41,10 @@ class UpgradeCommands extends TaskBase {
     #[Option(name: 'new-version', description: 'The specific Drupal core version to upgrade to.')]
     public function upgradeComposer(ConsoleIO $io, string|null $new_version = InputOption::VALUE_REQUIRED): int {
         $composerPath = $this->getNonProjectComposerPath();
+        if (!$composerPath) {
+            $this->logger->error("No composer binary found outside the repository directory. Polymer can't run the upgrade process with project-level composer binary.");
+            return 1;
+        }
         $upgradeStrategy = $this->getConfigValue('drupal.upgrade.strategy');
         $validOptions = ['latest-minor', 'latest-major', 'next-major', 'semantic'];
         $args = [];
@@ -48,13 +52,10 @@ class UpgradeCommands extends TaskBase {
             $args[] = '--new-version=' . $new_version;
         }
         else {
-            if (in_array($upgradeStrategy, $validOptions)) {
-                if ('semantic' !== $upgradeStrategy) {
-                    $args[] = "--$upgradeStrategy";
-                }
+            if (in_array($upgradeStrategy, $validOptions) && 'semantic' !== $upgradeStrategy) {
+                $args[] = "--$upgradeStrategy";
             }
             else {
-                $io->say("Invalid upgrade strategy: $upgradeStrategy. Valid options are: " . implode(', ', $validOptions));
                 $this->logger->error("Invalid upgrade strategy: $upgradeStrategy. Valid options are: " . implode(', ', $validOptions));
                 return 1;
             }
