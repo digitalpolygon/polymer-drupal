@@ -93,7 +93,7 @@ class SetupCommands extends TaskBase
         $sitePath = "$docroot/sites/$site";
         $settingsFile = "$sitePath/settings.php";
         $includeStartDelim = '@polymer-settings-include-start';
-        $includeEndDelim = '@polymer-settings-include-start';
+        $includeEndDelim = '@polymer-settings-include-end';
         $lines = file($settingsFile);
         $startLine = null;
         $endLine = null;
