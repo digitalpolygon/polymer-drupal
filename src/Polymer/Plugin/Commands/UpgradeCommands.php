@@ -27,7 +27,7 @@ class UpgradeCommands extends TaskBase {
 
     #[Command(name: 'drupal:upgrade:composer', aliases: ['duc'])]
     public function upgradeComposer(): void {
-        $this->execCommand('composer drupal:core:version-change --latest-minor');
+        $this->execCommand('composer drupal:core:version-change --latest-minor --no-interaction');
     }
 
     #[Command(name: 'drupal:upgrade:export', aliases: ['due'])]
