@@ -280,9 +280,10 @@ INCLUDE;
             $taskCreateDatabases->exec($dbCreateString);
         }
         $config['hooks']['post-start'] = $postStartHooks;
-        file_put_contents($polymerDdevConfigFile, Yaml::dump($config, 4));
         try {
             $taskCreateDatabases->run();
+            // Only write the config file if we actually had to create databases.
+            file_put_contents($polymerDdevConfigFile, Yaml::dump($config, 4));
         }
         catch (TaskException $e) {
             $this->logger->info("No extra databases required for DDEV.");
