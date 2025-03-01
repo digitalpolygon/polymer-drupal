@@ -41,15 +41,15 @@ class DrupalUpgradeCommands extends TaskBase
      * @throws \Robo\Exception\AbortTasksException
      *   Thrown if any step in the upgrade process fails.
      */
-    #[Command(name: 'drupal:upgrade')]
-    #[Option(name: 'new-version', description: 'The specific Drupal core version to upgrade to.')]
-    #[Option(name: 'latest-minor', description: 'Upgrade to the latest stable minor version of Drupal core.')]
-    #[Option(name: 'latest-major', description: 'Upgrade to the latest stable major version of Drupal core.')]
-    #[Option(name: 'next-major', description: 'Upgrade to the next major version of Drupal core.')]
-    #[Usage(name: 'drupal:upgrade --new-version=10.2.3', description: 'Upgrades Drupal core to version 10.2.3.')]
-    #[Usage(name: 'drupal:upgrade --latest-minor', description: 'Upgrades Drupal core to the latest stable minor version.')]
-    #[Usage(name: 'drupal:upgrade --latest-major', description: 'Upgrades Drupal core to the latest stable major version.')]
-    #[Usage(name: 'drupal:upgrade --next-major', description: 'Upgrades Drupal core to the next major version.')]
+//    #[Command(name: 'drupal:upgrade')]
+//    #[Option(name: 'new-version', description: 'The specific Drupal core version to upgrade to.')]
+//    #[Option(name: 'latest-minor', description: 'Upgrade to the latest stable minor version of Drupal core.')]
+//    #[Option(name: 'latest-major', description: 'Upgrade to the latest stable major version of Drupal core.')]
+//    #[Option(name: 'next-major', description: 'Upgrade to the next major version of Drupal core.')]
+//    #[Usage(name: 'drupal:upgrade --new-version=10.2.3', description: 'Upgrades Drupal core to version 10.2.3.')]
+//    #[Usage(name: 'drupal:upgrade --latest-minor', description: 'Upgrades Drupal core to the latest stable minor version.')]
+//    #[Usage(name: 'drupal:upgrade --latest-major', description: 'Upgrades Drupal core to the latest stable major version.')]
+//    #[Usage(name: 'drupal:upgrade --next-major', description: 'Upgrades Drupal core to the next major version.')]
     public function upgradeDrupal(string $new_version = null, bool $latest_minor = false, bool $latest_major = false, bool $next_major = false): void
     {
         $this->doUpgrade($new_version, $latest_minor, $latest_major, $next_major);
@@ -252,21 +252,4 @@ class DrupalUpgradeCommands extends TaskBase
         }
     }
 
-    protected function getNonProjectComposerPath(): string|false {
-        // Find a composer binary not located within the repository directory.
-        $repoRoot = $this->getConfigValue('repo.root');
-        if (!empty($path = getenv('PATH'))) {
-            $paths = explode(PATH_SEPARATOR, $path);
-            foreach ($paths as $path) {
-                if (strpos($path, $repoRoot) === 0) {
-                    continue;
-                }
-                $composerPath = $path . '/composer';
-                if (file_exists($composerPath)) {
-                    return $composerPath;
-                }
-            }
-        }
-        return false;
-    }
 }

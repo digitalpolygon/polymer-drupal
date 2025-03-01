@@ -3,6 +3,9 @@ docroot: ${repo.root}/${docroot-dir-name}
 deploy:
   docroot: ${deploy.dir}/${docroot-dir-name}
 drupal:
+  upgrade:
+    # Valid values are: semantic, latest-minor, next-major, latest-major.
+    strategy: semantic
   account:
     # Admin account name and password will be randomly generated unless set here.
     #name: admin
