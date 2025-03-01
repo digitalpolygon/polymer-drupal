@@ -253,11 +253,17 @@ class DrupalUpgradeCommands extends TaskBase
     }
 
     protected function getNonProjectComposerPath(): string|false {
+        // Find a composer binary not located within the repository directory.
+        $repoRoot = $this->getConfigValue('repo.root');
         if (!empty($path = getenv('PATH'))) {
             $paths = explode(PATH_SEPARATOR, $path);
             foreach ($paths as $path) {
-                if (file_exists($path . '/composer')) {
-                    return $path . '/composer';
+                if (strpos($path, $repoRoot) === 0) {
+                    continue;
+                }
+                $composerPath = $path . '/composer';
+                if (file_exists($composerPath)) {
+                    return $composerPath;
                 }
             }
         }
