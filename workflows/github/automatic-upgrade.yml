@@ -1,0 +1,70 @@
+name: Automatic Upgrades
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Run every sunday at 2am server time
+    - cron: '0 2 * * 0'
+
+jobs:
+  upgrade:
+    name: Upgrade Drupal
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Git user
+        uses: fregante/setup-git-user@v2.0.2
+      - uses: tibdex/github-app-token@v1
+        id: generate-token
+        with:
+          app_id: ${{ secrets.DP_PR_APP_ID }}
+          private_key: ${{ secrets.DP_PR_APP_KEY }}
+      - name: Setup SSH keys
+        run: |
+          mkdir -p .ddev/homeadditions/.ssh
+          echo "${{ secrets.SSH_KEY }}" > .ddev/homeadditions/.ssh/id_rsa
+          chmod 700 .ddev/homeadditions/.ssh
+          chmod 600 .ddev/homeadditions/.ssh/id_rsa
+      - name: Setup DDEV
+        uses: ddev/github-action-setup-ddev@v1
+      - name: Configure GitHub token for Composer
+        run: ddev composer config --global github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
+      - name: Install dependencies
+        run: ddev composer install --no-interaction
+      - name: Execute setup strategies for sites
+        run: |
+          ddev exec -- polymer drupal:setup:site:all --no-interaction -v
+      - name: Execute upgrade strategy
+        run: ddev exec -- polymer drupal:upgrade --no-interaction -v
+      - name: Cleanup sensitive info before adding and committing
+        run: |
+          rm -rf .ddev/homeadditions/.ssh
+      - name: Create pull request with any changes
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
+          # Close all previous open PRs using latest gh CLI syntax
+          gh pr list --author="app/actions-pr-workflows-trigger" --state=open --json number --jq '.[].number' | xargs -I {} gh pr close {} --comment "Automatically closing the PR in favor of new updates." --delete-branch
+
+          # Create new branch
+          branch_name=automated-update/$(date +%Y-%m-%dT%H-%M-%S)
+          git checkout -b "$branch_name"
+          git add .
+
+          if git commit -m "Update application."; then
+            # Create or ensure label exists using latest gh CLI syntax
+            gh label create "automated application update" --description "Automatic application updates from workflow." --color FBCA04 --force
+
+            # Push branch and create PR using latest gh CLI syntax
+            git push origin "$branch_name"
+            gh pr create \
+              --title "Automated application updates for $branch_name" \
+              --body "Automated application updates." \
+              --label "automated application update" \
+              --base $GITHUB_REF
+          else
+            echo "No changes to commit."
+          fi
