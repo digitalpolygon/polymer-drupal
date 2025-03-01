@@ -73,15 +73,15 @@ class UpgradeCommands extends TaskBase {
 
     #[Command(name: 'drupal:upgrade:export', aliases: ['due'])]
     public function exportChanges(ConsoleIO $io): void {
+        $task = $this->taskDrush()
+            ->stopOnFail()
+            ->interactive($io->input()->isInteractive())
+            ->drush('updb');
         $configManagementStrategy = $this->getConfigValue('drupal.cm.strategy');
         if (in_array($configManagementStrategy, ['config-split', 'core-only'])) {
-            $this->taskDrush()
-                ->stopOnFail()
-                ->interactive($io->input()->isInteractive())
-                ->drush('updb')
-                ->drush('cex')
-                ->run();
+            $task->drush('cex');
         }
+        $task->run();
     }
 
     protected function getNonProjectComposerPath(): string|false {
