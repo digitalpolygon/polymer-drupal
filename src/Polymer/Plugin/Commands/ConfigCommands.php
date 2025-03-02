@@ -38,7 +38,7 @@ class ConfigCommands extends TaskBase
     }
 
     /**
-     * Update the current Drupal site configs.
+     * Run site updates and execute configuration management strategy.
      *
      * @throws \Robo\Exception\AbortTasksException|TaskException
      */

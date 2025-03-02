@@ -16,7 +16,10 @@ class SyncCommands extends TaskBase
     use LoadDrushTaskTrait;
 
     /**
-     * Synchronize each multisite.
+     * Synchronize each site.
+     *
+     * @param ConsoleIO $io
+     *   The console input/output object.
      *
      * @throws \Robo\Exception\AbortTasksException|TaskException
      */
@@ -40,6 +43,7 @@ class SyncCommands extends TaskBase
 
     /**
      * Synchronize local env from remote (remote -> local).
+     *
      * Copies remote db to local db, re-imports config, and executes db updates fro default site.
      *
      * @throws \Robo\Exception\AbortTasksException|TaskException

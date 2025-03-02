@@ -18,7 +18,18 @@ class UpgradeCommands extends TaskBase
     use LoadDrushTaskTrait;
 
     /**
-     * Upgrade Drupal.
+     * Upgrade Drupal codebase and export changes.
+     *
+     * Part of this operation ensures that all multisites are updated
+     * and their configuration is exported, if the site uses a
+     * configuration management strategy that exports config.
+     *
+     * @param ConsoleIO $io
+     *   The console input/output object.
+     * @param string|null|int $new_version
+     *   If provided, this will target a specific Drupal version to upgrade to.
+     *
+     * @return void
      */
     #[Command(name: 'drupal:upgrade', aliases: ['du'])]
     #[Option(name: 'new-version', description: 'The specific Drupal core version to upgrade to.')]
@@ -38,6 +49,19 @@ class UpgradeCommands extends TaskBase
         }
     }
 
+    /**
+     * Upgrade Drupal codebase based on upgrade strategy.
+     *
+     * @param ConsoleIO $io
+     *   The console input/output object.
+     * @param string|int|null $new_version
+     *   If provided, this will target a specific Drupal version to upgrade to.
+     * @return int
+     *  The exit code of the command.
+     *
+     * @throws \Robo\Exception\AbortTasksException
+     * @throws \Robo\Exception\TaskException
+     */
     #[Command(name: 'drupal:upgrade:composer', aliases: ['duc'])]
     #[Option(name: 'new-version', description: 'The specific Drupal core version to upgrade to.')]
     public function upgradeComposer(ConsoleIO $io, string|null|int $new_version = InputOption::VALUE_REQUIRED): int
@@ -70,6 +94,20 @@ class UpgradeCommands extends TaskBase
         return $this->execCommand("$composerPath $command $args --yes --no-interaction");
     }
 
+    /**
+     * Run database updates and export configuration for a site.
+     *
+     * Note that configuration will only be exported if the site's
+     * configuration management strategy is one of the following:
+     *
+     *   - config-split
+     *   - core-only
+     *
+     * @param ConsoleIO $io
+     * @return void
+     *
+     * @throws \Robo\Exception\TaskException
+     */
     #[Command(name: 'drupal:upgrade:export', aliases: ['due'])]
     public function exportChanges(ConsoleIO $io): void
     {

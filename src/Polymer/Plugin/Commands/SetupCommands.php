@@ -13,6 +13,13 @@ use Symfony\Component\Yaml\Yaml;
 
 class SetupCommands extends TaskBase
 {
+    /**
+     * Set up all sites.
+     *
+     * @param ConsoleIO $io
+     *   Robo application input/output for this command.
+     * @return void
+     */
     #[Command(name: 'drupal:setup:site:all', aliases: ['dssa'])]
     public function setupSiteAll(ConsoleIO $io): void
     {
@@ -24,6 +31,13 @@ class SetupCommands extends TaskBase
         }
     }
 
+    /**
+     * Set up a single site using the site's configured setup strategy.
+     *
+     * @param ConsoleIO $io
+     *   Robo application input/output for this command.
+     * @return void
+     */
     #[Command(name: 'drupal:setup:site', aliases: ['dss'])]
     public function setupSite(ConsoleIO $io): void
     {
@@ -69,6 +83,21 @@ class SetupCommands extends TaskBase
         $this->commandInvoker->unpinGlobal('--site');
     }
 
+    /**
+     * Set up a site's files.
+     *
+     * Ensures that the following files are present:
+     *
+     *   - Global settings (common to all sites)
+     *   - Site-specific settings and Drush files
+     *
+     * Also ensures that the polymer.settings.php file is included in the
+     * site's settings.php file.
+     *
+     * @param ConsoleIO $io
+     *   Robo application input/output for this command.
+     * @return void
+     */
     #[Command(name: 'drupal:setup:site:files', aliases: ['dssf'])]
     public function setupSiteFiles(ConsoleIO $io): void
     {
@@ -245,6 +274,17 @@ INCLUDE;
         }
     }
 
+    /**
+     * Set up DDEV databases and generate DDEV configuration files.
+     *
+     * Creates databases based on site directory names and generates a
+     * DDEV config file that includes hooks for ensuring the databases
+     * are created when the project starts going forward.
+     *
+     * @param ConsoleIO $io
+     *   Robo application input/output for this command.
+     * @return void
+     */
     #[Command(name: 'drupal:setup:ddev', aliases: ['dssdd'])]
     public function setupDdev(ConsoleIO $io): void
     {
