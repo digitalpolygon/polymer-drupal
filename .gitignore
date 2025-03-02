@@ -17,3 +17,6 @@ docs_site/
 
 # polymer config repo
 polymer/
+
+# Ignore documentation files.
+/mkdocs.yml
