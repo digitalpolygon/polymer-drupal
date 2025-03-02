@@ -6,6 +6,7 @@ use Consolidation\AnnotatedCommand\Attributes\Command;
 use DigitalPolygon\Polymer\Robo\Tasks\TaskBase;
 use Grasmash\Expander\Expander;
 use Robo\Contract\VerbosityThresholdInterface;
+use Robo\Exception\TaskException;
 use Robo\Symfony\ConsoleIO;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
@@ -249,6 +250,7 @@ INCLUDE;
     {
         $io->say("Generating DDEV config and creating databases...");
         $repoRoot = $this->getConfigValue('repo.root');
+        $this->logger->info("Working out of repo root $repoRoot...");
         $taskCreateDatabases = $this->taskExecStack()
             ->interactive($io->input()->isInteractive())
             ->stopOnFail()
@@ -260,6 +262,7 @@ INCLUDE;
             return;
         }
         $multisites = $this->getConfigValue('drupal.multisite.sites', []);
+        $this->logger->info("Found multisites: " . implode(', ', $multisites));
         $databaseString = 'CREATE DATABASE IF NOT EXISTS #site#; GRANT ALL ON #site#.* TO "db"@"%";';
         $config = [
             'hooks' => [],
@@ -277,7 +280,12 @@ INCLUDE;
             $taskCreateDatabases->exec($dbCreateString);
         }
         $config['hooks']['post-start'] = $postStartHooks;
-        file_put_contents($polymerDdevConfigFile, Yaml::dump($config, 4));
-        $taskCreateDatabases->run();
+        try {
+            $taskCreateDatabases->run();
+            // Only write the config file if we actually had to create databases.
+            file_put_contents($polymerDdevConfigFile, Yaml::dump($config, 4));
+        } catch (TaskException $e) {
+            $this->logger->info("No extra databases required for DDEV.");
+        }
     }
 }

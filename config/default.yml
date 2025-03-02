@@ -3,6 +3,14 @@ docroot: ${repo.root}/${docroot-dir-name}
 deploy:
   docroot: ${deploy.dir}/${docroot-dir-name}
 drupal:
+  workflow:
+    files:
+      github:
+        - automatic-upgrade.yml
+        - composer-diff.yml
+  upgrade:
+    # Valid values are: semantic, latest-minor, next-major, latest-major.
+    strategy: latest-minor
   account:
     # Admin account name and password will be randomly generated unless set here.
     #name: admin
