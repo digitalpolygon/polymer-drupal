@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Setup PHP Action
+        uses: shivammathur/setup-php@2.32.0
+      - name: Generate docs
+        run: polymer mk:docs
       - name: Build docs
         run: ./scripts/build-docs.sh build --clean
       - name: Upload pages artifact
