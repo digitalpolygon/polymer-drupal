@@ -39,7 +39,7 @@ jobs:
       - name: Generate docs
         run: |
           composer install --no-interaction
-          bin/polymer mk:docs
+          vendor/bin/polymer mk:docs
       - name: Mike alias
         run: mike alias 0.x latest --update-aliases
       - name: Mike set-default
