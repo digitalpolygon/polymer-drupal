@@ -55,11 +55,6 @@
     "squizlabs/php_codesniffer": "^3",
     "php-parallel-lint/php-parallel-lint": "^1.4"
   },
-  "extra": {
-    "branch-alias": {
-      "dev-main": "0.x-dev"
-    }
-  },
   "scripts": {
     "lint": "find src test/src -name '*.php' -print0 | xargs -0 -n1 -P4 -- php -l",
     "cs": "phpcs",
