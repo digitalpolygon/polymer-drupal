@@ -27,7 +27,7 @@ theme:
     - navigation.tabs.sticky
     - toc.integrate
 repo_url: https://github.com/digitalpolygon/polymer-drual
-repo_name: digitalpolygon/polymer
+repo_name: digitalpolygon/polymer-drupal
 edit_uri: blob/0.x/docs
 site_url: https://digitalpolygon.github.io/polymer-drupal/latest/
 plugins:
