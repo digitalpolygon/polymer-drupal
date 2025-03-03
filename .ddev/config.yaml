@@ -10,6 +10,9 @@ database:
     version: "10.11"
 use_dns_when_possible: true
 composer_version: "2"
+webimage_extra_packages:
+  - python3-pip
+  - python3-venv
 web_environment: []
 corepack_enable: false
 web_extra_exposed_ports:
@@ -17,6 +20,10 @@ web_extra_exposed_ports:
       container_port: 81
       http_port: 81
       https_port: 444
+    - name: docs-dev
+      container_port: 8000
+      http_port: 82
+      https_port: 445
 hooks:
   post-start:
     - exec: |

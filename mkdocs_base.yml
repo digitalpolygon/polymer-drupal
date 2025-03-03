@@ -1,7 +1,7 @@
 # This file is augmented with more nav pages by drush mk:docs command.
 site_name: Polymer Drupal
-site_author: "Les Peabody"
-site_description: A tool for facilitating WebOps workflows.
+site_author: 'Les Peabody'
+site_description: A Polymer extension for supporting Drupal applications.
 site_dir: docs_site
 theme:
   name: material
@@ -26,19 +26,34 @@ theme:
     - navigation.tabs
     - navigation.tabs.sticky
     - toc.integrate
-repo_url: https://github.com/digitalpolygon/polymer-drupal
-repo_name: digitalpolygon/polymer-drupal
+repo_url: https://github.com/digitalpolygon/polymer-drual
+repo_name: digitalpolygon/polymer
+edit_uri: blob/0.x/docs
+site_url: https://digitalpolygon.github.io/polymer-drupal/latest/
 plugins:
+  - edit_url
   - search
-  - git-revision-date-localized
+  - git-revision-date-localized:
+      exclude:
+        - commands/*
+  - git-authors:
+      exclude:
+        - commands/*
+  - mike:
+      canonical_version: latest
+      alias_type: redirect
+extra:
+  version:
+    provider: mike
+    alias: true
 markdown_extensions:
   - toc:
       permalink: true
-  - admonition: {}
-  - meta: {}
-  - pymdownx.magiclink: {}
-  - pymdownx.keys: {}
-  - pymdownx.snippets: {}
+  - admonition: {  }
+  - meta: { }
+  - pymdownx.magiclink: {  }
+  - pymdownx.keys: { }
+  - pymdownx.snippets: { }
   - pymdownx.highlight:
       use_pygments: true
       # https://github.com/squidfunk/mkdocs-material/issues/506#issuecomment-338007823
@@ -47,8 +62,8 @@ markdown_extensions:
           lang: php
           options:
             startinline: true
-  - pymdownx.inlinehilite: {}
-  - pymdownx.superfences: {}
+  - pymdownx.inlinehilite: { }
+  - pymdownx.superfences: { }
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.emoji:

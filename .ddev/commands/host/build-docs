@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-# This script builds documentation.
-
-set -e
-
-./scripts/build-docs.sh build --clean
