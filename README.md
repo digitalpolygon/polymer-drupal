@@ -1,4 +1,5 @@
 [![CI](https://github.com/digitalpolygon/polymer-drupal/actions/workflows/code_standards.yml/badge.svg)](https://github.com/digitalpolygon/polymer-drupal/actions/workflows/code_standards.yml)
+[![pages-build-deployment](https://github.com/digitalpolygon/polymer-drupal/actions/workflows/pages/pages-build-deployment/badge.svg)](https://digitalpolygon.github.io/polymer-drupal/latest/)
 
 # Drupal Integration for Polymer WebOps Tooling
 
