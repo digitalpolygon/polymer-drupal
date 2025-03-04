@@ -2,197 +2,217 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/development/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/all/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/artifact_build_prepare/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/artifact_build_sanitize/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/artifact_compile/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/artifact_composer_install/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/artifact_deploy/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/build/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/build_assets/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/build_reqs/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/completion/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/composer_validate_security/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_config_import/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_deploy_hook/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_multisite_create/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_multisite_update-all/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_setup_ddev/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_setup_site/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_setup_site_all/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_setup_site_files/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_site_install/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_site_sync/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_site_sync_all-sites/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_site_sync_database/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_site_sync_db_all-sites/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_site_sync_files/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_site_sync_private-files/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_update/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_upgrade/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_upgrade_composer/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_upgrade_export/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/drupal_workflow_generate/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/help/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/internal_drupal_install/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/list/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/mk_docs/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/polymer_init/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/commands/source_build_copy/</loc>
-         <lastmod>2025-03-03</lastmod>
+         <lastmod>2025-03-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/usage/configuration/</loc>
+         <lastmod>2025-03-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/usage/continuous_integration/</loc>
+         <lastmod>2025-03-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/usage/site_setup/</loc>
+         <lastmod>2025-03-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://digitalpolygon.github.io/polymer-drupal/latest/latest/usage/upgrading/</loc>
+         <lastmod>2025-03-04</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

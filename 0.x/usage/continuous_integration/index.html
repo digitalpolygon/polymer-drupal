@@ -1,0 +1,2436 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A Polymer extension for supporting Drupal applications.">
+      
+      
+        <meta name="author" content="Les Peabody">
+      
+      
+        <link rel="canonical" href="https://digitalpolygon.github.io/polymer-drupal/latest/latest/usage/continuous_integration/">
+      
+      
+        <link rel="prev" href="../upgrading/">
+      
+      
+        <link rel="next" href="../site_setup/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.18">
+    
+    
+      
+        <title>Continuous integration - Polymer Drupal</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+<meta name="robots" content="noindex,nofollow,noarchive" />
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#continuous-integration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Polymer Drupal" class="md-header__button md-logo" aria-label="Polymer Drupal" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Polymer Drupal
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Continuous integration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/digitalpolygon/polymer-drupal" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    digitalpolygon/polymer-drupal
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../configuration/" class="md-tabs__link">
+          
+  
+  Use
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../development/" class="md-tabs__link">
+        
+  
+    
+  
+  Development
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../commands/all/" class="md-tabs__link">
+          
+  
+  Commands
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Polymer Drupal" class="md-nav__button md-logo" aria-label="Polymer Drupal" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Polymer Drupal
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/digitalpolygon/polymer-drupal" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    digitalpolygon/polymer-drupal
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Use
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Use
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Site-specific configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../upgrading/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading Drupal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Continuous integration
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Continuous integration
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#supported-platforms-and-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supported platforms and workflows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Supported platforms and workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#github-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub Actions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GitHub Actions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automatic-upgrades-with-a-pull-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automatic upgrades with a pull request
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Automatic upgrades with a pull request">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pre-requisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pre-requisites
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pre-requisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ddev" class="md-nav__link">
+    <span class="md-ellipsis">
+      DDEV
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-or-reuse-a-custom-github-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create or reuse a custom GitHub application
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      SSH key
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#composer-diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      Composer diff
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initializing-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initializing workflows
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../site_setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Site setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Development
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Commands
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Commands
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    _global
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            _global
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/all/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    all
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/completion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    completion
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/composer_validate_security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    composer:validate:security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/help/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    help
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/internal_drupal_install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    internal:drupal:install
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/list/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    list
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/mk_docs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    mk:docs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/polymer_init/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    polymer:init
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/source_build_copy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    source:build:copy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    artifact
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            artifact
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/artifact_build_prepare/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    artifact:build:prepare
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/artifact_build_sanitize/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    artifact:build:sanitize
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/artifact_compile/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    artifact:compile
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/artifact_composer_install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    artifact:composer:install
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/artifact_deploy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    artifact:deploy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    build
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            build
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/build/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    build
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/build_assets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    build:assets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/build_reqs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    build:reqs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    drupal
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            drupal
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_config_import/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:config:import
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_deploy_hook/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:deploy:hook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_multisite_create/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:multisite:create
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_multisite_update-all/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:multisite:update-all
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_setup_ddev/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:setup:ddev
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_setup_site/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:setup:site
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_setup_site_all/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:setup:site:all
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_setup_site_files/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:setup:site:files
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_site_install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:site:install
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_site_sync/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:site:sync
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_site_sync_all-sites/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:site:sync:all-sites
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_site_sync_database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:site:sync:database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_site_sync_db_all-sites/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:site:sync:db:all-sites
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_site_sync_files/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:site:sync:files
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_site_sync_private-files/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:site:sync:private-files
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_update/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:update
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_upgrade/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:upgrade
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_upgrade_composer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:upgrade:composer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_upgrade_export/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:upgrade:export
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/drupal_workflow_generate/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    drupal:workflow:generate
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">March 4, 2025</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+<h1 id="continuous-integration">Continuous integration<a class="headerlink" href="#continuous-integration" title="Permanent link">&para;</a></h1>
+<p>This extension wants to make it easy to roll out CI process for your Drupal
+application.</p>
+<h2 id="supported-platforms-and-workflows">Supported platforms and workflows<a class="headerlink" href="#supported-platforms-and-workflows" title="Permanent link">&para;</a></h2>
+<ul>
+<li>GitHub Actions<ul>
+<li>Automatic upgrades with a pull request</li>
+<li>Composer diff</li>
+</ul>
+</li>
+</ul>
+<h3 id="github-actions">GitHub Actions<a class="headerlink" href="#github-actions" title="Permanent link">&para;</a></h3>
+<h4 id="automatic-upgrades-with-a-pull-request">Automatic upgrades with a pull request<a class="headerlink" href="#automatic-upgrades-with-a-pull-request" title="Permanent link">&para;</a></h4>
+<p>This workflow does the following:</p>
+<ol>
+<li>Sets up all sites using each site's configured setup strategy.</li>
+<li>Runs the configured Drupal upgrade strategy.</li>
+<li>For each site, runs database updates and exports configuration (if applicable).</li>
+<li>Creates a pull request with the changes.</li>
+</ol>
+<h5 id="pre-requisites">Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permanent link">&para;</a></h5>
+<h6 id="ddev">DDEV<a class="headerlink" href="#ddev" title="Permanent link">&para;</a></h6>
+<p>The OOTB workflow file assumes the project uses DDEV, and it executes commands
+via DDEV in the workflow.</p>
+<h6 id="create-or-reuse-a-custom-github-application">Create or reuse a custom GitHub application<a class="headerlink" href="#create-or-reuse-a-custom-github-application" title="Permanent link">&para;</a></h6>
+<p>You will need to have a <a href="https://docs.github.com/en/apps/creating-github-apps">custom GitHub application</a> configured with the following
+permissions:</p>
+<ul>
+<li>Read access to members and data</li>
+<li>Read and write access to code and pull requests</li>
+</ul>
+<p>Ensure to enable the application for the repository for your project.</p>
+<p>We need to create two repository secrets: <code>DP_PR_APP_ID</code> and <code>DP_PR_APP_KEY</code>.
+The <code>DP_PR_APP_ID</code> is the ID of the GitHub application. The <code>DP_PR_APP_KEY</code>
+is a <a href="https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/managing-private-keys-for-github-apps">private key associated with the GitHub app</a>.</p>
+<h6 id="ssh-key">SSH key<a class="headerlink" href="#ssh-key" title="Permanent link">&para;</a></h6>
+<p>Finally, you need to add a repository secret, <code>SSH_KEY</code>, that
+contains a private SSH key. You should only need this if any of your site setup
+strategies depend on having this SSH key available.</p>
+<h4 id="composer-diff">Composer diff<a class="headerlink" href="#composer-diff" title="Permanent link">&para;</a></h4>
+<p>This workflow runs on every pull request that contains changes to
+<code>composer.lock</code>. It will post, as a sticky comment on the pull request,
+a table with a row for each package changed with the following fields:</p>
+<ul>
+<li>Package name</li>
+<li>Change type</li>
+<li>Previous version</li>
+<li>New version</li>
+<li>Link to package changes code diff (Drupal packages are supported!)</li>
+</ul>
+<p>It relies on the <code>Composer Diff</code> plugin to generate a
+version diff of the changes made to the <code>composer.lock</code> file.</p>
+<details class="example">
+<summary>Example Composer diff table of changes</summary>
+<table>
+<thead>
+<tr>
+<th>Prod Packages</th>
+<th>Operation</th>
+<th>Base</th>
+<th>Target</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/composer/installers">composer/installers</a></td>
+<td>Upgraded</td>
+<td>v2.2.0</td>
+<td>v2.3.0</td>
+<td><a href="https://github.com/composer/installers/compare/v2.2.0...v2.3.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/digitalpolygon/drupal-upgrade-plugin">digitalpolygon/drupal-upgrade-plugin</a></td>
+<td>Changed</td>
+<td>dev-main 87f2362</td>
+<td>1.0.0-beta1</td>
+<td><a href="https://github.com/digitalpolygon/drupal-upgrade-plugin/compare/87f2362...1.0.0-beta1">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/doctrine/annotations">doctrine/annotations</a></td>
+<td>Upgraded</td>
+<td>1.14.3</td>
+<td>1.14.4</td>
+<td><a href="https://github.com/doctrine/annotations/compare/1.14.3...1.14.4">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/doctrine/deprecations">doctrine/deprecations</a></td>
+<td>Upgraded</td>
+<td>1.1.3</td>
+<td>1.1.4</td>
+<td><a href="https://github.com/doctrine/deprecations/compare/1.1.3...1.1.4">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://www.drupal.org/project/drupal">drupal/core</a></td>
+<td>Upgraded</td>
+<td>10.3.0</td>
+<td>10.4.3</td>
+<td><a href="https://github.com/drupal/core/compare/6f1af3070110d7d0f2a6671bea26add34667f765...b9ecec3637e19050a3ab5fe14f6d84e9e00c9abd">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/drupal/core-composer-scaffold">drupal/core-composer-scaffold</a></td>
+<td>Upgraded</td>
+<td>10.3.0</td>
+<td>10.4.3</td>
+<td><a href="https://github.com/drupal/core-composer-scaffold/compare/10.3.0...10.4.3">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/drupal/core-project-message">drupal/core-project-message</a></td>
+<td>Upgraded</td>
+<td>10.3.0</td>
+<td>11.1.3</td>
+<td><a href="https://github.com/drupal/core-project-message/compare/10.3.0...11.1.3">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/drupal/core-recommended">drupal/core-recommended</a></td>
+<td>Upgraded</td>
+<td>10.3.0</td>
+<td>10.4.3</td>
+<td><a href="https://github.com/drupal/core-recommended/compare/10.3.0...10.4.3">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/egulias/EmailValidator">egulias/email-validator</a></td>
+<td>Upgraded</td>
+<td>4.0.2</td>
+<td>4.0.3</td>
+<td><a href="https://github.com/egulias/EmailValidator/compare/4.0.2...4.0.3">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/guzzle/guzzle">guzzlehttp/guzzle</a></td>
+<td>Upgraded</td>
+<td>7.8.2</td>
+<td>7.9.2</td>
+<td><a href="https://github.com/guzzle/guzzle/compare/7.8.2...7.9.2">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/guzzle/psr7">guzzlehttp/psr7</a></td>
+<td>Upgraded</td>
+<td>2.6.3</td>
+<td>2.7.0</td>
+<td><a href="https://github.com/guzzle/psr7/compare/2.6.3...2.7.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/mck89/peast">mck89/peast</a></td>
+<td>Upgraded</td>
+<td>v1.16.2</td>
+<td>v1.16.3</td>
+<td><a href="https://github.com/mck89/peast/compare/v1.16.2...v1.16.3">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/pear/pear-core-minimal">pear/pear-core-minimal</a></td>
+<td>Upgraded</td>
+<td>v1.10.15</td>
+<td>v1.10.16</td>
+<td><a href="https://github.com/pear/pear-core-minimal/compare/v1.10.15...v1.10.16">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/dependency-injection">symfony/dependency-injection</a></td>
+<td>Upgraded</td>
+<td>v6.4.16</td>
+<td>v6.4.19</td>
+<td><a href="https://github.com/symfony/dependency-injection/compare/v6.4.16...v6.4.19">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/error-handler">symfony/error-handler</a></td>
+<td>Upgraded</td>
+<td>v6.4.8</td>
+<td>v6.4.19</td>
+<td><a href="https://github.com/symfony/error-handler/compare/v6.4.8...v6.4.19">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/http-foundation">symfony/http-foundation</a></td>
+<td>Upgraded</td>
+<td>v6.4.8</td>
+<td>v6.4.18</td>
+<td><a href="https://github.com/symfony/http-foundation/compare/v6.4.8...v6.4.18">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/http-kernel">symfony/http-kernel</a></td>
+<td>Upgraded</td>
+<td>v6.4.8</td>
+<td>v6.4.19</td>
+<td><a href="https://github.com/symfony/http-kernel/compare/v6.4.8...v6.4.19">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/mailer">symfony/mailer</a></td>
+<td>Upgraded</td>
+<td>v6.4.8</td>
+<td>v6.4.18</td>
+<td><a href="https://github.com/symfony/mailer/compare/v6.4.8...v6.4.18">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/mime">symfony/mime</a></td>
+<td>Upgraded</td>
+<td>v6.4.8</td>
+<td>v6.4.19</td>
+<td><a href="https://github.com/symfony/mime/compare/v6.4.8...v6.4.19">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/polyfill-ctype">symfony/polyfill-ctype</a></td>
+<td>Upgraded</td>
+<td>v1.29.0</td>
+<td>v1.31.0</td>
+<td><a href="https://github.com/symfony/polyfill-ctype/compare/v1.29.0...v1.31.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/polyfill-iconv">symfony/polyfill-iconv</a></td>
+<td>Upgraded</td>
+<td>v1.29.0</td>
+<td>v1.31.0</td>
+<td><a href="https://github.com/symfony/polyfill-iconv/compare/v1.29.0...v1.31.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/polyfill-intl-grapheme">symfony/polyfill-intl-grapheme</a></td>
+<td>Upgraded</td>
+<td>v1.29.0</td>
+<td>v1.31.0</td>
+<td><a href="https://github.com/symfony/polyfill-intl-grapheme/compare/v1.29.0...v1.31.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/polyfill-intl-idn">symfony/polyfill-intl-idn</a></td>
+<td>Upgraded</td>
+<td>v1.29.0</td>
+<td>v1.31.0</td>
+<td><a href="https://github.com/symfony/polyfill-intl-idn/compare/v1.29.0...v1.31.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/polyfill-intl-normalizer">symfony/polyfill-intl-normalizer</a></td>
+<td>Upgraded</td>
+<td>v1.29.0</td>
+<td>v1.31.0</td>
+<td><a href="https://github.com/symfony/polyfill-intl-normalizer/compare/v1.29.0...v1.31.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/polyfill-mbstring">symfony/polyfill-mbstring</a></td>
+<td>Upgraded</td>
+<td>v1.29.0</td>
+<td>v1.31.0</td>
+<td><a href="https://github.com/symfony/polyfill-mbstring/compare/v1.29.0...v1.31.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/polyfill-php83">symfony/polyfill-php83</a></td>
+<td>Upgraded</td>
+<td>v1.29.0</td>
+<td>v1.31.0</td>
+<td><a href="https://github.com/symfony/polyfill-php83/compare/v1.29.0...v1.31.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/process">symfony/process</a></td>
+<td>Upgraded</td>
+<td>v6.4.15</td>
+<td>v6.4.19</td>
+<td><a href="https://github.com/symfony/process/compare/v6.4.15...v6.4.19">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/psr-http-message-bridge">symfony/psr-http-message-bridge</a></td>
+<td>Upgraded</td>
+<td>v6.4.8</td>
+<td>v6.4.13</td>
+<td><a href="https://github.com/symfony/psr-http-message-bridge/compare/v6.4.8...v6.4.13">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/routing">symfony/routing</a></td>
+<td>Upgraded</td>
+<td>v6.4.8</td>
+<td>v6.4.18</td>
+<td><a href="https://github.com/symfony/routing/compare/v6.4.8...v6.4.18">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/serializer">symfony/serializer</a></td>
+<td>Upgraded</td>
+<td>v6.4.8</td>
+<td>v6.4.19</td>
+<td><a href="https://github.com/symfony/serializer/compare/v6.4.8...v6.4.19">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/validator">symfony/validator</a></td>
+<td>Upgraded</td>
+<td>v6.4.8</td>
+<td>v6.4.19</td>
+<td><a href="https://github.com/symfony/validator/compare/v6.4.8...v6.4.19">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/var-exporter">symfony/var-exporter</a></td>
+<td>Upgraded</td>
+<td>v6.4.13</td>
+<td>v6.4.19</td>
+<td><a href="https://github.com/symfony/var-exporter/compare/v6.4.13...v6.4.19">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/twigphp/Twig">twig/twig</a></td>
+<td>Upgraded</td>
+<td>v3.10.3</td>
+<td>v3.19.0</td>
+<td><a href="https://github.com/twigphp/Twig/compare/v3.10.3...v3.19.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/polyfill-php72">symfony/polyfill-php72</a></td>
+<td>Removed</td>
+<td>v1.31.0</td>
+<td>-</td>
+<td><a href="https://github.com/symfony/polyfill-php72/releases/tag/v1.31.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/polyfill-php80">symfony/polyfill-php80</a></td>
+<td>Removed</td>
+<td>v1.31.0</td>
+<td>-</td>
+<td><a href="https://github.com/symfony/polyfill-php80/releases/tag/v1.31.0">Compare</a></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Dev Packages</th>
+<th>Operation</th>
+<th>Base</th>
+<th>Target</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/minkphp/Mink">behat/mink</a></td>
+<td>Upgraded</td>
+<td>v1.11.0</td>
+<td>v1.12.0</td>
+<td><a href="https://github.com/minkphp/Mink/compare/v1.11.0...v1.12.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/brick/math">brick/math</a></td>
+<td>New</td>
+<td>-</td>
+<td>0.12.3</td>
+<td><a href="https://github.com/brick/math/releases/tag/0.12.3">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/composer/ca-bundle">composer/ca-bundle</a></td>
+<td>Upgraded</td>
+<td>1.5.1</td>
+<td>1.5.5</td>
+<td><a href="https://github.com/composer/ca-bundle/compare/1.5.1...1.5.5">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/composer/class-map-generator">composer/class-map-generator</a></td>
+<td>Upgraded</td>
+<td>1.3.4</td>
+<td>1.6.0</td>
+<td><a href="https://github.com/composer/class-map-generator/compare/1.3.4...1.6.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/composer/composer">composer/composer</a></td>
+<td>Upgraded</td>
+<td>2.7.7</td>
+<td>2.8.6</td>
+<td><a href="https://github.com/composer/composer/compare/2.7.7...2.8.6">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/composer/pcre">composer/pcre</a></td>
+<td>Upgraded</td>
+<td>3.2.0</td>
+<td>3.3.2</td>
+<td><a href="https://github.com/composer/pcre/compare/3.2.0...3.3.2">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/pfrenssen/coder">drupal/coder</a></td>
+<td>Upgraded</td>
+<td>8.3.24</td>
+<td>8.3.28</td>
+<td><a href="https://github.com/pfrenssen/coder/compare/8.3.24...8.3.28">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/drupal/core-dev">drupal/core-dev</a></td>
+<td>Upgraded</td>
+<td>10.3.0</td>
+<td>10.4.3</td>
+<td><a href="https://github.com/drupal/core-dev/compare/10.3.0...10.4.3">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/protocolbuffers/protobuf-php">google/protobuf</a></td>
+<td>Upgraded</td>
+<td>v3.25.4</td>
+<td>v4.29.3</td>
+<td><a href="https://github.com/protocolbuffers/protobuf-php/compare/v3.25.4...v4.29.3">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/IonBazan/composer-diff">ion-bazan/composer-diff</a></td>
+<td>Upgraded</td>
+<td>v1.9.1</td>
+<td>v1.11.0</td>
+<td><a href="https://github.com/IonBazan/composer-diff/compare/v1.9.1...v1.11.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/mglaman/phpstan-drupal">mglaman/phpstan-drupal</a></td>
+<td>Upgraded</td>
+<td>1.2.12</td>
+<td>1.3.3</td>
+<td><a href="https://github.com/mglaman/phpstan-drupal/compare/1.2.12...1.3.3">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/bovigo/vfsStream">mikey179/vfsstream</a></td>
+<td>Upgraded</td>
+<td>v1.6.11</td>
+<td>v1.6.12</td>
+<td><a href="https://github.com/bovigo/vfsStream/compare/v1.6.11...v1.6.12">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/myclabs/DeepCopy">myclabs/deep-copy</a></td>
+<td>Upgraded</td>
+<td>1.12.0</td>
+<td>1.13.0</td>
+<td><a href="https://github.com/myclabs/DeepCopy/compare/1.12.0...1.13.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/Nyholm/psr7-server">nyholm/psr7-server</a></td>
+<td>New</td>
+<td>-</td>
+<td>1.1.0</td>
+<td><a href="https://github.com/Nyholm/psr7-server/releases/tag/1.1.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/opentelemetry-php/api">open-telemetry/api</a></td>
+<td>Upgraded</td>
+<td>1.0.3</td>
+<td>1.2.2</td>
+<td><a href="https://github.com/opentelemetry-php/api/compare/1.0.3...1.2.2">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/opentelemetry-php/context">open-telemetry/context</a></td>
+<td>Upgraded</td>
+<td>1.0.2</td>
+<td>1.1.0</td>
+<td><a href="https://github.com/opentelemetry-php/context/compare/1.0.2...1.1.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/opentelemetry-php/exporter-otlp">open-telemetry/exporter-otlp</a></td>
+<td>Upgraded</td>
+<td>1.0.4</td>
+<td>1.2.0</td>
+<td><a href="https://github.com/opentelemetry-php/exporter-otlp/compare/1.0.4...1.2.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/opentelemetry-php/gen-otlp-protobuf">open-telemetry/gen-otlp-protobuf</a></td>
+<td>Upgraded</td>
+<td>1.1.0</td>
+<td>1.5.0</td>
+<td><a href="https://github.com/opentelemetry-php/gen-otlp-protobuf/compare/1.1.0...1.5.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/opentelemetry-php/sdk">open-telemetry/sdk</a></td>
+<td>Upgraded</td>
+<td>1.0.8</td>
+<td>1.2.2</td>
+<td><a href="https://github.com/opentelemetry-php/sdk/compare/1.0.8...1.2.2">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/opentelemetry-php/sem-conv">open-telemetry/sem-conv</a></td>
+<td>Upgraded</td>
+<td>1.25.0</td>
+<td>1.30.0</td>
+<td><a href="https://github.com/opentelemetry-php/sem-conv/compare/1.25.0...1.30.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/php-http/discovery">php-http/discovery</a></td>
+<td>Upgraded</td>
+<td>1.19.4</td>
+<td>1.20.0</td>
+<td><a href="https://github.com/php-http/discovery/compare/1.19.4...1.20.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/php-http/guzzle7-adapter">php-http/guzzle7-adapter</a></td>
+<td>Upgraded</td>
+<td>1.0.0</td>
+<td>1.1.0</td>
+<td><a href="https://github.com/php-http/guzzle7-adapter/compare/1.0.0...1.1.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/php-http/httplug">php-http/httplug</a></td>
+<td>Upgraded</td>
+<td>2.4.0</td>
+<td>2.4.1</td>
+<td><a href="https://github.com/php-http/httplug/compare/2.4.0...2.4.1">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpDocumentor/ReflectionDocBlock">phpdocumentor/reflection-docblock</a></td>
+<td>Upgraded</td>
+<td>5.4.1</td>
+<td>5.6.1</td>
+<td><a href="https://github.com/phpDocumentor/ReflectionDocBlock/compare/5.4.1...5.6.1">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpDocumentor/TypeResolver">phpdocumentor/type-resolver</a></td>
+<td>Upgraded</td>
+<td>1.8.2</td>
+<td>1.10.0</td>
+<td><a href="https://github.com/phpDocumentor/TypeResolver/compare/1.8.2...1.10.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpspec/prophecy">phpspec/prophecy</a></td>
+<td>Upgraded</td>
+<td>v1.19.0</td>
+<td>v1.20.0</td>
+<td><a href="https://github.com/phpspec/prophecy/compare/v1.19.0...v1.20.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpspec/prophecy-phpunit">phpspec/prophecy-phpunit</a></td>
+<td>Upgraded</td>
+<td>v2.2.0</td>
+<td>v2.3.0</td>
+<td><a href="https://github.com/phpspec/prophecy-phpunit/compare/v2.2.0...v2.3.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpstan/extension-installer">phpstan/extension-installer</a></td>
+<td>Upgraded</td>
+<td>1.4.1</td>
+<td>1.4.3</td>
+<td><a href="https://github.com/phpstan/extension-installer/compare/1.4.1...1.4.3">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpstan/phpdoc-parser">phpstan/phpdoc-parser</a></td>
+<td>Upgraded</td>
+<td>1.29.1</td>
+<td>2.1.0</td>
+<td><a href="https://github.com/phpstan/phpdoc-parser/compare/1.29.1...2.1.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpstan/phpstan">phpstan/phpstan</a></td>
+<td>Upgraded</td>
+<td>1.11.10</td>
+<td>1.12.19</td>
+<td><a href="https://github.com/phpstan/phpstan/compare/1.11.10...1.12.19">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpstan/phpstan-deprecation-rules">phpstan/phpstan-deprecation-rules</a></td>
+<td>Upgraded</td>
+<td>1.2.0</td>
+<td>1.2.1</td>
+<td><a href="https://github.com/phpstan/phpstan-deprecation-rules/compare/1.2.0...1.2.1">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/phpstan/phpstan-phpunit">phpstan/phpstan-phpunit</a></td>
+<td>Upgraded</td>
+<td>1.4.0</td>
+<td>1.4.2</td>
+<td><a href="https://github.com/phpstan/phpstan-phpunit/compare/1.4.0...1.4.2">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/sebastianbergmann/php-code-coverage">phpunit/php-code-coverage</a></td>
+<td>Upgraded</td>
+<td>9.2.31</td>
+<td>9.2.32</td>
+<td><a href="https://github.com/sebastianbergmann/php-code-coverage/compare/9.2.31...9.2.32">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/sebastianbergmann/phpunit">phpunit/phpunit</a></td>
+<td>Upgraded</td>
+<td>9.6.20</td>
+<td>9.6.22</td>
+<td><a href="https://github.com/sebastianbergmann/phpunit/compare/9.6.20...9.6.22">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/ramsey/collection">ramsey/collection</a></td>
+<td>New</td>
+<td>-</td>
+<td>2.0.0</td>
+<td><a href="https://github.com/ramsey/collection/releases/tag/2.0.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/ramsey/uuid">ramsey/uuid</a></td>
+<td>New</td>
+<td>-</td>
+<td>4.7.6</td>
+<td><a href="https://github.com/ramsey/uuid/releases/tag/4.7.6">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/sirbrillig/phpcs-variable-analysis">sirbrillig/phpcs-variable-analysis</a></td>
+<td>Upgraded</td>
+<td>v2.11.19</td>
+<td>v2.11.22</td>
+<td><a href="https://github.com/sirbrillig/phpcs-variable-analysis/compare/v2.11.19...v2.11.22">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/slevomat/coding-standard">slevomat/coding-standard</a></td>
+<td>Upgraded</td>
+<td>8.15.0</td>
+<td>8.16.0</td>
+<td><a href="https://github.com/slevomat/coding-standard/compare/8.15.0...8.16.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/PHPCSStandards/PHP_CodeSniffer">squizlabs/php_codesniffer</a></td>
+<td>Upgraded</td>
+<td>3.10.2</td>
+<td>3.11.3</td>
+<td><a href="https://github.com/PHPCSStandards/PHP_CodeSniffer/compare/3.10.2...3.11.3">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/browser-kit">symfony/browser-kit</a></td>
+<td>Upgraded</td>
+<td>v6.4.8</td>
+<td>v6.4.19</td>
+<td><a href="https://github.com/symfony/browser-kit/compare/v6.4.8...v6.4.19">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/css-selector">symfony/css-selector</a></td>
+<td>Upgraded</td>
+<td>v6.4.8</td>
+<td>v6.4.13</td>
+<td><a href="https://github.com/symfony/css-selector/compare/v6.4.8...v6.4.13">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/dom-crawler">symfony/dom-crawler</a></td>
+<td>Upgraded</td>
+<td>v6.4.8</td>
+<td>v6.4.19</td>
+<td><a href="https://github.com/symfony/dom-crawler/compare/v6.4.8...v6.4.19">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/lock">symfony/lock</a></td>
+<td>Upgraded</td>
+<td>v6.4.8</td>
+<td>v6.4.13</td>
+<td><a href="https://github.com/symfony/lock/compare/v6.4.8...v6.4.13">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/phpunit-bridge">symfony/phpunit-bridge</a></td>
+<td>Upgraded</td>
+<td>v6.4.10</td>
+<td>v6.4.16</td>
+<td><a href="https://github.com/symfony/phpunit-bridge/compare/v6.4.10...v6.4.16">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/polyfill-php80">symfony/polyfill-php80</a></td>
+<td>New</td>
+<td>-</td>
+<td>v1.31.0</td>
+<td><a href="https://github.com/symfony/polyfill-php80/releases/tag/v1.31.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/polyfill-php82">symfony/polyfill-php82</a></td>
+<td>Upgraded</td>
+<td>v1.30.0</td>
+<td>v1.31.0</td>
+<td><a href="https://github.com/symfony/polyfill-php82/compare/v1.30.0...v1.31.0">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/symfony/stopwatch">symfony/stopwatch</a></td>
+<td>Upgraded</td>
+<td>v6.4.8</td>
+<td>v7.2.4</td>
+<td><a href="https://github.com/symfony/stopwatch/compare/v6.4.8...v7.2.4">Compare</a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/Nevay/spi">tbachert/spi</a></td>
+<td>New</td>
+<td>-</td>
+<td>v1.0.2</td>
+<td><a href="https://github.com/Nevay/spi/releases/tag/v1.0.2">Compare</a></td>
+</tr>
+</tbody>
+</table>
+</details>
+<h2 id="initializing-workflows">Initializing workflows<a class="headerlink" href="#initializing-workflows" title="Permanent link">&para;</a></h2>
+<p>Currently, you can initialize the workflows by running
+<code>polymer drupal:workflow:generate github</code>. This will place the supported
+workflows in <code>.github/workflows/</code>.</p>
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "toc.integrate"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.3220b9d7.min.js"></script>
+      
+    
+  </body>
+</html>
