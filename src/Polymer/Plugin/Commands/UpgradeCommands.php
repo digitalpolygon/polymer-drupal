@@ -76,7 +76,7 @@ class UpgradeCommands extends TaskBase
         $validOptions = ['latest-minor', 'latest-major', 'next-major', 'semantic'];
         $args = [];
         if ($new_version) {
-            $args[] = '--new-version=' . $new_version;
+            $args[] = $new_version;
         } else {
             if (in_array($upgradeStrategy, $validOptions)) {
                 if ($upgradeStrategy === 'semantic') {
@@ -91,7 +91,7 @@ class UpgradeCommands extends TaskBase
         }
         $args = implode(' ', $args);
 
-        return $this->execCommand("$composerPath $command $args --yes --no-interaction");
+        return $this->execCommand("$composerPath $command $args --no-interaction");
     }
 
     /**
