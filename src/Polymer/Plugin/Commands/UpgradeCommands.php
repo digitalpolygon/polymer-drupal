@@ -155,6 +155,9 @@ class UpgradeCommands extends TaskBase
             $io->error("Configured rector binary file at path $command was not found. Aborting.");
             return 1;
         }
+        if (!file_exists($configFile)) {
+            $this->commandInvoker->invokeCommand($io->input(), 'drupal:upgrade:rector:setup');
+        }
         try {
             foreach ($paths as $path) {
                 try {
@@ -186,6 +189,24 @@ class UpgradeCommands extends TaskBase
         }
 
         return $result;
+    }
+
+    #[Command(name: 'drupal:upgrade:rector:setup', aliases: ['durs'])]
+    public function setupRectorConfiguration(): int {
+        $composerPath = dirname($this->getConfigValue('composer.bin'));
+        $rectorDefaultConfig = $composerPath . '/palantirnet/drupal-rector/rector.php';
+        $repoRoot = $this->getConfigValue('repo.root');
+        $destinationConfigFile = $repoRoot . '/rector.php';
+        if (!file_exists($rectorDefaultConfig)) {
+            $this->logger->error("Rector default configuration file not found at $rectorDefaultConfig.");
+            return 1;
+        }
+        $result = $this->_copy($rectorDefaultConfig, $destinationConfigFile);
+        if ($result->getExitCode() !== 0) {
+            $this->logger->error("Failed to copy rector configuration file from $rectorDefaultConfig to $destinationConfigFile.");
+            return 1;
+        }
+        return 0;
     }
 
     protected function getNonProjectComposerPath(): string|false
