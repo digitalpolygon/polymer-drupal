@@ -149,7 +149,8 @@ class UpgradeCommands extends TaskBase
     #[Command(name: 'drupal:upgrade:rector', aliases: ['dur'])]
     #[Option(name: 'dry-run', description: 'Scan but do not modify code.')]
     #[Option(name: 'hide-diffs', description: 'Hide diffs of changes made.')]
-    public function drupalRector(ConsoleIO $io, bool $dry_run, bool $hide_diffs): int {
+    public function drupalRector(ConsoleIO $io, bool $dry_run, bool $hide_diffs): int
+    {
         $result = 0;
         $paths = $this->getConfigValue('drupal.upgrade.rector.paths', []);
         $command = $this->getConfigValue('drupal.upgrade.rector.command', '${composer.bin}/rector');
@@ -175,12 +176,10 @@ class UpgradeCommands extends TaskBase
                         $commandLine .= " --no-diffs";
                     }
                     $this->execCommand($commandLine);
-                }
-                catch (AbortTasksException $e) {
+                } catch (AbortTasksException $e) {
                     if (2 === $e->getCode()) {
                         $io->info("Rector process identified changes to be made for path $path.");
-                    }
-                    else {
+                    } else {
                         $io->error("Rector process failed for path $path with error code: " . $e->getCode());
                         $result = 1;
                     }
@@ -200,7 +199,8 @@ class UpgradeCommands extends TaskBase
      * @return int
      */
     #[Command(name: 'drupal:upgrade:rector:setup', aliases: ['durs'])]
-    public function setupRectorConfiguration(): int {
+    public function setupRectorConfiguration(): int
+    {
         $composerPath = dirname($this->getConfigValue('composer.bin'));
         $rectorDefaultConfig = $composerPath . '/palantirnet/drupal-rector/rector.php';
         $repoRoot = $this->getConfigValue('repo.root');
@@ -225,7 +225,8 @@ class UpgradeCommands extends TaskBase
      * @throws TaskException
      */
     #[Command(name: 'drupal:upgrade:upgrade-status', aliases: ['duus'])]
-    public function executeUpgradeStatus(ConsoleIO $io): int {
+    public function executeUpgradeStatus(ConsoleIO $io): int
+    {
         $ignoreContrib = $this->getConfigValue('drupal.upgrade.upgrade-status.ignore-contrib');
         $task = $this->taskDrush();
         $task
@@ -260,5 +261,4 @@ class UpgradeCommands extends TaskBase
         }
         return false;
     }
-
 }
