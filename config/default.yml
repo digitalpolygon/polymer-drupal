@@ -11,6 +11,8 @@ drupal:
   upgrade:
     # Valid values are: semantic, latest-minor, next-major, latest-major.
     strategy: latest-minor
+    upgrade-status:
+      ignore-contrib: true
     rector:
       run-on-major-upgrades: true
       command: ${composer.bin}/rector

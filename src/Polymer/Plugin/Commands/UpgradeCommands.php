@@ -39,8 +39,8 @@ class UpgradeCommands extends TaskBase
     public function upgrade(ConsoleIO $io, string|null|int $new_version = InputOption::VALUE_REQUIRED): void
     {
         // If upgrading to next major version:
-        // -> Enable upgrade status module and generate report.
         // -> Run rector on custom code.
+        // -> Enable upgrade status module and generate report.
         // -> Run composer update.
         // -> Attempt to apply changes and export.
         $multisites = $this->getConfigValue('drupal.multisite.sites');
@@ -53,6 +53,9 @@ class UpgradeCommands extends TaskBase
         }
         if ($runRectorOnMajorUpgrade && in_array($upgradeStrategy, $validMajorUpgradeOptions)) {
             $this->commandInvoker->invokeCommand($io->input(), 'drupal:upgrade:rector');
+        }
+        if (in_array($upgradeStrategy, $validMajorUpgradeOptions)) {
+            $this->commandInvoker->invokeCommand($io->input(), 'drupal:upgrade:upgrade-status');
         }
         $this->commandInvoker->invokeCommand($io->input(), 'drupal:upgrade:composer', $args);
         foreach ($multisites as $multisite) {
@@ -191,6 +194,11 @@ class UpgradeCommands extends TaskBase
         return $result;
     }
 
+    /**
+     * Copy the default rector configuration file to the project root.
+     *
+     * @return int
+     */
     #[Command(name: 'drupal:upgrade:rector:setup', aliases: ['durs'])]
     public function setupRectorConfiguration(): int {
         $composerPath = dirname($this->getConfigValue('composer.bin'));
@@ -206,6 +214,31 @@ class UpgradeCommands extends TaskBase
             $this->logger->error("Failed to copy rector configuration file from $rectorDefaultConfig to $destinationConfigFile.");
             return 1;
         }
+        return 0;
+    }
+
+    /**
+     * Generate upgrade status report.
+     *
+     * @param ConsoleIO $io
+     * @return int
+     * @throws TaskException
+     */
+    #[Command(name: 'drupal:upgrade:upgrade-status', aliases: ['duus'])]
+    public function executeUpgradeStatus(ConsoleIO $io): int {
+        $ignoreContrib = $this->getConfigValue('drupal.upgrade.upgrade-status.ignore-contrib');
+        $task = $this->taskDrush();
+        $task
+            ->interactive($this->input()->isInteractive())
+            ->stopOnFail()
+            ->drush('pm:enable')
+            ->arg('upgrade_status')
+            ->drush('upgrade_status:analyze')
+            ->option('--all');
+        if ($ignoreContrib) {
+            $task->option('--ignore-contrib');
+        }
+        $task->run();
         return 0;
     }
 
