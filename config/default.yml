@@ -12,6 +12,7 @@ drupal:
     # Valid values are: semantic, latest-minor, next-major, latest-major.
     strategy: latest-minor
     rector:
+      run-on-major-upgrades: true
       command: ${composer.bin}/rector
       config: ${repo.root}/rector.php
       paths:

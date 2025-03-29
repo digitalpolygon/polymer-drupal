@@ -40,13 +40,19 @@ class UpgradeCommands extends TaskBase
     {
         // If upgrading to next major version:
         // -> Enable upgrade status module and generate report.
-        // -> Run composer update.
         // -> Run rector on custom code.
+        // -> Run composer update.
         // -> Attempt to apply changes and export.
         $multisites = $this->getConfigValue('drupal.multisite.sites');
+        $upgradeStrategy = $this->getConfigValue('drupal.upgrade.strategy');
+        $runRectorOnMajorUpgrade = $this->getConfigValue('drupal.upgrade.rector.run-on-major-upgrades', false);
+        $validMajorUpgradeOptions = ['latest-major', 'next-major'];
         $args = [];
         if ($new_version) {
             $args['--new-version'] = $new_version;
+        }
+        if ($runRectorOnMajorUpgrade && in_array($upgradeStrategy, $validMajorUpgradeOptions)) {
+            $this->commandInvoker->invokeCommand($io->input(), 'drupal:upgrade:rector');
         }
         $this->commandInvoker->invokeCommand($io->input(), 'drupal:upgrade:composer', $args);
         foreach ($multisites as $multisite) {
