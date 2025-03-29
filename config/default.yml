@@ -11,6 +11,13 @@ drupal:
   upgrade:
     # Valid values are: semantic, latest-minor, next-major, latest-major.
     strategy: latest-minor
+    rector:
+      command: ${composer.bin}/rector
+      config: ${repo.root}/rector.php
+      paths:
+        - ${docroot}/modules/custom
+        - ${docroot}/themes/custom
+        - ${docroot}/profiles/custom
   account:
     # Admin account name and password will be randomly generated unless set here.
     #name: admin

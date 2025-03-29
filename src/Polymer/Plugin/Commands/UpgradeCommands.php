@@ -10,6 +10,8 @@ use Consolidation\AnnotatedCommand\Attributes\Option;
 use Consolidation\AnnotatedCommand\Attributes\Usage;
 use DigitalPolygon\Polymer\Robo\Tasks\TaskBase;
 use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\LoadDrushTaskTrait;
+use Robo\Exception\AbortTasksException;
+use Robo\Exception\TaskException;
 use Robo\Symfony\ConsoleIO;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -36,6 +38,11 @@ class UpgradeCommands extends TaskBase
     #[Usage(name: 'drupal:upgrade --new-version=10.2.3', description: 'Upgrades Drupal core to version 10.2.3.')]
     public function upgrade(ConsoleIO $io, string|null|int $new_version = InputOption::VALUE_REQUIRED): void
     {
+        // If upgrading to next major version:
+        // -> Enable upgrade status module and generate report.
+        // -> Run composer update.
+        // -> Run rector on custom code.
+        // -> Attempt to apply changes and export.
         $multisites = $this->getConfigValue('drupal.multisite.sites');
         $args = [];
         if ($new_version) {
@@ -44,7 +51,7 @@ class UpgradeCommands extends TaskBase
         $this->commandInvoker->invokeCommand($io->input(), 'drupal:upgrade:composer', $args);
         foreach ($multisites as $multisite) {
             $this->commandInvoker->pinGlobal('--site', $multisite);
-            $this->commandInvoker->invokeCommand($io->input(), 'drupal:upgrade:export');
+            $this->commandInvoker->invokeCommand($io->input(), 'drupal:upgrade:apply-and-export');
             $this->commandInvoker->unpinGlobal('--site');
         }
     }
@@ -108,7 +115,7 @@ class UpgradeCommands extends TaskBase
      *
      * @throws \Robo\Exception\TaskException
      */
-    #[Command(name: 'drupal:upgrade:export', aliases: ['due'])]
+    #[Command(name: 'drupal:upgrade:apply-and-export', aliases: ['due'])]
     public function exportChanges(ConsoleIO $io): void
     {
         $task = $this->taskDrush()
@@ -120,6 +127,59 @@ class UpgradeCommands extends TaskBase
             $task->drush('cex');
         }
         $task->run();
+    }
+
+    /**
+     * Run rector on configured code paths.
+     *
+     * @param ConsoleIO $io
+     * @param bool $dry_run
+     * @param bool $hide_diffs
+     * @return int
+     */
+    #[Command(name: 'drupal:upgrade:rector', aliases: ['dur'])]
+    #[Option(name: 'dry-run', description: 'Scan but do not modify code.')]
+    #[Option(name: 'hide-diffs', description: 'Hide diffs of changes made.')]
+    public function drupalRector(ConsoleIO $io, bool $dry_run, bool $hide_diffs): int {
+        $result = 0;
+        $paths = $this->getConfigValue('drupal.upgrade.rector.paths', []);
+        $command = $this->getConfigValue('drupal.upgrade.rector.command', '${composer.bin}/rector');
+        $configFile = $this->getConfigValue('drupal.upgrade.rector.config');
+        if (!file_exists($command)) {
+            $io->error("Configured rector binary file at path $command was not found. Aborting.");
+            return 1;
+        }
+        try {
+            foreach ($paths as $path) {
+                try {
+                    $commandLine = "$command process $path --no-progress-bar";
+                    if ($dry_run) {
+                        $commandLine .= " --dry-run";
+                    }
+                    if ($configFile) {
+                        $commandLine .= " --config=$configFile";
+                    }
+                    if ($hide_diffs) {
+                        $commandLine .= " --no-diffs";
+                    }
+                    $this->execCommand($commandLine);
+                }
+                catch (AbortTasksException $e) {
+                    if (2 === $e->getCode()) {
+                        $io->info("Rector process identified changes to be made for path $path.");
+                    }
+                    else {
+                        $io->error("Rector process failed for path $path with error code: " . $e->getCode());
+                        $result = 1;
+                    }
+                }
+            }
+        } catch (TaskException $e) {
+            $io->error("We have failed.");
+            $result = 1;
+        }
+
+        return $result;
     }
 
     protected function getNonProjectComposerPath(): string|false
@@ -140,4 +200,5 @@ class UpgradeCommands extends TaskBase
         }
         return false;
     }
+
 }
