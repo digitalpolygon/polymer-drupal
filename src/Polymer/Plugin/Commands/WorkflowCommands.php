@@ -30,5 +30,4 @@ class WorkflowCommands extends TaskBase
     {
         return $this->generateWorkflowFilesFromExtensionAndConfigKey('polymer_drupal', 'drupal.workflow.files', $platform);
     }
-
 }
