@@ -3,13 +3,14 @@
 namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Hooks;
 
 use Consolidation\AnnotatedCommand\Attributes\Hook;
+use Consolidation\AnnotatedCommand\Hooks\HookManager;
 use DigitalPolygon\Polymer\Robo\Commands\Artifact\BuildSanitizeCommand;
 use Robo\Contract\VerbosityThresholdInterface;
 use Symfony\Component\Finder\Finder;
 
 class DrupalBuildSanitizeHook extends BuildSanitizeCommand
 {
-    #[Hook(type: 'replace-command', target: 'artifact:build:sanitize')]
+    #[Hook(type: HookManager::REPLACE_COMMAND_HOOK, target: 'artifact:build:sanitize')]
     public function sanitize(): void
     {
         parent::sanitize();
