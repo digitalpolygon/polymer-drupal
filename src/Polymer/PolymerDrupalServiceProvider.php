@@ -5,6 +5,8 @@ namespace DigitalPolygon\PolymerDrupal\Polymer;
 use DigitalPolygon\Polymer\Robo\Template\TemplateInterface;
 use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Template\GitHubWorkflows\AutomaticUpgrade;
 use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Template\GitHubWorkflows\ComposerDiff;
+use DigitalPolygon\PolymerDrupal\Polymer\Services\Event\AlterSiteSettingsFiles;
+use DigitalPolygon\PolymerDrupal\Polymer\Services\Event\SiteSettingsFiles;
 use DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber\ContextProvidersSubscriber;
 use DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber\DrupalConfigInjector;
 use DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber\PostInvokeCommandSubscriber;
@@ -30,6 +32,8 @@ class PolymerDrupalServiceProvider extends AbstractServiceProvider implements Bo
             'drupalFinder',
             'drupalFileSystem',
             'drupalPostInvokeCommandSubscriber',
+            SiteSettingsFiles::class,
+            AlterSiteSettingsFiles::class,
         ];
         return in_array($id, $services);
     }
@@ -48,14 +52,18 @@ class PolymerDrupalServiceProvider extends AbstractServiceProvider implements Bo
         $container->addShared('drupalFinder', DrupalFinderComposerRuntime::class);
         $container->addShared('drupalFileSystem', FileSystem::class)
             ->addArgument(new ResolvableArgument('drupalFinder'));
+        $container->add(SiteSettingsFiles::class);
+        $container->add(AlterSiteSettingsFiles::class);
     }
 
     public function boot(): void
     {
         $container = $this->getContainer();
         $container->addShared('drupalPostInvokeCommandSubscriber', PostInvokeCommandSubscriber::class);
+
         $container->extend('eventDispatcher')
             ->addMethodCall('addSubscriber', ['drupalConfigContextProvider']);
+
 //            ->addMethodCall('addSubscriber', ['drupalConfigInjector'])
 //            ->addMethodCall('addSubscriber', ['drupalPostInvokeCommandSubscriber']);
 
