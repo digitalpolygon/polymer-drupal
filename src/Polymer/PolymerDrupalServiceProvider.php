@@ -19,8 +19,6 @@ use Symfony\Component\Console\Input\InputOption;
 
 class PolymerDrupalServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface
 {
-    protected array $providedTemplates = [];
-
     /**
      * {@inheritdoc}
      */
@@ -64,33 +62,9 @@ class PolymerDrupalServiceProvider extends AbstractServiceProvider implements Bo
         $container->extend('eventDispatcher')
             ->addMethodCall('addSubscriber', ['drupalConfigContextProvider']);
 
-//            ->addMethodCall('addSubscriber', ['drupalConfigInjector'])
-//            ->addMethodCall('addSubscriber', ['drupalPostInvokeCommandSubscriber']);
-
         $container->extend('application')
             ->addMethodCall('addGlobalOption', [
                 new InputOption('--site', null, InputOption::VALUE_REQUIRED, 'The multisite to execute this command against.', 'default')
             ]);
-
-        $this->addTemplate(
-            AutomaticUpgrade::id(),
-            AutomaticUpgrade::collections(),
-            AutomaticUpgrade::class,
-        );
-        $this->addTemplate(
-            ComposerDiff::id(),
-            ComposerDiff::collections(),
-            ComposerDiff::class,
-        );
-    }
-
-    protected function addTemplate(string $id, array $collections, string $concrete): void
-    {
-        $serviceId = TemplateInterface::SERVICE_PREFIX . $id;
-        $this->providedTemplates[] = $serviceId;
-        $definition = $this->getContainer()->add($serviceId, $concrete);
-        foreach ($collections as $collection) {
-            $definition->addTag('plugin.templates.collections.' . $collection);
-        }
     }
 }
