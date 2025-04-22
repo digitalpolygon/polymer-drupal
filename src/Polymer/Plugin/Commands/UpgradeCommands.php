@@ -41,7 +41,7 @@ class UpgradeCommands extends TaskBase
         if ($new_version) {
             $args['--new-version'] = $new_version;
         }
-        $this->commandInvoker->pinGlobal('--site', $io->input()->getOption('--site'));
+        $this->commandInvoker->pinGlobal('--site', $io->input()->getOption('site'));
         $this->commandInvoker->invokeCommand($io->input(), 'drupal:upgrade:composer', $args);
         $this->commandInvoker->unpinGlobal('--site');
         foreach ($multisites as $multisite) {

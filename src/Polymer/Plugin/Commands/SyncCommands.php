@@ -55,7 +55,7 @@ class SyncCommands extends TaskBase
         /** @var array<string> $commands */
         $commands = $this->getConfigValue('drupal.sync.commands');
 
-        $this->commandInvoker->pinGlobal('--site', $io->input()->getOption('--site'));
+        $this->commandInvoker->pinGlobal('--site', $io->input()->getOption('site'));
         foreach ($commands as $command) {
             $this->commandInvoker->invokeCommand($io->input(), $command);
         }
