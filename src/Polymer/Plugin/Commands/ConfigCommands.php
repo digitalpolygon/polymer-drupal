@@ -61,7 +61,9 @@ class ConfigCommands extends TaskBase
             'drupal:deploy:hook',
         ];
         foreach ($commands as $command) {
+            $this->commandInvoker->pinGlobal('--site', $io->input()->getOption('site'));
             $this->commandInvoker->invokeCommand($io->input(), $command);
+            $this->commandInvoker->unpinGlobal('--site');
         }
     }
 

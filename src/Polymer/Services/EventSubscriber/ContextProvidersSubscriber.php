@@ -39,6 +39,9 @@ class ContextProvidersSubscriber implements EventSubscriberInterface
             $loader = new YamlConfigLoader();
             $drupalConfig[$configId] = $loader->load($file)->export();
         }
+        if (!empty($possibleConfigFiles['site'])) {
+            $drupalConfig['site'] = array_merge($drupalConfig['site'], $this->getDefaultConfig($site));
+        }
         $event->addContexts($drupalConfig);
     }
 
@@ -53,5 +56,12 @@ class ContextProvidersSubscriber implements EventSubscriberInterface
             ],
         ];
         return $events;
+    }
+
+    protected function getDefaultConfig(string $site): array
+    {
+        $defaultConfig['drupal']['cm']['core']['dirs']['sync']['path'] = '../config/' . $site;
+        $defaultConfig['drupal']['drush']['uri'] = $site;
+        return $defaultConfig;
     }
 }
