@@ -50,7 +50,9 @@ class InstallCommand extends TaskBase
             $commands[] = 'drupal:config:import';
         }
         foreach ($commands as $command) {
+            $this->commandInvoker->pinGlobal('--site', $io->input()->getOption('--site'));
             $this->commandInvoker->invokeCommand($io->input(), $command);
+            $this->commandInvoker->unpinGlobal('--site');
         }
         $this->setSitePermissions();
     }
