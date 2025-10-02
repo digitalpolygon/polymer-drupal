@@ -1,6 +1,6 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Services;
+namespace DigitalPolygon\Polymer\polymer_drupal\Services;
 
 use DrupalFinder\DrupalFinderComposerRuntime;
 use Symfony\Component\Finder\Finder;

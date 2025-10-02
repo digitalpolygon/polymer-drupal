@@ -1,10 +1,10 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber;
+namespace DigitalPolygon\Polymer\polymer_drupal\Services\EventSubscriber;
 
-use DigitalPolygon\Polymer\Robo\Config\ConfigAwareTrait;
-use DigitalPolygon\Polymer\Robo\Event\PolymerEvents;
-use DigitalPolygon\Polymer\Robo\Event\PostInvokeCommandEvent;
+use DigitalPolygon\Polymer\Core\Robo\Config\ConfigAwareTrait;
+use DigitalPolygon\Polymer\Core\Robo\Event\PolymerEvents;
+use DigitalPolygon\Polymer\Core\Robo\Event\PostInvokeCommandEvent;
 use Robo\Contract\ConfigAwareInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

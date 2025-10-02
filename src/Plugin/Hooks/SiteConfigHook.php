@@ -1,10 +1,10 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Hooks;
+namespace DigitalPolygon\Polymer\polymer_drupal\Plugin\Hooks;
 
 use Consolidation\AnnotatedCommand\Attributes\Hook;
-use DigitalPolygon\Polymer\Robo\Config\ConfigAwareTrait;
-use DigitalPolygon\Polymer\Robo\Config\PolymerConfig;
+use DigitalPolygon\Polymer\Core\Robo\Config\ConfigAwareTrait;
+use DigitalPolygon\Polymer\Core\Robo\Config\PolymerConfig;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use Psr\Log\LoggerAwareInterface;

@@ -1,25 +1,25 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Services\Event;
+namespace DigitalPolygon\Polymer\polymer_drupal\Services\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
 
-final class SiteSettingsFiles extends Event
+final class AlterSiteSettingsFiles extends Event
 {
     protected array $settingsFiles = [];
-    protected readonly string $site;
+    protected string $site;
 
     /**
      * Add a settings file that can be globbed.
      *
      * The file should be a complete path.
      *
-     * @param $file
+     * @param array $settingsFiles
      * @return void
      */
-    public function addSettingsFile(string $id, string $file): void
+    public function setSettingsFiles(array $settingsFiles): void
     {
-        $this->settingsFiles[$id] = $file;
+        $this->settingsFiles = $settingsFiles;
     }
 
     /**

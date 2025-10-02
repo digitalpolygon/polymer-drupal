@@ -1,14 +1,14 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Commands;
+namespace DigitalPolygon\Polymer\polymer_drupal\Plugin\Commands;
 
-use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\LoadDrushTaskTrait;
+use DigitalPolygon\Polymer\polymer_drupal\Plugin\Tasks\LoadDrushTaskTrait;
 use Robo\Exception\TaskException;
-use DigitalPolygon\Polymer\Robo\Tasks\TaskBase;
+use DigitalPolygon\Polymer\Core\Robo\Tasks\TaskBase;
 use Consolidation\AnnotatedCommand\Attributes\Command;
-use DigitalPolygon\Polymer\Robo\Exceptions\PolymerException;
+use DigitalPolygon\Polymer\Core\Robo\Exceptions\PolymerException;
 use Robo\Result;
-use DigitalPolygon\Polymer\Robo\Tasks\Command as PolymerCommand;
+use DigitalPolygon\Polymer\Core\Robo\Tasks\Command as PolymerCommand;
 use Robo\Symfony\ConsoleIO;
 
 class SyncCommands extends TaskBase

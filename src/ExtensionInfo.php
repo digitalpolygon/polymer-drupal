@@ -1,10 +1,10 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer;
+namespace DigitalPolygon\Polymer\polymer_drupal;
 
 use Consolidation\Config\ConfigInterface;
-use DigitalPolygon\Polymer\Robo\Extension\PolymerExtensionBase;
-use DigitalPolygon\PolymerDrupal\Polymer\Services\FileSystem;
+use DigitalPolygon\Polymer\Core\Robo\Extension\PolymerExtensionBase;
+use DigitalPolygon\Polymer\polymer_drupal\Services\FileSystem;
 use League\Container\DefinitionContainerInterface;
 
 class ExtensionInfo extends PolymerExtensionBase

@@ -1,6 +1,6 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks;
+namespace DigitalPolygon\Polymer\polymer_drupal\Plugin\Tasks;
 
 /**
  * Load the Drush Robo task.
@@ -14,12 +14,12 @@ trait LoadDrushTaskTrait
     /**
      * Initializes and returns a configured Drush task instance.
      *
-     * @return \DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\DrushTask
+     * @return \DigitalPolygon\Polymer\polymer_drupal\Plugin\Tasks\DrushTask
      *   Drush task.
      */
     protected function taskDrush()
     {
-        /** @var \DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\DrushTask $task */
+        /** @var \DigitalPolygon\Polymer\polymer_drupal\Plugin\Tasks\DrushTask $task */
         $task = $this->task(DrushTask::class);
         /** @var \Symfony\Component\Console\Output\OutputInterface $output */
         $output = $this->output();

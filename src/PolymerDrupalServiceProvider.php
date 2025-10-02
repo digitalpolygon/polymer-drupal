@@ -1,16 +1,16 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer;
+namespace DigitalPolygon\Polymer\polymer_drupal;
 
-use DigitalPolygon\Polymer\Robo\Template\TemplateInterface;
-use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Template\GitHubWorkflows\AutomaticUpgrade;
-use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Template\GitHubWorkflows\ComposerDiff;
-use DigitalPolygon\PolymerDrupal\Polymer\Services\Event\AlterSiteSettingsFiles;
-use DigitalPolygon\PolymerDrupal\Polymer\Services\Event\SiteSettingsFiles;
-use DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber\ContextProvidersSubscriber;
-use DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber\DrupalConfigInjector;
-use DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber\PostInvokeCommandSubscriber;
-use DigitalPolygon\PolymerDrupal\Polymer\Services\FileSystem;
+use DigitalPolygon\Polymer\Core\Robo\Template\TemplateInterface;
+use DigitalPolygon\Polymer\polymer_drupal\Plugin\Template\GitHubWorkflows\AutomaticUpgrade;
+use DigitalPolygon\Polymer\polymer_drupal\Plugin\Template\GitHubWorkflows\ComposerDiff;
+use DigitalPolygon\Polymer\polymer_drupal\Services\Event\AlterSiteSettingsFiles;
+use DigitalPolygon\Polymer\polymer_drupal\Services\Event\SiteSettingsFiles;
+use DigitalPolygon\Polymer\polymer_drupal\Services\EventSubscriber\ContextProvidersSubscriber;
+use DigitalPolygon\Polymer\polymer_drupal\Services\EventSubscriber\DrupalConfigInjector;
+use DigitalPolygon\Polymer\polymer_drupal\Services\EventSubscriber\PostInvokeCommandSubscriber;
+use DigitalPolygon\Polymer\polymer_drupal\Services\FileSystem;
 use DrupalFinder\DrupalFinderComposerRuntime;
 use League\Container\Argument\ResolvableArgument;
 use League\Container\ServiceProvider\AbstractServiceProvider;

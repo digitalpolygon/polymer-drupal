@@ -1,10 +1,10 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Hooks;
+namespace DigitalPolygon\Polymer\polymer_drupal\Plugin\Hooks;
 
 use Consolidation\AnnotatedCommand\Attributes\Hook;
 use Consolidation\AnnotatedCommand\Hooks\HookManager;
-use DigitalPolygon\Polymer\Robo\Commands\Artifact\BuildSanitizeCommand;
+use DigitalPolygon\Polymer\Core\Robo\Commands\Artifact\BuildSanitizeCommand;
 use Robo\Contract\VerbosityThresholdInterface;
 use Symfony\Component\Finder\Finder;
 

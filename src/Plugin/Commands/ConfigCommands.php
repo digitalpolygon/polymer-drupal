@@ -1,17 +1,17 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Commands;
+namespace DigitalPolygon\Polymer\polymer_drupal\Plugin\Commands;
 
-use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\LoadDrushTaskTrait;
+use DigitalPolygon\Polymer\polymer_drupal\Plugin\Tasks\LoadDrushTaskTrait;
 use Robo\Common\IO;
 use Robo\Symfony\ConsoleIO;
 use Symfony\Component\Yaml\Yaml;
 use Robo\Exception\TaskException;
-use DigitalPolygon\Polymer\Robo\Tasks\TaskBase;
-use DigitalPolygon\Polymer\Robo\Tasks\DrushTask;
+use DigitalPolygon\Polymer\Core\Robo\Tasks\TaskBase;
+use DigitalPolygon\Polymer\polymer_drupal\Plugin\Tasks\DrushTask;
 use Consolidation\AnnotatedCommand\Attributes\Command;
-use DigitalPolygon\Polymer\Robo\Exceptions\PolymerException;
-use DigitalPolygon\Polymer\Robo\Tasks\Command as PolymerCommand;
+use DigitalPolygon\Polymer\Core\Robo\Exceptions\PolymerException;
+use DigitalPolygon\Polymer\Core\Robo\Tasks\Command as PolymerCommand;
 
 class ConfigCommands extends TaskBase
 {
@@ -75,7 +75,7 @@ class ConfigCommands extends TaskBase
     #[Command(name: 'drupal:config:import', aliases: ['dcim'])]
     public function import(): mixed
     {
-        /** @var \DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\DrushTask $task */
+        /** @var \DigitalPolygon\Polymer\polymer_drupal\Plugin\Tasks\DrushTask $task */
         $task = $this->taskDrush();
 
         $strategy = $this->getConfigValue('drupal.cm.strategy');

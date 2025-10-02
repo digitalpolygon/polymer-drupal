@@ -1,6 +1,6 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Commands;
+namespace DigitalPolygon\Polymer\polymer_drupal\Plugin\Commands;
 
 use Consolidation\AnnotatedCommand\Attributes\Argument;
 use Consolidation\AnnotatedCommand\Attributes\Command;
@@ -8,8 +8,8 @@ use Consolidation\AnnotatedCommand\Attributes\DefaultFields;
 use Consolidation\AnnotatedCommand\Attributes\Hook;
 use Consolidation\AnnotatedCommand\Attributes\Option;
 use Consolidation\AnnotatedCommand\Attributes\Usage;
-use DigitalPolygon\Polymer\Robo\Tasks\TaskBase;
-use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\LoadDrushTaskTrait;
+use DigitalPolygon\Polymer\Core\Robo\Tasks\TaskBase;
+use DigitalPolygon\Polymer\polymer_drupal\Plugin\Tasks\LoadDrushTaskTrait;
 use Robo\Symfony\ConsoleIO;
 use Symfony\Component\Console\Input\InputOption;
 

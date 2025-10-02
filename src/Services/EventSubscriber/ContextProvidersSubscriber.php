@@ -1,10 +1,10 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber;
+namespace DigitalPolygon\Polymer\polymer_drupal\Services\EventSubscriber;
 
 use Consolidation\Config\Loader\YamlConfigLoader;
-use DigitalPolygon\Polymer\Robo\Event\CollectConfigContextsEvent;
-use DigitalPolygon\PolymerDrupal\Polymer\Services\FileSystem;
+use DigitalPolygon\Polymer\Core\Robo\Event\CollectConfigContextsEvent;
+use DigitalPolygon\Polymer\polymer_drupal\Services\FileSystem;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ContextProvidersSubscriber implements EventSubscriberInterface

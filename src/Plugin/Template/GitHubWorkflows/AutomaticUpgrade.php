@@ -1,8 +1,8 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Template\GitHubWorkflows;
+namespace DigitalPolygon\Polymer\polymer_drupal\Plugin\Template\GitHubWorkflows;
 
-use DigitalPolygon\Polymer\Robo\Template\GitHub\GitHubWorkflowTemplateBase;
+use DigitalPolygon\Polymer\Core\Robo\Template\GitHub\GitHubWorkflowTemplateBase;
 
 class AutomaticUpgrade extends GitHubWorkflowTemplateBase
 {

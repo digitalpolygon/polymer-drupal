@@ -1,11 +1,11 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Commands;
+namespace DigitalPolygon\Polymer\polymer_drupal\Plugin\Commands;
 
 use Consolidation\AnnotatedCommand\Attributes\Command;
-use DigitalPolygon\Polymer\Robo\Tasks\TaskBase;
-use DigitalPolygon\PolymerDrupal\Polymer\Services\Event\AlterSiteSettingsFiles;
-use DigitalPolygon\PolymerDrupal\Polymer\Services\Event\SiteSettingsFiles;
+use DigitalPolygon\Polymer\Core\Robo\Tasks\TaskBase;
+use DigitalPolygon\Polymer\polymer_drupal\Services\Event\AlterSiteSettingsFiles;
+use DigitalPolygon\Polymer\polymer_drupal\Services\Event\SiteSettingsFiles;
 use Grasmash\Expander\Expander;
 use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Exception\TaskException;

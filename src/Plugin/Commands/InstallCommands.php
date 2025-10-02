@@ -1,13 +1,13 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Commands;
+namespace DigitalPolygon\Polymer\polymer_drupal\Plugin\Commands;
 
 use Consolidation\AnnotatedCommand\Attributes\Command;
 use Consolidation\AnnotatedCommand\Attributes\Usage;
-use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Common\RandomString;
-use DigitalPolygon\Polymer\Robo\Exceptions\PolymerException;
-use DigitalPolygon\Polymer\Robo\Tasks\TaskBase;
-use DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\LoadDrushTaskTrait;
+use DigitalPolygon\Polymer\polymer_drupal\Plugin\Common\RandomString;
+use DigitalPolygon\Polymer\Core\Robo\Exceptions\PolymerException;
+use DigitalPolygon\Polymer\Core\Robo\Tasks\TaskBase;
+use DigitalPolygon\Polymer\polymer_drupal\Plugin\Tasks\LoadDrushTaskTrait;
 use Robo\Common\IO;
 use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Result;
@@ -17,7 +17,7 @@ use Symfony\Component\Finder\Finder;
 /**
  * Defines commands in the "drupal:*" namespace.
  */
-class InstallCommand extends TaskBase
+class InstallCommands extends TaskBase
 {
     use LoadDrushTaskTrait;
     use IO;
@@ -41,7 +41,7 @@ class InstallCommand extends TaskBase
     {
         $this->site = $this->input()->getOption('site');
 
-        /** @var \DigitalPolygon\Polymer\Robo\Tasks\Command[] $commands */
+        /** @var \DigitalPolygon\Polymer\Core\Robo\Tasks\Command[] $commands */
         $commands = [];
         $commands[] = 'internal:drupal:install';
         $strategy = $this->getConfigValue('drupal.cm.strategy');
@@ -148,7 +148,7 @@ class InstallCommand extends TaskBase
         /** @var string $drupal_locale */
         $drupal_locale = $this->getConfigValue('drupal.locale');
 
-        /** @var \DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks\DrushTask $task */
+        /** @var \DigitalPolygon\Polymer\polymer_drupal\Plugin\Tasks\DrushTask $task */
         $task = $this->taskDrush()
             ->drush("site-install")
             ->arg($project_profile_name)

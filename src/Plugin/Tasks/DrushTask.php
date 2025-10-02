@@ -1,6 +1,6 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Tasks;
+namespace DigitalPolygon\Polymer\polymer_drupal\Plugin\Tasks;
 
 use Robo\Common\CommandArguments;
 use Robo\Exception\TaskException;

@@ -1,6 +1,6 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Common;
+namespace DigitalPolygon\Polymer\polymer_drupal\Plugin\Common;
 
 /**
  * Utility class for generating random strings.

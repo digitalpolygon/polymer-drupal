@@ -1,11 +1,11 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Plugin\Commands;
+namespace DigitalPolygon\Polymer\polymer_drupal\Plugin\Commands;
 
 use Consolidation\AnnotatedCommand\Attributes\Argument;
 use Consolidation\AnnotatedCommand\Attributes\Command;
 use DigitalPolygon\Polymer\Environment\DDEVEnvironment;
-use DigitalPolygon\Polymer\Robo\Tasks\TaskBase;
+use DigitalPolygon\Polymer\Core\Robo\Tasks\TaskBase;
 use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Exception\AbortTasksException;
 

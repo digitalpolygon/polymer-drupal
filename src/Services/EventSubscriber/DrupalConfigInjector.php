@@ -1,13 +1,13 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal\Polymer\Services\EventSubscriber;
+namespace DigitalPolygon\Polymer\polymer_drupal\Services\EventSubscriber;
 
 use Consolidation\Config\Config;
 use Consolidation\Config\Loader\YamlConfigLoader;
-use DigitalPolygon\Polymer\Robo\Config\PolymerConfig;
-use DigitalPolygon\Polymer\Robo\Event\PolymerEvents;
-use DigitalPolygon\Polymer\Robo\Event\PostInvokeCommandEvent;
-use DigitalPolygon\PolymerDrupal\Polymer\Services\FileSystem;
+use DigitalPolygon\Polymer\Core\Robo\Config\PolymerConfig;
+use DigitalPolygon\Polymer\Core\Robo\Event\PolymerEvents;
+use DigitalPolygon\Polymer\Core\Robo\Event\PostInvokeCommandEvent;
+use DigitalPolygon\Polymer\polymer_drupal\Services\FileSystem;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use Robo\Application;
