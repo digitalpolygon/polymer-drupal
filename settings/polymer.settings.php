@@ -18,7 +18,7 @@ use DigitalPolygon\Polymer\Core\Environment\PantheonEnvironmentDetector;
 $site_name = str_replace('sites/', '', $site_path);
 
 if (!isset($repo_root)) {
-    $repo_root = realpath(DRUPAL_ROOT . '/..');
+  $repo_root = realpath(DRUPAL_ROOT . '/..');
 }
 
 $settings_files = [];
@@ -26,14 +26,14 @@ $settings_files = [];
 // Default global settings.
 // @todo Add polymer specific settings file as needed.
 $polymer_settings_files = [
-    'config',
-    'db',
+  'config',
+  'db',
 ];
 foreach ($polymer_settings_files as $polymer_settings_file) {
-    $settings_file = __DIR__ . "/$polymer_settings_file.settings.php";
-    if (file_exists($settings_file)) {
-        $settings_files[] = $settings_file;
-    }
+  $settings_file = __DIR__ . "/$polymer_settings_file.settings.php";
+  if (file_exists($settings_file)) {
+    $settings_files[] = $settings_file;
+  }
 }
 
 // Custom global and site-specific settings.
@@ -42,21 +42,21 @@ $settings_files[] = DRUPAL_ROOT . "/sites/$site_name/settings/polymer-extensions
 $settings_files[] = DRUPAL_ROOT . "/sites/$site_name/settings/includes.settings.php";
 
 if (EnvironmentDetectorBase::isCiEnv()) {
-    // Custom global and site-specific CI settings.
-    $settings_files[] = DRUPAL_ROOT . "/sites/settings/ci.settings.php";
-    $settings_files[] = DRUPAL_ROOT . "/sites/$site_name/settings/ci.settings.php";
+  // Custom global and site-specific CI settings.
+  $settings_files[] = DRUPAL_ROOT . "/sites/settings/ci.settings.php";
+  $settings_files[] = DRUPAL_ROOT . "/sites/$site_name/settings/ci.settings.php";
 }
 
 // Local global and site-specific settings.
 if (AcquiaEnvironmentDetector::isLocalEnv() || PantheonEnvironmentDetector::isLocalEnv()) {
-    // Use settings.local.php because that's what Drupal scaffold uses.
-    $settings_files[] = DRUPAL_ROOT . '/sites/settings/settings.local.php';
-    $settings_files[] = DRUPAL_ROOT . "/sites/$site_name/settings.local.php";
+  // Use settings.local.php because that's what Drupal scaffold uses.
+  $settings_files[] = DRUPAL_ROOT . '/sites/settings/settings.local.php';
+  $settings_files[] = DRUPAL_ROOT . "/sites/$site_name/settings.local.php";
 }
 
 foreach ($settings_files as $settings_file) {
-    if (file_exists($settings_file)) {
+  if (file_exists($settings_file)) {
       // phpcs:ignore
       require $settings_file;
-    }
+  }
 }

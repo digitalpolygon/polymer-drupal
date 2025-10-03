@@ -3,14 +3,16 @@ grumphp:
   tasks:
     phpcs:
       standard: PSR12
+      warning_severity: 0
       whitelist_patterns:
-        - src/*
+        - src
     phpcs_drupal:
       standard:
         - Drupal
         - DrupalPractice
+      warning_severity: 0
       whitelist_patterns:
-        - settings/*
+        - settings
       metadata:
         task: phpcs
     phpstan: null

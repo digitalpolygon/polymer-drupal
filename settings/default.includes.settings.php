@@ -44,8 +44,8 @@ $additionalSettingsFiles = [
 
 // @phpstan-ignore foreach.emptyArray
 foreach ($additionalSettingsFiles as $settingsFile) {
-    if (file_exists($settingsFile)) {
+  if (file_exists($settingsFile)) {
         // phpcs:ignore
         require $settingsFile;
-    }
+  }
 }

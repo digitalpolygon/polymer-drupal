@@ -1,7 +1,12 @@
 <?php
 
+/**
+ * @file
+ * Contains configuration-related settings.
+ */
+
 if (!isset($polymer_override_config_directories)) {
-    $polymer_override_config_directories = TRUE;
+  $polymer_override_config_directories = TRUE;
 }
 
 // Configuration directories.
