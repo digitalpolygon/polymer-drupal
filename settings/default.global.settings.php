@@ -21,6 +21,7 @@ $additionalSettingsFiles = [
     // e.g,( DRUPAL_ROOT . "/sites/settings/foo.settings.php" )
 ];
 
+// @phpstan-ignore foreach.emptyArray
 foreach ($additionalSettingsFiles as $settingsFile) {
     if (file_exists($settingsFile)) {
         // phpcs:ignore

@@ -1,6 +1,17 @@
 grumphp:
   hooks_dir: grumphp/hooks
   tasks:
-    phpcs: null
+    phpcs:
+      standard: PSR12
+      whitelist_patterns:
+        - src/*
+    phpcs_drupal:
+      standard:
+        - Drupal
+        - DrupalPractice
+      whitelist_patterns:
+        - settings/*
+      metadata:
+        task: phpcs
     phpstan: null
     phplint: null

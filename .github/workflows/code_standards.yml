@@ -35,11 +35,6 @@ jobs:
         run: |
           composer install --no-interaction
 
-      - name: Run PHP_CodeSniffer
-        run: composer cs
-
-      - name: Lint
-        run: composer lint
-
-      - name: Run PHPStan
-        run: composer sa
+      - name: GrumpPHP
+        run: |
+          vendor/bin/grumphp run --verbose
