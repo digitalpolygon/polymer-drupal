@@ -57,7 +57,8 @@
   "scripts": {
     "lint": "find src test/src -name '*.php' -print0 | xargs -0 -n1 -P4 -- php -l",
     "cs": [
-      "phpcs"
+      "phpcs --standard=phpcs-non-drupal.xml.dist",
+      "phpcs --standard=phpcs-drupal.xml.dist"
     ],
     "sa": "phpstan analyse -v -c phpstan.neon",
     "validations": [
