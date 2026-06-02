@@ -8,13 +8,17 @@
  */
 
 if (getenv('IS_DDEV_PROJECT') == 'true') {
+  $ddev_settings_loaded = FALSE;
   if (isset($site_path)) {
     $ddev_settings_file = DRUPAL_ROOT . "/$site_path/settings.ddev.php";
     if (file_exists($ddev_settings_file)) {
       require $ddev_settings_file;
+      $ddev_settings_loaded = TRUE;
     }
   }
-  if (isset($site_name)) {
+  // Only apply the default DDEV database settings when settings.ddev.php was not
+  // loaded, so it does not overwrite DDEV's own (e.g. multisite) configuration.
+  if (!$ddev_settings_loaded && isset($site_name)) {
     $database_to_use = match($site_name) {
       'default' => 'db',
       default => $site_name,

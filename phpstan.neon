@@ -3,8 +3,8 @@ parameters:
     paths:
         - src
     additionalConstructors:
-        - DigitalPolygon\Polymer\Core\Services\Event\SiteSettingsFiles::setSite
-        - DigitalPolygon\Polymer\Core\Services\Event\AlterSiteSettingsFiles::setSite
+        - DigitalPolygon\Polymer\polymer_drupal\Services\Event\SiteSettingsFiles::setSite
+        - DigitalPolygon\Polymer\polymer_drupal\Services\Event\AlterSiteSettingsFiles::setSite
     ignoreErrors:
         -
             message: "#^Parameter \\#2 \\$default of method Consolidation\\\\Config\\\\Util\\\\ConfigOverlay\\:\\:get\\(\\) expects string\\|null, array given\\.$#"

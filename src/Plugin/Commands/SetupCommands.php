@@ -141,8 +141,8 @@ class SetupCommands extends TaskBase
  * @link https://digitalpolygon.github.io/polymer-drupal/
  */
 // Polymer assumes that this inclusion always comes at the end of the file.
-if (method_exists('\DigitalPolygon\PolymerDrupal\VendorAssets', 'dir')) {
-  \$polymer_settings_file = \DigitalPolygon\PolymerDrupal\VendorAssets::dir() . '/polymer.settings.php';
+if (method_exists('\DigitalPolygon\Polymer\polymer_drupal\VendorAssets', 'dir')) {
+  \$polymer_settings_file = \DigitalPolygon\Polymer\polymer_drupal\VendorAssets::dir() . '/polymer.settings.php';
   if (file_exists(\$polymer_settings_file)) {
     require \$polymer_settings_file;
   }
