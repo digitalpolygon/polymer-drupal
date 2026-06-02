@@ -1,6 +1,6 @@
 <?php
 
-namespace DigitalPolygon\PolymerDrupal;
+namespace DigitalPolygon\Polymer\polymer_drupal;
 
 class VendorAssets
 {

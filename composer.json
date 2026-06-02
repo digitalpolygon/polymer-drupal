@@ -1,5 +1,6 @@
 {
   "name": "digitalpolygon/polymer-drupal",
+  "type": "polymer-plugin",
   "description": "Drupal integration for Polymer",
   "license": "GPL-2.0+",
   "authors":[
@@ -39,30 +40,36 @@
     "phpstan/phpstan": "^1.11",
     "phpro/grumphp-shim": "^2.5",
     "squizlabs/php_codesniffer": "^3",
-    "php-parallel-lint/php-parallel-lint": "^1.4"
+    "php-parallel-lint/php-parallel-lint": "^1.4",
+    "drupal/coder": "^8.3"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "autoload": {
-    "psr-4": {
-      "DigitalPolygon\\PolymerDrupal\\": "./src/"
-    }
-  },
   "config": {
     "allow-plugins": {
+      "composer/installers": true,
       "digitalpolygon/polymer": true,
       "digitalpolygon/drupal-upgrade-plugin": true,
-      "phpro/grumphp-shim": true
+      "phpro/grumphp-shim": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "scripts": {
     "lint": "find src test/src -name '*.php' -print0 | xargs -0 -n1 -P4 -- php -l",
-    "cs": "phpcs",
+    "cs": [
+      "phpcs --standard=phpcs-non-drupal.xml.dist",
+      "phpcs --standard=phpcs-drupal.xml.dist"
+    ],
     "sa": "phpstan analyse -v -c phpstan.neon",
     "validations": [
       "@lint",
       "@cs",
       "@sa"
+    ]
+  },
+  "autoload": {
+    "classmap": [
+      "src/VendorAssets.php"
     ]
   }
 }

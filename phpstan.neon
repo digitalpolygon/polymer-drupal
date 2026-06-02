@@ -3,10 +3,12 @@ parameters:
     paths:
         - src
     additionalConstructors:
-        - DigitalPolygon\PolymerDrupal\Polymer\Services\Event\SiteSettingsFiles::setSite
-        - DigitalPolygon\PolymerDrupal\Polymer\Services\Event\AlterSiteSettingsFiles::setSite
+        - DigitalPolygon\Polymer\polymer_drupal\Services\Event\SiteSettingsFiles::setSite
+        - DigitalPolygon\Polymer\polymer_drupal\Services\Event\AlterSiteSettingsFiles::setSite
     ignoreErrors:
         -
             message: "#^Parameter \\#2 \\$default of method Consolidation\\\\Config\\\\Util\\\\ConfigOverlay\\:\\:get\\(\\) expects string\\|null, array given\\.$#"
         -
             identifier: missingType.iterableValue
+    bootstrapFiles:
+        - phpstanBootstrap.php

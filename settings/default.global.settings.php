@@ -14,16 +14,18 @@
 /**
  * Include settings files in web/sites/settings.
  *
- * If instead you want to add settings to a specific site, see Polymer's includes
- * file in web/sites/{site-name}/settings/default.includes.settings.php.
+ * If instead you want to add settings to a specific site, see Polymer's
+ * includes file
+ * in web/sites/{site-name}/settings/default.includes.settings.php.
  */
 $additionalSettingsFiles = [
     // e.g,( DRUPAL_ROOT . "/sites/settings/foo.settings.php" )
 ];
 
+// @phpstan-ignore foreach.emptyArray
 foreach ($additionalSettingsFiles as $settingsFile) {
-    if (file_exists($settingsFile)) {
-        // phpcs:ignore
-        require $settingsFile;
-    }
+  if (file_exists($settingsFile)) {
+    // phpcs:ignore
+    require $settingsFile;
+  }
 }
