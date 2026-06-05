@@ -4,8 +4,9 @@ namespace DigitalPolygon\Polymer\polymer_drupal\Plugin\Commands;
 
 use Consolidation\AnnotatedCommand\Attributes\Command;
 use DigitalPolygon\Polymer\Core\Robo\Tasks\TaskBase;
-use DigitalPolygon\Polymer\polymer_drupal\Services\Event\AlterSiteSettingsFiles;
-use DigitalPolygon\Polymer\polymer_drupal\Services\Event\SiteSettingsFiles;
+use DigitalPolygon\Polymer\Drupal\Contracts\Event\AlterSettingsFilesEvent;
+use DigitalPolygon\Polymer\Drupal\Contracts\Event\CollectSettingsFilesEvent;
+use DigitalPolygon\Polymer\Drupal\Contracts\Event\DrupalSettingsEvents;
 use Grasmash\Expander\Expander;
 use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Exception\TaskException;
@@ -213,15 +214,15 @@ INCLUDE;
         $settingsFilePath = $this->getConfigValue('docroot') . '/sites/' . $site . '/settings/polymer-extensions.settings.php';
         /** @var EventDispatcherInterface $eventDispatcher */
         $eventDispatcher = $this->getContainer()->get('eventDispatcher');
-        /** @var SiteSettingsFiles $siteSettingsEvent */
-        $siteSettingsEvent = $this->getContainer()->get(SiteSettingsFiles::class);
+        /** @var CollectSettingsFilesEvent $siteSettingsEvent */
+        $siteSettingsEvent = $this->getContainer()->get(CollectSettingsFilesEvent::class);
         $siteSettingsEvent->setSite($site);
-        $eventDispatcher->dispatch($siteSettingsEvent);
-        /** @var AlterSiteSettingsFiles $alterSettingsEvent */
-        $alterSettingsEvent = $this->getContainer()->get(AlterSiteSettingsFiles::class);
+        $eventDispatcher->dispatch($siteSettingsEvent, DrupalSettingsEvents::COLLECT_SETTINGS_FILES);
+        /** @var AlterSettingsFilesEvent $alterSettingsEvent */
+        $alterSettingsEvent = $this->getContainer()->get(AlterSettingsFilesEvent::class);
         $alterSettingsEvent->setSite($site);
         $alterSettingsEvent->setSettingsFiles($siteSettingsEvent->getSettingsFiles());
-        $eventDispatcher->dispatch($alterSettingsEvent);
+        $eventDispatcher->dispatch($alterSettingsEvent, DrupalSettingsEvents::ALTER_SETTINGS_FILES);
         $siteSettingsFiles = $alterSettingsEvent->getSettingsFiles();
         $settingsIncludeText = <<<INCLUDE
 <?php

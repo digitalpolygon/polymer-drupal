@@ -40,7 +40,7 @@ class RandomString
      *
      * @see \Drupal\Component\Utility\Random::name()
      */
-    public static function string($length = 8, $unique = false, callable $validator = null, $characters = '')
+    public static function string($length = 8, $unique = false, ?callable $validator = null, $characters = '')
     {
         $counter = 0;
         /** @var array<string> $strings */

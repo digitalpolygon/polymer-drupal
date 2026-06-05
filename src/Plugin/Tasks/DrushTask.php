@@ -404,7 +404,7 @@ class DrushTask extends CommandStack
      *
      * @return $this
      */
-    public function option(string $option, string $value = null, string $separator = '='): static
+    public function option(string $option, ?string $value = null, string $separator = '='): static
     {
         return $this->traitOption($option, $value, $separator);
     }
