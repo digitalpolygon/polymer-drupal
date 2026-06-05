@@ -1,74 +1,79 @@
 {
-  "name": "digitalpolygon/polymer-drupal",
-  "type": "polymer-plugin",
-  "description": "Drupal integration for Polymer",
-  "license": "GPL-2.0-only",
-  "authors":[
-    {
-      "name": "Digital Polygon Engineering",
-      "homepage": "https://www.digitalpolygon.com/",
-      "role": "Maintainer"
-    }
-  ],
-  "keywords": [
-    "Drupal",
-    "Polymer",
-    "Integration"
-  ],
-  "support": {
-    "issues": "https://github.com/digitalpolygon/polymer-drupal/issues",
-    "source": "https://github.com/digitalpolygon/polymer-drupal"
-  },
-  "require": {
-    "digitalpolygon/polymer": "0.x-dev",
-    "digitalpolygon/polymer-drupal-contracts": "0.x-dev",
-    "digitalpolygon/drupal-upgrade-plugin": "^2@dev",
-    "drush/drush": "^12 || ^13",
-    "php": ">=8.1",
-    "webflo/drupal-finder": "^1.3"
-  },
-  "require-dev": {
-    "phpstan/phpstan": "^1.11",
-    "phpro/grumphp-shim": "^2.5",
-    "phpunit/phpunit": "^9 || ^10",
-    "squizlabs/php_codesniffer": "^3",
-    "php-parallel-lint/php-parallel-lint": "^1.4",
-    "drupal/coder": "^8.3"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "config": {
-    "allow-plugins": {
-      "composer/installers": true,
-      "digitalpolygon/polymer": true,
-      "digitalpolygon/drupal-upgrade-plugin": true,
-      "phpro/grumphp-shim": true,
-      "dealerdirect/phpcodesniffer-composer-installer": true
-    }
-  },
-  "scripts": {
-    "lint": "find src test/src -name '*.php' -print0 | xargs -0 -n1 -P4 -- php -l",
-    "cs": [
-      "phpcs --standard=phpcs-non-drupal.xml.dist",
-      "phpcs --standard=phpcs-drupal.xml.dist"
+    "name": "digitalpolygon/polymer-drupal",
+    "type": "polymer-plugin",
+    "description": "Drupal integration for Polymer",
+    "license": "GPL-2.0-only",
+    "authors": [
+        {
+            "name": "Digital Polygon Engineering",
+            "homepage": "https://www.digitalpolygon.com/",
+            "role": "Maintainer"
+        }
     ],
-    "sa": "phpstan analyse -v -c phpstan.neon",
-    "test": "phpunit -c tests/phpunit/phpunit.xml.dist --no-coverage",
-    "validations": [
-      "@lint",
-      "@cs",
-      "@sa",
-      "@test"
-    ]
-  },
-  "autoload": {
-    "classmap": [
-      "src/VendorAssets.php"
-    ]
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "DigitalPolygon\\PolymerDrupalTest\\": "tests/"
+    "keywords": [
+        "Drupal",
+        "Polymer",
+        "Integration"
+    ],
+    "support": {
+        "issues": "https://github.com/digitalpolygon/polymer-drupal/issues",
+        "source": "https://github.com/digitalpolygon/polymer-drupal"
+    },
+    "require": {
+        "digitalpolygon/polymer": "^0.2.0-alpha1",
+        "digitalpolygon/polymer-drupal-contracts": "^0.2.0-alpha1",
+        "digitalpolygon/drupal-upgrade-plugin": "^2@dev",
+        "drush/drush": "^12 || ^13",
+        "php": ">=8.1",
+        "webflo/drupal-finder": "^1.3"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.11",
+        "phpro/grumphp-shim": "^2.5",
+        "phpunit/phpunit": "^9 || ^10",
+        "squizlabs/php_codesniffer": "^3",
+        "php-parallel-lint/php-parallel-lint": "^1.4",
+        "drupal/coder": "^8.3"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "digitalpolygon/polymer": true,
+            "digitalpolygon/drupal-upgrade-plugin": true,
+            "phpro/grumphp-shim": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "scripts": {
+        "lint": "find src test/src -name '*.php' -print0 | xargs -0 -n1 -P4 -- php -l",
+        "cs": [
+            "phpcs --standard=phpcs-non-drupal.xml.dist",
+            "phpcs --standard=phpcs-drupal.xml.dist"
+        ],
+        "sa": "phpstan analyse -v -c phpstan.neon",
+        "test": "phpunit -c tests/phpunit/phpunit.xml.dist --no-coverage",
+        "validations": [
+            "@lint",
+            "@cs",
+            "@sa",
+            "@test"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-0.x": "0.2.x-dev"
+        }
+    },
+    "autoload": {
+        "classmap": [
+            "src/VendorAssets.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DigitalPolygon\\PolymerDrupalTest\\": "tests/"
+        }
     }
-  }
 }
