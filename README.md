@@ -3,7 +3,7 @@
 > in the [polymer-drupal-monorepo](https://github.com/digitalpolygon/polymer-drupal-monorepo).
 > Development happens there — please open issues and pull requests against the monorepo.
 
-[![CI](https://github.com/digitalpolygon/polymer-drupal/actions/workflows/code_standards.yml/badge.svg)](https://github.com/digitalpolygon/polymer-drupal/actions/workflows/code_standards.yml)
+[![CI](https://github.com/digitalpolygon/polymer-drupal-monorepo/actions/workflows/ci.yml/badge.svg?branch=0.x)](https://github.com/digitalpolygon/polymer-drupal-monorepo/actions/workflows/ci.yml)
 [![pages-build-deployment](https://github.com/digitalpolygon/polymer-drupal/actions/workflows/pages/pages-build-deployment/badge.svg)](https://digitalpolygon.github.io/polymer-drupal/latest/)
 
 # Drupal Integration for Polymer WebOps Tooling
