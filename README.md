@@ -1,3 +1,8 @@
+> [!IMPORTANT]
+> This repository is a **read-only split mirror** of [`packages/drupal`](https://github.com/digitalpolygon/polymer-drupal-monorepo/tree/0.x/packages/drupal)
+> in the [polymer-drupal-monorepo](https://github.com/digitalpolygon/polymer-drupal-monorepo).
+> Development happens there — please open issues and pull requests against the monorepo.
+
 [![CI](https://github.com/digitalpolygon/polymer-drupal/actions/workflows/code_standards.yml/badge.svg)](https://github.com/digitalpolygon/polymer-drupal/actions/workflows/code_standards.yml)
 [![pages-build-deployment](https://github.com/digitalpolygon/polymer-drupal/actions/workflows/pages/pages-build-deployment/badge.svg)](https://digitalpolygon.github.io/polymer-drupal/latest/)
 
