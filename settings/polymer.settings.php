@@ -48,7 +48,10 @@ if (EnvironmentDetectorBase::isCiEnv()) {
 }
 
 // Local global and site-specific settings.
-if (AcquiaEnvironmentDetector::isLocalEnv() || PantheonEnvironmentDetector::isLocalEnv()) {
+// Each detector reports "local" when *its own* platform variables are absent,
+// so the per-platform results must be ANDed: local means no supported
+// platform identified the environment (and we are not in CI).
+if (AcquiaEnvironmentDetector::isLocalEnv() && PantheonEnvironmentDetector::isLocalEnv()) {
   // Use settings.local.php because that's what Drupal scaffold uses.
   $settings_files[] = DRUPAL_ROOT . '/sites/settings/settings.local.php';
   $settings_files[] = DRUPAL_ROOT . "/sites/$site_name/settings.local.php";
