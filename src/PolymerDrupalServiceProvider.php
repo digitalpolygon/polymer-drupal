@@ -7,6 +7,7 @@ use DigitalPolygon\Polymer\polymer_drupal\Plugin\Template\GitHubWorkflows\Automa
 use DigitalPolygon\Polymer\polymer_drupal\Plugin\Template\GitHubWorkflows\ComposerDiff;
 use DigitalPolygon\Polymer\Drupal\Contracts\Event\AlterSettingsFilesEvent;
 use DigitalPolygon\Polymer\Drupal\Contracts\Event\CollectSettingsFilesEvent;
+use DigitalPolygon\Polymer\polymer_drupal\Services\ConfigSyncDirectory;
 use DigitalPolygon\Polymer\polymer_drupal\Services\EventSubscriber\ContextProvidersSubscriber;
 use DigitalPolygon\Polymer\polymer_drupal\Services\EventSubscriber\DrupalConfigInjector;
 use DigitalPolygon\Polymer\polymer_drupal\Services\EventSubscriber\PostInvokeCommandSubscriber;
@@ -25,6 +26,7 @@ class PolymerDrupalServiceProvider extends AbstractServiceProvider implements Bo
     public function provides(string $id): bool
     {
         $services = [
+            'configSyncDirectory',
             'drupalConfigContextProvider',
             'drupalConfigInjector',
             'drupalFinder',
@@ -42,6 +44,7 @@ class PolymerDrupalServiceProvider extends AbstractServiceProvider implements Bo
     public function register(): void
     {
         $container = $this->getContainer();
+        $container->addShared('configSyncDirectory', ConfigSyncDirectory::class);
         $container->addShared('drupalConfigContextProvider', ContextProvidersSubscriber::class)
             ->addArgument(new ResolvableArgument('drupalFileSystem'));
         $container->addShared('drupalConfigInjector', DrupalConfigInjector::class)

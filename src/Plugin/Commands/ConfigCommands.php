@@ -5,7 +5,6 @@ namespace DigitalPolygon\Polymer\polymer_drupal\Plugin\Commands;
 use DigitalPolygon\Polymer\polymer_drupal\Plugin\Tasks\LoadDrushTaskTrait;
 use Robo\Common\IO;
 use Robo\Symfony\ConsoleIO;
-use Symfony\Component\Yaml\Yaml;
 use Robo\Exception\TaskException;
 use DigitalPolygon\Polymer\Core\Robo\Tasks\TaskBase;
 use DigitalPolygon\Polymer\polymer_drupal\Plugin\Tasks\DrushTask;
@@ -87,13 +86,15 @@ class ConfigCommands extends TaskBase
 
         $this->invokeHook('pre-config-import');
 
+        /** @var \DigitalPolygon\Polymer\polymer_drupal\Services\ConfigSyncDirectory $syncDirectory */
+        $syncDirectory = $this->getContainer()->get('configSyncDirectory');
+        $syncDir = $this->getConfigValue('docroot') . '/' . $this->getConfigValue("drupal.cm.core.dirs.sync.path");
+
         // If using core-only or config-split strategies, first check to see if
         // required config is exported.
         if (in_array($strategy, ['core-only', 'config-split'])) {
-            $core_config_file = $this->getConfigValue('docroot') . '/' . $this->getConfigValue("drupal.cm.core.dirs.sync.path") . '/core.extension.yml';
-
-            if (!file_exists($core_config_file)) {
-                $this->logger?->warning("Polymer will NOT import configuration, $core_config_file was not found.");
+            if (!$syncDirectory->isCoreConfigExported($syncDir)) {
+                $this->logger?->warning("Polymer will NOT import configuration, $syncDir/core.extension.yml was not found.");
                 // This is not considered a failure.
                 return 0;
             }
@@ -102,7 +103,7 @@ class ConfigCommands extends TaskBase
         // If exported site UUID does not match site active site UUID, set active
         // to equal exported.
         // @see https://www.drupal.org/project/drupal/issues/1613424
-        $exported_site_uuid = $this->getExportedSiteUuid();
+        $exported_site_uuid = $syncDirectory->exportedSiteUuid($syncDir);
         if ($exported_site_uuid) {
             $task->drush("config:set system.site uuid $exported_site_uuid");
         }
@@ -207,24 +208,6 @@ class ConfigCommands extends TaskBase
         } else {
             return false;
         }
-    }
-
-    /**
-     * Returns the site UUID stored in exported configuration.
-     *
-     * @return ?string
-     */
-    protected function getExportedSiteUuid(): ?string
-    {
-        $site_config_file = $this->getConfigValue('docroot') . '/' . $this->getConfigValue("drupal.cm.core.dirs.sync.path") . '/system.site.yml';
-        if (file_exists($site_config_file)) {
-            $site_config = Yaml::parseFile($site_config_file);
-            if (is_array($site_config) && isset($site_config['uuid'])) {
-                return $site_config['uuid'];
-            }
-        }
-
-        return null;
     }
 
     /**
